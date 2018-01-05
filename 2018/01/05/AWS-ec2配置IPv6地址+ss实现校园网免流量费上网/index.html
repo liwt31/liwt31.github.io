@@ -3,14 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo</title>
+  <title>AWS-ec2配置IPv6地址+ss实现校园网免流量费上网 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="我日常使用的校园网每月除去免费流量外流量计费为2元/GB。当然这个规定只针对IPv4，“教学科研”用的IPv6是不受限制的。今天折腾AWS的时候突然想到可以用IPv6服务器做代理实现免流量上网，如果使用得当每月可以省下二三十元的流量费，基本刚好把租服务器的钱赚了回来，等于白用一个V#P:N。配置的过程中踩了一些坑，记录如下。 首先租服务器的时候要给服务器分配IPv6地址。ec2虽然支持IPv6但是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS-ec2配置IPv6地址+ss实现校园网免流量费上网">
+<meta property="og:url" content="http://yoursite.com/2018/01/05/AWS-ec2配置IPv6地址+ss实现校园网免流量费上网/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我日常使用的校园网每月除去免费流量外流量计费为2元/GB。当然这个规定只针对IPv4，“教学科研”用的IPv6是不受限制的。今天折腾AWS的时候突然想到可以用IPv6服务器做代理实现免流量上网，如果使用得当每月可以省下二三十元的流量费，基本刚好把租服务器的钱赚了回来，等于白用一个V#P:N。配置的过程中踩了一些坑，记录如下。 首先租服务器的时候要给服务器分配IPv6地址。ec2虽然支持IPv6但是">
+<meta property="og:updated_time" content="2018-01-05T14:31:49.721Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="AWS-ec2配置IPv6地址+ss实现校园网免流量费上网">
+<meta name="twitter:description" content="我日常使用的校园网每月除去免费流量外流量计费为2元/GB。当然这个规定只针对IPv4，“教学科研”用的IPv6是不受限制的。今天折腾AWS的时候突然想到可以用IPv6服务器做代理实现免流量上网，如果使用得当每月可以省下二三十元的流量费，基本刚好把租服务器的钱赚了回来，等于白用一个V#P:N。配置的过程中踩了一些坑，记录如下。 首先租服务器的时候要给服务器分配IPv6地址。ec2虽然支持IPv6但是">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -59,9 +63,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-AWS-ec2配置IPv6地址+ss实现校园网免流量费上网" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-AWS-ec2配置IPv6地址+ss实现校园网免流量费上网" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/05/AWS-ec2配置IPv6地址+ss实现校园网免流量费上网/" class="article-date">
   <time datetime="2018-01-05T14:02:58.000Z" itemprop="datePublished">2018-01-05</time>
@@ -74,8 +76,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/05/AWS-ec2配置IPv6地址+ss实现校园网免流量费上网/">AWS-ec2配置IPv6地址+ss实现校园网免流量费上网</a>
+    <h1 class="article-title" itemprop="name">
+      AWS-ec2配置IPv6地址+ss实现校园网免流量费上网
     </h1>
   
 
@@ -113,10 +115,9 @@
     </footer>
   </div>
   
-</article>
-
-
+    
   
+</article>
 
 </section>
         
