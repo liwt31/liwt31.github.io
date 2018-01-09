@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Sleeping...</title>
+  <title>AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo) | Sleeping...</title>
 
   
   <meta name="author" content="Weitang Li">
@@ -14,12 +14,15 @@
   
 
   
+  
+  <meta name="keywords" content="">
+  
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  
+  <meta property="og:title" content="AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo)"/>
 
   <meta property="og:site_name" content="Sleeping..."/>
 
@@ -56,12 +59,11 @@
 </header>
 
     <main class="site-main posts-loop">
-    
-  <article>
+    <article>
 
   
     
-    <h3 class="article-title"><a href="/2018/01/09/lightsail/"><span>AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo)</span></a></h3>
+    <h3 class="article-title"><span>AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo)</span></h3>
     
   
 
@@ -109,77 +111,6 @@
 </article>
 
 
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/01/05/AWS-ec2配置IPv6地址+ss实现校园网免流量费上网/"><span>AWS-EC2配置IPv6地址+ss实现校园网免流量费上网</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/01/05/AWS-ec2配置IPv6地址+ss实现校园网免流量费上网/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-01-05T14:02:58.000Z">
-          2018-01-05
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>我日常使用的校园网每月除去免费流量外流量计费为2元/GB。当然这个规定只针对IPv4，“教学科研”用的IPv6是不受限制的。今天折腾AWS的时候突然想到可以用IPv6服务器做代理实现免流量上网，如果使用得当每月可以省下二三十元的流量费，基本刚好把租服务器的钱赚了回来，等于白用一个V#P:N。配置的过程中踩了一些坑，记录如下。</p>
-<p>首先租服务器的时候要给服务器分配IPv6地址。EC2虽然支持IPv6但是默认是没有这个功能的。</p>
-<ol>
-<li>配置VPC，添加IPv6的CIDR，相应地配置Subnet的CIDR和Route Table与Gateway的关联。</li>
-<li>启动实例，用了简单的Ubuntu。然后配置VPC和subnet。如果VPC配置正常，会出现自动分配IPv6地址的选项。这里自动即可。</li>
-<li>配置安全组，简单粗暴地Port Range 0-65535，然后Source上除了配置IPv4的0.0.0.0/0外，还需要配置IPv6的::/0。</li>
-<li>完成</li>
-</ol>
-<p>现在手里就有一个外网可访问IPv6地址的云服务器了，下一步是在服务器上装ss并启动服务。ss默认是支持IPv6的，但是启动ss并没有想象中那么容易。</p>
-<p>首先，装Python3-pip的时候，提示<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E: Unable to locate package python3-pip</span><br></pre></td></tr></table></figure></p>
-<p>这是因为没有更新包列表，执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure></p>
-<p>解决。</p>
-<p>但是在update时，卡在了连接security.ubuntu.com上，Google之后参考<a href="https://askubuntu.com/questions/620317/apt-get-update-stuck-connecting-to-security-ubuntu-com" target="_blank" rel="noopener">这个回答</a>得到了解决。apt默认会尽可能使用IPv6进行更新，但是security.ubuntu.com好像不吃这套，于是需要手动调高IPv4的优先级。解决办法：</p>
-<ol>
-<li>打开<code>/etc/gai.conf</code></li>
-<li>取消<code># precedence ::ffff:0:0/96 100</code>的注释</li>
-<li>接着执行<code>sudo apt update</code>，顺利完成</li>
-</ol>
-<p>接下来就是安装pip和ss了，然后<code>ssserver</code>启动即可，地址需要根据IPv6的要求设置为<code>::</code>。</p>
-<p>配好ss后试了一下，确实可以不用流量上网了，但由于服务器是在境外，上国内的网站比较慢，不是很6。好在平时上境外网站很多，应该也是能省下不少流量的。实在不行就自己配置一下PAC，手动避开一些有些大流量的场景。</p>
-
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-
-<nav class="pagination">
-  
-  
-</nav>
     </main>
 
     <footer class="site-footer">
