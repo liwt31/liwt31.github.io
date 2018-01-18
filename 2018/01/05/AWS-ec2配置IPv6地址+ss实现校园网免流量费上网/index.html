@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <title>AWS-EC2配置IPv6地址+ss实现校园网免流量费上网 | Sleeping...</title>
 
@@ -33,11 +33,22 @@
   <link href="/favicon.ico" rel="icon">
   <link rel="alternate" href="/atom.xml" title="Sleeping..." type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 
 <body>
-<div class="blog">
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
   <div class="content">
 
     <header>
@@ -50,9 +61,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">主页</a></li>
+        <li><a href="/">Home</a></li>
       
-        <li><a href="/archives">归档</a></li>
+        <li><a href="/archives">Archives</a></li>
       
     </ul>
   </nav>
@@ -102,7 +113,7 @@
 <li>接着执行<code>sudo apt update</code>，顺利完成</li>
 </ol>
 <p>接下来就是安装pip和ss了，然后<code>ssserver</code>启动即可，地址需要根据IPv6的要求设置为<code>::</code>。</p>
-<p>配好ss后试了一下，确实可以不用流量上网了，但由于服务器是在境外，上国内的网站比较慢，不是很6。好在平时上境外网站很多，应该也是能省下不少流量的。实在不行就自己配置一下PAC，手动避开一些有些大流量的场景。</p>
+<p>配好ss后试了一下，确实可以不用流量上网了，但由于服务器是在境外，上国内的网站比较慢，不是很6。好在平时上境外网站很多，应该也是能省下不少流量的。实在不行就自己配置一下PAC或者代理服务器，手动避开一些有些大流量的场景。</p>
 
       
     </div>
@@ -148,6 +159,6 @@
 </script>
 
   </div>
-</div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
