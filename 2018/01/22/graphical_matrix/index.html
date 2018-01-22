@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>矩阵（张量）乘法的图形化表达 | Sleeping...</title>
+
+  
+  <meta name="author" content="Weitang Li">
+  
+
+  
+  <meta name="description" content="A serious blog">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="矩阵（张量）乘法的图形化表达"/>
+
+  <meta property="og:site_name" content="Sleeping..."/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Sleeping..." type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Sleeping...</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>矩阵（张量）乘法的图形化表达</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/01/22/graphical_matrix/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-01-22T09:13:14.000Z">
+          2018-01-22
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>之前在研究<a href="https://en.wikipedia.org/wiki/Matrix_product_state" target="_blank" rel="noopener">矩阵乘积态</a>的时候，遇到了大量繁琐的矩阵（其实是张量）乘法，看得头晕脑胀不得要领。<a href="http://arxiv.org/abs/1008.3477v2" target="_blank" rel="noopener">The density-matrix renormalization group in the age of matrix product states</a>介绍了一种用图像表示这种乘法的方法，初看好似鬼画符，看懂之后却显得非常简洁明了。如下图，即表示了一个六阶张量。</p>
+<p><img src="/images/demo.png" alt=""><br><a id="more"></a><br>我自认线性代数学的还凑合，但掌握这种方法之后对矩阵特别是张量的理解瞬间提升了一个档次。另外，上网搜索没有发现任何有关的资料。</p>
+<p>众所周知，图像就是矩阵（张量），为了不引起混淆，这里明确说明“矩阵（张量）乘法的图形化表达”与计算机视觉没有半毛钱关系。如果硬要说关系，那就是两者都和矩阵有关。</p>
+<p>这里还要说明，线性代数是有几何背景的，矩阵也可以理解为某种算符，所以在一个二维坐标系下，可以将一个二阶矩阵的作用画出来，帮助理解矩阵的意义和作用。本文中“矩阵（张量）乘法的图形化表达”和这也没有半毛钱关系，除了两者都和矩阵有关以外。</p>
+<p><a href="https://en.wikipedia.org/wiki/Penrose_graphical_notation" target="_blank" rel="noopener">Penrose graphical notation</a>倒是和本文中“矩阵（张量）乘法的图形化表达”有点类似，不过前者过于繁复，非数学专业恐怕用起来有点费劲。</p>
+<p>以下为了编辑方便，用字符来画图。    看起来有点费眼睛，但精确度很高，绘制、修改很方便。</p>
+<hr>
+<p>首先，很简单，我们把一个矩阵画成一个方块（你可以想象它是■或者□，但为了排版好看用<code>#</code>表示），非常直观吧？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#</span><br></pre></td></tr></table></figure></p>
+<p>把它记为\(A\)。我们假设\(A\)的大小是\(m\times n\)，进一步记为\(A_{m\times n}\)。为了表示这些信息，可以让这个表示\(A_{m\times n}\)的小方块伸出来两个脚，分别写上\(m\)和\(n\)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> m   n      </span><br><span class="line">---#---</span><br></pre></td></tr></table></figure></p>
+<p>下面假设有矩阵\(B_{n\times l}\)，不难仿照\(A_{m\times n}\)画出\(B_{n\times l}\)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> n   l</span><br><span class="line">---#---</span><br><span class="line">   B</span><br></pre></td></tr></table></figure></p>
+<p>为了清晰起见，我在<code>#</code>下方标注了\(B_{n\times l}\)。熟悉矩阵的同学想必早已忍不住要做矩阵乘法了：\(A_{m\times n}B_{n\times l} = C_{m\times l}\)。那么，怎样表示\(A_{m\times n}B_{n\times l}\)呢？很简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> m   n   l</span><br><span class="line">---#---#---</span><br><span class="line">   A   B</span><br></pre></td></tr></table></figure></p>
+<p>把它们维数为\(n\)的脚连起来就好了~<br>注意到，连起来之后的图形也伸出来两个脚，它表示的矩阵大小为\(m\times l\)。也就是说，上面那个“图”表示了\(C_{m\times l}\)。<strong>矩阵乘法把总维数为4的两个量变成了一个总维数为2的量</strong>，我觉得这才是张量<strong>收缩（contraction）</strong>这一词的来源。<br>如果用计算机语言来表示\(A_{m\times n}B_{n\times l}\)：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C已经被初始化为一个初值都为0的m*l数组</span></span><br><span class="line"><span class="comment">// 以下写法不是速度最快的，但可能是最清晰的</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; l; j++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; k++)&#123;</span><br><span class="line">            C[m][l] += A[m][k] * B[k][l];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看出，\(A_{m\times n}B_{n\times l}\)其实就是\(A_{m\times n}\)和\(B_{n\times l}\)消去它们共同的指标（index）<code>n</code>的过程，信息被压缩，存储在<code>C</code>中。所以，用两个方块的脚连在一起表示矩阵乘法，体现了<strong>contraction</strong>的特性和矩阵乘法的本质。</p>
+<hr>
+<p>吹了半天牛逼，好像没什么卵用？接下来是这种图形化表达的一些应用。</p>
+<h3 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h3><p><a href="https://www.zhihu.com/question/20695804" target="_blank" rel="noopener">张量是什么-知乎？</a>我在刚学张量的时候也是一头雾水。知乎大神一通操作，对我来说并没有什么有效信息，竟然也骗了2k个赞。现在张量也是很火的，说一句tensor，立马就显得很有逼格，好像很懂tensorflow，非常熟悉矩阵的各种理论一样。其实对于搞计算机的来说，张量说白了就是高维数组。只不过高维数组这个数据结构定义很直观，但要操作起来很头疼。因为张量的一大作用就是做乘法，而给两个高维数组定义乘法这么一个操作让人有点摸不着头脑。<br>不过有图有好说了。<br>比如张量\(A_{i\times j \times k}\)有三个指标，可以伸出来三个脚，表示为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   j</span><br><span class="line"> i | k</span><br><span class="line">---#---                  </span><br><span class="line">   A</span><br></pre></td></tr></table></figure></p>
+<p>而\(B_{k\times l \times m \times n}\)可以表示为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   m</span><br><span class="line"> k | l</span><br><span class="line">---#---</span><br><span class="line">   |</span><br><span class="line">   n                  </span><br><span class="line">   B</span><br></pre></td></tr></table></figure></p>
+<p>如果对他们维度为\(k\)的指标做contraction，得到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   j     m                      </span><br><span class="line"> i |  k  | l                        </span><br><span class="line">---#-----#---                </span><br><span class="line">         |      </span><br><span class="line">         n                                                   </span><br><span class="line">   A     B</span><br></pre></td></tr></table></figure></p>
+<p>得到的结果张量大小为\(i\times j \times l \times m \times n\)，相应的计算代码为：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// C已经被初始化为一个初值都为0的I*J*L*M*N数组</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I; i++)&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J; j++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt; L; l++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; M; m++)&#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; N; n++)&#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; K; k++)&#123;</span><br><span class="line">                        C[i][j][l][m][n] += A[i][j][k] + B[k][l][m][n];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这代码本来可以当做“糟糕代码”的典型，但如果用图形的方式来理解，高维数组乘法的定义立刻就变得很清楚，如果把我上面画的图当做文档加进去，我想就不会有人再抱怨。<code>numpy</code>的<code>tensordot</code>函数“声明”为<code>np.tensordot(a, b, axes=2)</code>，其意义在图形方式下也变得直观明朗。<br>至此，本文最开始给出的“六阶张量”图也很容易理解了。图中出现的方块和圆形记号没有本质区别，都是张量的表示，只不过在那张图的语境下，方块张量和圆形张量物理上有不同含义而已。</p>
+<h3 id="矩阵（张量）转置"><a href="#矩阵（张量）转置" class="headerlink" title="矩阵（张量）转置"></a>矩阵（张量）转置</h3><p>矩阵的转置很平凡：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> m   n                    n   m          </span><br><span class="line">---#---  --transpose--&gt;  ---#---                    </span><br><span class="line">   A                        A</span><br></pre></td></tr></table></figure></p>
+<p>但张量的转置似乎就不太好定义了。不难想象，张量的转置需要明确定义转置后各个指标的位置。看看<a href="https://docs.scipy.org/doc/numpy-1.14.0/reference/generated/numpy.transpose.html#numpy.transpose" target="_blank" rel="noopener">np.transpose的文档</a>吧。<br>下面我们来“证明”一个经典公式\((AB)^T=B^TA^T\)，考虑\(A_{m\times n}\)和\(B_{n\times l}\)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  m   n   l         l   n   m        </span><br><span class="line">(---#---#---)^T == ---#---#---          </span><br><span class="line">    A   B            B^T A^T</span><br></pre></td></tr></table></figure></p>
+<p>这才是数学证明中的“显然”。这种图形化的表示方法本质上是按照定义进行的乘法和加法操作，进行这种证明时绕开了不计其数的\(\Sigma\)符号，也就无往而不利。</p>
+<h3 id="矩阵乘法的性质"><a href="#矩阵乘法的性质" class="headerlink" title="矩阵乘法的性质"></a>矩阵乘法的性质</h3><p>我们考虑两个矩阵乘法的性质，其一是结合律，即\(A(BC)=(AB)C\)。这个很显然。<br>其二是交换律。对于不是方阵的情况，盲目交换的问题是显然的（segmentation fault!)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> m   n   l       n   l      m   n         </span><br><span class="line">---#---#--- !=  ---#--- ?? ---#---            </span><br><span class="line">   A   B           B          A</span><br></pre></td></tr></table></figure></p>
+<p>假设\(m=l\)，那么上面所绘制的操作就有定义了，但不难看出\(AB\)和\(BA\)进行的完全是两种运算，一般地\(AB \neq BA\)。</p>
+<h3 id="矩阵的迹-trace"><a href="#矩阵的迹-trace" class="headerlink" title="矩阵的迹(trace)"></a>矩阵的迹(trace)</h3><p>学线代的时候对矩阵的迹感觉非常奇怪，好好一个矩阵，只从中抽取对角元，能有什么信息？还有这么多性质？即使告诉你迹是一个矩阵对自己做contraction，也是懵懵懂懂。下面我们来看\(A_{n\times n}\)的迹：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> n   n        </span><br><span class="line">---#---</span><br><span class="line">|     |</span><br><span class="line">-------</span><br><span class="line">   A</span><br></pre></td></tr></table></figure></p>
+<p>这一表示已经包含了一定信息，比如迹只对方阵有定义，比如求迹的代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> trace = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">	trace += A[i][i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>和之前的两个代码颇为神似。我们也可以“证明”一些迹的简单的性质，比如\(\textrm{tr}(AB)=\textrm{tr}(BA)\):<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---#---#---      ---#---#---               </span><br><span class="line">|         |  ==  |         | </span><br><span class="line">-----------      -----------               </span><br><span class="line">   A   B            B   A</span><br></pre></td></tr></table></figure></p>
+<p>像\(\textrm{tr}A^T=\textrm{tr}A\)，是一眼就能看出的。<br>还有“偏迹”的概念。如果你去看<a href="https://en.wikipedia.org/wiki/Partial_trace" target="_blank" rel="noopener">wikipedia</a>，包你看个痛。不过如果我们这么看一个四阶张量的偏迹：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   |</span><br><span class="line">---#---            </span><br><span class="line">   |  |</span><br><span class="line">   ----</span><br></pre></td></tr></table></figure></p>
+<p>就非常的简单直观。<br>作为结语，让我们再“证明”一个量子力学中的定理吧，是密度矩阵的基础之一。由于<code>MathJax</code>不支持braket符号，量子力学的公式写起来很费劲，就不多扯了，总之是要证明：<br>$$<br>A_{1\times n}B_{n\times n}C_{n\times 1}=\textrm{tr}(C_{n\times 1}A_{1\times n}B_{n\times n})<br>$$<br>首先，等号左边：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 1    n     n    1</span><br><span class="line">---#-----#-----#---       </span><br><span class="line">   A     B     C</span><br></pre></td></tr></table></figure></p>
+<p>注意到，这个表示结果是一个数（\(1\times 1\)的矩阵)，而一个数的迹还是它自己，即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> 1    n     n    1        1    n     n    1               </span><br><span class="line">---#-----#-----#---  ==  ---#-----#-----#---                            </span><br><span class="line">   A     B     C         |                 |          </span><br><span class="line">                         -------------------                      </span><br><span class="line">                            A     B     C</span><br></pre></td></tr></table></figure></p>
+<p>我们把这个环做一下旋转，把C从右边移到左边，因为我们没有改变任何一个contraction，式子的值保持不变：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> 1    n     n    1        n    1     n    n            </span><br><span class="line">---#-----#-----#---      ---#-----#-----#---                         </span><br><span class="line">|                 |  ==  |                 |       </span><br><span class="line">-------------------      -------------------                   </span><br><span class="line">   A     B     C            C     A     B</span><br></pre></td></tr></table></figure></p>
+<p>式子的右边即是\(\textrm{tr}(C_{n\times 1}A_{1\times n}B_{n\times n})\)。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Weitang Li
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112074287-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

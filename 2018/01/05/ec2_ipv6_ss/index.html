@@ -61,9 +61,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -80,7 +80,7 @@
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/01/05/AWS-ec2配置IPv6地址+ss实现校园网免流量费上网/" rel="bookmark">
+      <a href="/2018/01/05/ec2_ipv6_ss/" rel="bookmark">
         <time class="entry-date published" datetime="2018-01-05T14:02:58.000Z">
           2018-01-05
         </time>
@@ -95,6 +95,7 @@
     <div class="entry">
       
         <p>我日常使用的校园网每月除去免费流量外流量计费为2元/GB。当然这个规定只针对IPv4，“教学科研”用的IPv6是不受限制的。今天折腾AWS的时候突然想到可以用IPv6服务器做代理实现免流量上网，如果使用得当每月可以省下二三十元的流量费，基本刚好把租服务器的钱赚了回来，等于白用一个V#P:N。配置的过程中踩了一些坑，记录如下。</p>
+<a id="more"></a> 
 <p>首先租服务器的时候要给服务器分配IPv6地址。EC2虽然支持IPv6但是默认是没有这个功能的。</p>
 <ol>
 <li>配置VPC，添加IPv6的CIDR，相应地配置Subnet的CIDR和Route Table与Gateway的关联。</li>

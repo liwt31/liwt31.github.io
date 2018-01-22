@@ -61,9 +61,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -95,6 +95,7 @@
     <div class="entry">
       
         <p>因为课程项目的原因，需要配置若干个LightSail实例环境。一种比较方便的方式是在启动实例时执行一段脚本。操作系统为Ubuntu。<br>环境需求有以下几个：建立ubuntu之外的账户；除了公钥之外，可以使用密码SSH登录；可以进行免密码sudo。三个Linux经典操作。</p>
+<a id="more"></a> 
 <h3 id="建立新账户"><a href="#建立新账户" class="headerlink" title="建立新账户"></a>建立新账户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Add user. -m create home. -s set shell</span></span><br><span class="line">sudo useradd newuser -m -s /bin/bash</span><br></pre></td></tr></table></figure>
 <p>其中newuser为用户名，<code>-m</code>选项创建<code>/home</code>下的<code>newuser</code>文件夹，<code>-s</code>指定登录Shell。<br>下面为新账户设定密码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set password</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'newuser:123456'</span> | sudo chpasswd</span><br></pre></td></tr></table></figure></p>
 <p>一般设置密码的方式是<code>passwd</code>命令，然而这种方式必须是交互式的，不适用于脚本中。使用<code>chpasswd</code>可以将账户密码以标准输入的形式输入，格式为“账户:密码”。其缺点是需要在命令里显式写下密码，如果想要保密可以将密码先存在文件里，然后<code>cat</code>到<code>chpasswd</code>的标准输入中。在实例启动阶段，就<code>echo</code>好了。</p>

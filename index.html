@@ -58,9 +58,9 @@
   <nav class="site-navigation">
     <ul>
       
-        <li><a href="/">Home</a></li>
+        <li><a href="/">主页</a></li>
       
-        <li><a href="/archives">Archives</a></li>
+        <li><a href="/archives">归档</a></li>
       
     </ul>
   </nav>
@@ -68,6 +68,52 @@
 
     <main class="site-main posts-loop">
     
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2018/01/22/graphical_matrix/"><span>矩阵（张量）乘法的图形化表达</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/01/22/graphical_matrix/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-01-22T09:13:14.000Z">
+          2018-01-22
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>之前在研究<a href="https://en.wikipedia.org/wiki/Matrix_product_state" target="_blank" rel="noopener">矩阵乘积态</a>的时候，遇到了大量繁琐的矩阵（其实是张量）乘法，看得头晕脑胀不得要领。<a href="http://arxiv.org/abs/1008.3477v2" target="_blank" rel="noopener">The density-matrix renormalization group in the age of matrix product states</a>介绍了一种用图像表示这种乘法的方法，初看好似鬼画符，看懂之后却显得非常简洁明了。如下图，即表示了一个六阶张量。</p>
+<p><img src="/images/demo.png" alt=""><br>
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
   <article>
 
   
@@ -92,20 +138,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>今天人工智能课考试，果不其然跪在了支持向量机上。题也不难，但我真的是啥都不会。其一我是从神经网络开始听说机器学习的，所以就戴上了鄙视SVM的有色眼镜，一直不情愿去学；其二学起来确实也感觉有点费劲，不像线性回归、随机森林这些模型简单直观；其三课上讲支持向量机一节我因为一些个人原因大部没听；其四因为后来还算自己补了一些支持向量机的知识，自我感觉很良好没有认真复习，只是考前随便看了看，结果随便一看看得心里拔凉，但也没时间继续复习了。这下好了，怒跪一波，花点时间亡羊补牢吧。</p>
-<p>先看题:</p>
-<blockquote>
-<p>有三个点，(0,0)是正样例，(-1,-1),(1,1)是两个负样例，核函数\(K=(1+\vec x\cdot \vec y)^2\)，求支持向量机参数，以及(0,1)的分类。</p>
-</blockquote>
-<p>核心考点是一个对偶问题的公式：<br>$$\min_\alpha \frac{1}{2}\Sigma_{i=1}^{N}\Sigma_{j=1}^{N}\alpha_i\alpha_j y_i y_j K(\vec x_i, \vec x_j) - \Sigma_{i=1}^{N}\alpha_i$$<br>同时满足：<br>$$<br>\begin{align}<br>&amp; \Sigma_{i=1}^{N}\alpha_i y_i = 0<br>&amp; \alpha_i \geq 0, i = 1,2,\cdots, N<br>\end{align}<br>$$<br>求出三个\(\alpha\)很简单，把三个点带进去，然后求\(\alpha\)的极值方程就行了，但我掌握不牢的第一个体现是忘了公式里后面到底是\(\Sigma_{i=1}^{N}\alpha_i\)还是\(\Sigma_{i=1}^{N}\alpha_i^2\)（可能是被正则化影响…）。当时隐约记得应该是前者，但有点分不清，这个问题其实不算大。<br>但接着往下看，还要判断(0,1)的分类，这就一下击穿了我纸糊的SVM知识。用主问题的\(\vec w\)和\(b\)来判断还好，变成核空间了咋整？我毫无头绪。我第一反应是利用\(\alpha\)把\(\vec w\)和\(b\)求出来，但因为我一点都不懂SVM，并不知道怎么用\(\alpha\)求出\(\vec w\)和\(b\)，所以这就等于是要我推对偶问题公式。考虑到我本来就不太确定这个公式的形式，我就在考场上推了起来。由主问题：<br>$$\min_{w,b} | \vec w |^2$$<br>同时满足：<br>$$<br>y_i(\vec w \cdot \vec x_i+b) \geq 1, i = 1,2,\cdots, N<br>$$<br>使用拉格朗日乘子法，为每个约束条件添加拉格朗日乘子\(\alpha\)，得拉格朗日函数：<br>$$L(\vec w,b,\alpha) = \frac{1}{2} | \vec w |^2 + \Sigma_{i=1}^N\alpha_i\left (1-y_i(\vec w \cdot \vec x_i+b)\right )$$<br>关于拉格朗日乘子法，这里多说两句，因为考场上开始怀疑拉格朗日函数极值问题和主问题极值问题的等价性了（微积分都还给了老师，惭愧惭愧！）。拉格朗日函数对\(\alpha\)的偏导为0可以得到约束条件，这一部分的等价性不难发现。而拉格朗日函数对\(\vec w\)和\(b\)的偏导为0，则意味着主函数和约束条件对某个变量的偏导数方向共线。如果不共线，总能通过调整某个变量使主函数变得更大（针对max优化）或者更小（针对min优化）。<br>这里按照传统的条件极值的解法，应该分别对\(\vec w\)、\(b\)和\(\alpha\)求偏导为0然后解联立方程组。但这样的话数学上就没什么大事了，剩下的就是暴力解方程组，可能很困难。SVM使用了SMO的trick，这里只对\(\vec w\)和\(b\)求偏导为0，\(\alpha\)用SMO迭代解决。这还是我在考场上琢磨出来的。但我还是出了错，只求了\(\vec w\)的偏导，忘了还有\(b\)这样一个参数，于是半天没有推出来，卒。<br>对\(w\)求偏导得：<br>$$\vec w=\Sigma_{i=1}^N\alpha_i y_i \vec x_i$$<br>对\(b\)求偏导得：<br>$$0=\Sigma_{i=1}^N\alpha_i y_i$$<br>这两个式子代入到拉格朗日函数中消去\(\vec w\)和\(b\)。\(w\)直接代入消去即可，\(b\)则用到了\(0=\Sigma_{i=1}^N\alpha_i y_i\)。这就得到了最开始给出的对偶问题公式。<br>这么一推，虽然得到了优化出\(\alpha\)后，\(\vec w\)应该怎么求的线索，但其实没什么卵用，因为通过核函数已经隐式地把\(\vec x\)映射到特征空间得到\(\phi(\vec x)\)了，而\(\phi(\vec x)\)形式未知。这个公式其实也不难，但在考场上进一步推出来超出了我的能力……<br>通过特征空间映射，决策函数的形式从\(f(x)=\vec w \cdot \vec x+b\)变成了：<br>$$<br>f(\vec x)=\vec w \cdot \phi(\vec x)+b<br>$$<br>将\(\vec w=\Sigma_{i=1}^N\alpha_i y_i \phi(\vec x_i)\)代入：<br>$$<br>f(\vec x)=\Sigma_{i=1}^N\alpha_i y_i \phi(\vec x_i)\cdot \phi(\vec x)+b<br>$$<br>按照核函数的定义：<br>$$<br>f(\vec x)=\Sigma_{i=1}^N\alpha_i y_i K(\vec x_i, \vec x)+b<br>$$<br>这样决策函数中就不显含特征映射函数\(\phi(\vec x)\)了，(0,1)的分类可以由\(\alpha\)和\(b\)给出。在这个只有三个样本的例子中，可以利用二次函数极值求出\(\alpha\)，但偏移量\(b\)我肯定是不知道怎么求的。首先，由KKT条件知，若\(\alpha_i \geq 0 \)，则必有\(y_i f(\vec x_i) - 1 = 0\)，即\(x_i\)为支持向量。依据这个判据可以找到所有的支持向量，然后根据这些支持向量\(\vec x_s \)都满足：<br>$$<br>(\Sigma_{i=1}^N\alpha_i y_i K(\vec x_i, \vec x_s)+b)y_i=1<br>$$<br>把不等式变成等式，求出这些支持向量的\(b\)。最后对这些\(b\)取平均作为最终的\(b\)。</p>
-<p><strong>这是一篇伪装成技术博文的纯吐槽，对自己的吐槽。即便“亡羊补牢”了一把，我依然一点都不懂SVM。</strong></p>
-<hr>
-<h3 id="BTW"><a href="#BTW" class="headerlink" title="BTW"></a>BTW</h3><p>为了写这篇blog，还折腾了一下hexo的\(\LaTeX\)写法。Google了一下发现了一个Github项目<a href="https://github.com/hexojs/hexo-math" target="_blank" rel="noopener">hexo-math</a>，看起来好像挺对口，用起来真是难用，比如默认设置的<code>mathjax</code>的js链接已经失效，要自己custom一个，这么简单的事，issue提了半年没人管，感觉是年久失修。索性自己直接编辑了Hacker模板在header中引入了<code>mathjax</code>的js然后渲染。效果还可以，需要注意的两个坑是：</p>
-<ul>
-<li>直接用<code>$E=mc^2$</code>并不能获得行内公式环境，要用奇怪的括号括起来，如<code>\\(E=mc^2\\)</code>，在数学环境外需要用两个反斜杠，环境内一个即可。</li>
-<li>下划线貌似会和Markdown的语法冲突，所以也要用反斜杠转义</li>
-</ul>
-
+        <p>今天人工智能课考试，果不其然跪在了支持向量机上。<br>题也不难，但我真的是啥都不会。<br>究其原因，其一我是从神经网络开始听说机器学习的，所以就戴上了鄙视SVM的有色眼镜，一直不情愿去学；其二学起来确实也感觉有点费劲，不像线性回归、随机森林这些模型简单直观；其三课上讲支持向量机一节我因为一些个人原因大部没听；其四因为后来还算自己补了一些支持向量机的知识，自我感觉很良好没有认真复习，只是考前随便看了看，结果随便一看看得心里拔凉，但也没时间继续复习了。<br>找了这么多理由，没有怒跪一波管用。花点时间亡羊补牢吧。</p>
       
     </div>
 
@@ -151,14 +184,6 @@
     <div class="entry">
       
         <p>因为课程项目的原因，需要配置若干个LightSail实例环境。一种比较方便的方式是在启动实例时执行一段脚本。操作系统为Ubuntu。<br>环境需求有以下几个：建立ubuntu之外的账户；除了公钥之外，可以使用密码SSH登录；可以进行免密码sudo。三个Linux经典操作。</p>
-<h3 id="建立新账户"><a href="#建立新账户" class="headerlink" title="建立新账户"></a>建立新账户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Add user. -m create home. -s set shell</span></span><br><span class="line">sudo useradd newuser -m -s /bin/bash</span><br></pre></td></tr></table></figure>
-<p>其中newuser为用户名，<code>-m</code>选项创建<code>/home</code>下的<code>newuser</code>文件夹，<code>-s</code>指定登录Shell。<br>下面为新账户设定密码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set password</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'newuser:123456'</span> | sudo chpasswd</span><br></pre></td></tr></table></figure></p>
-<p>一般设置密码的方式是<code>passwd</code>命令，然而这种方式必须是交互式的，不适用于脚本中。使用<code>chpasswd</code>可以将账户密码以标准输入的形式输入，格式为“账户:密码”。其缺点是需要在命令里显式写下密码，如果想要保密可以将密码先存在文件里，然后<code>cat</code>到<code>chpasswd</code>的标准输入中。在实例启动阶段，就<code>echo</code>好了。</p>
-<h3 id="允许SSH密码登录"><a href="#允许SSH密码登录" class="headerlink" title="允许SSH密码登录"></a>允许SSH密码登录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable password authentication for ssh</span></span><br><span class="line">sudo sed -i <span class="string">'52c PasswordAuthentication yes'</span> /etc/ssh/sshd_config</span><br><span class="line">sudo service sshd restart</span><br></pre></td></tr></table></figure>
-<p>本质是编辑<code>/etc/ssh/sshd_config</code>文件，这里简便起见用<code>sed</code>命令写死。<code>-i</code>指in place，否则sed会把结果print出来，<code>52</code>是行号，<code>c</code>表示替换。随后重启SSHD服务。</p>
-<h3 id="允许新账户免密sudo"><a href="#允许新账户免密sudo" class="headerlink" title="允许新账户免密sudo"></a>允许新账户免密sudo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># password less sudo for bigdata</span></span><br><span class="line">sudo sed -i <span class="string">'20a newuser    ALL=(ALL:ALL) NOPASSWD:ALL'</span> /etc/sudoers</span><br></pre></td></tr></table></figure>
-<p>sudo权限设置文件位于<code>/etc/sudoers</code>，这里也是用<code>sed</code>写死，<code>a</code>表示添加。</p>
-
       
     </div>
 
@@ -183,13 +208,13 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/01/05/AWS-ec2配置IPv6地址+ss实现校园网免流量费上网/"><span>AWS-EC2配置IPv6地址+ss实现校园网免流量费上网</span></a></h3>
+    <h3 class="article-title"><a href="/2018/01/05/ec2_ipv6_ss/"><span>AWS-EC2配置IPv6地址+ss实现校园网免流量费上网</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/01/05/AWS-ec2配置IPv6地址+ss实现校园网免流量费上网/" rel="bookmark">
+      <a href="/2018/01/05/ec2_ipv6_ss/" rel="bookmark">
         <time class="entry-date published" datetime="2018-01-05T14:02:58.000Z">
           2018-01-05
         </time>
@@ -204,26 +229,6 @@
     <div class="entry">
       
         <p>我日常使用的校园网每月除去免费流量外流量计费为2元/GB。当然这个规定只针对IPv4，“教学科研”用的IPv6是不受限制的。今天折腾AWS的时候突然想到可以用IPv6服务器做代理实现免流量上网，如果使用得当每月可以省下二三十元的流量费，基本刚好把租服务器的钱赚了回来，等于白用一个V#P:N。配置的过程中踩了一些坑，记录如下。</p>
-<p>首先租服务器的时候要给服务器分配IPv6地址。EC2虽然支持IPv6但是默认是没有这个功能的。</p>
-<ol>
-<li>配置VPC，添加IPv6的CIDR，相应地配置Subnet的CIDR和Route Table与Gateway的关联。</li>
-<li>启动实例，用了简单的Ubuntu。然后配置VPC和subnet。如果VPC配置正常，会出现自动分配IPv6地址的选项。这里自动即可。</li>
-<li>配置安全组，简单粗暴地Port Range 0-65535，然后Source上除了配置IPv4的0.0.0.0/0外，还需要配置IPv6的::/0。</li>
-<li>完成</li>
-</ol>
-<p>现在手里就有一个外网可访问IPv6地址的云服务器了，下一步是在服务器上装ss并启动服务。ss默认是支持IPv6的，但是启动ss并没有想象中那么容易。</p>
-<p>首先，装Python3-pip的时候，提示<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E: Unable to locate package python3-pip</span><br></pre></td></tr></table></figure></p>
-<p>这是因为没有更新包列表，执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure></p>
-<p>解决。</p>
-<p>但是在update时，卡在了连接security.ubuntu.com上，Google之后参考<a href="https://askubuntu.com/questions/620317/apt-get-update-stuck-connecting-to-security-ubuntu-com" target="_blank" rel="noopener">这个回答</a>得到了解决。apt默认会尽可能使用IPv6进行更新，但是security.ubuntu.com好像不吃这套，于是需要手动调高IPv4的优先级。解决办法：</p>
-<ol>
-<li>打开<code>/etc/gai.conf</code></li>
-<li>取消<code># precedence ::ffff:0:0/96 100</code>的注释</li>
-<li>接着执行<code>sudo apt update</code>，顺利完成</li>
-</ol>
-<p>接下来就是安装pip和ss了，然后<code>ssserver</code>启动即可，地址需要根据IPv6的要求设置为<code>::</code>。</p>
-<p>配好ss后试了一下，确实可以不用流量上网了，但由于服务器是在境外，上国内的网站比较慢，不是很6。好在平时上境外网站很多，应该也是能省下不少流量的。实在不行就自己配置一下PAC或者代理服务器，手动避开一些有些大流量的场景。</p>
-
       
     </div>
 
