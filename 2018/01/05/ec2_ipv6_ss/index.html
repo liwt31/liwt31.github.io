@@ -117,6 +117,7 @@
 </ol>
 <p>接下来就是安装pip和ss了，然后<code>ssserver</code>启动即可，地址需要根据IPv6的要求设置为<code>::</code>。</p>
 <p>配好ss后试了一下，确实可以不用流量上网了，但由于服务器是在境外，上国内的网站比较慢，不是很6。好在平时上境外网站很多，应该也是能省下不少流量的。实在不行就自己配置一下PAC或者代理服务器，手动避开一些有些大流量的场景。</p>
+<h2 id="2018年5月4日后记"><a href="#2018年5月4日后记" class="headerlink" title="2018年5月4日后记"></a>2018年5月4日后记</h2><p>近期国内网络“升级”，连接境外IPv6站点速度普遍降低。如果只登陆文字网站如GitHub等尚可，遇到要加载图片乃至视频的情形便有很高延迟。见<a href="https://www.zhihu.com/question/54281642/answer/348855265" target="_blank" rel="noopener">清华ipv6网络是不是对国外限速了？ - 知乎</a>。<br>为了提高网速，可以采用<a href="https://github.com/xtaci/kcptun" target="_blank" rel="noopener">kcptun</a>。其原理是在TCP连接的两个主机之间建立多个UDP连接，并在应用层实现可靠传输。实测确实可以将网速提高到可用水平。</p>
 
       
     </div>
