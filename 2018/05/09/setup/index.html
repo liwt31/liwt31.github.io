@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>自用Linux环境的常用配置 | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
+
+  
+  <meta name="author" content="Weitang Li">
+  
+
+  
+  <meta name="description" content="Weitang Li&#39;s blog">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="自用Linux环境的常用配置"/>
+
+  <meta property="og:site_name" content="Weitang Li&#39;s blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Weitang Li&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Weitang Li&#39;s blog</a>
+    </h1>
+    <p class="site-description">We&#39;ve havered enough. Let&#39;s get tae work!</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>自用Linux环境的常用配置</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/05/09/setup/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-05-09T06:19:26.000Z">
+          2018-05-09
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。<br>目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。</p>
+<a id="more"></a> 
+<h3 id="配置软件包管理器的源"><a href="#配置软件包管理器的源" class="headerlink" title="配置软件包管理器的源"></a>配置软件包管理器的源</h3><p>软件包管理器，如Ubuntu中的<code>apt</code>，一般是从cdn中拿数据来更新、下载软件的。由于本人配置的Linux系统绝大多数位于清华大学校园内，因此可以用清华大学的mirror来加速更新、下载。<strong>感谢<a href="https://tuna.moe/" target="_blank" rel="noopener">清华大学TUNA协会</a>为提升广大老师同学生活幸福度所做出的努力。</strong>常用mirror的配置方法：<a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="noopener">ubuntu</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn/help/centos/" target="_blank" rel="noopener">centos</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/" target="_blank" rel="noopener">Anaconda</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/" target="_blank" rel="noopener">pypi</a>。说真的，一年前的我要知道还有这种好事，估计能省下来100个小时的时间。当然话说回来，没有当年的折腾也没有今天的我。</p>
+<h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><p>可以认为zsh是一个代替Bash的shell，<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>是其配置文件。配置步骤:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装zsh，以Ubuntu为例</span></span><br><span class="line">apt install zsh</span><br><span class="line"><span class="comment"># 设置zsh为默认shell</span></span><br><span class="line">chsh -s $(<span class="built_in">which</span> zsh)</span><br><span class="line"><span class="comment"># 安装oh-my-zsh</span></span><br><span class="line">sh -c <span class="string">"<span class="variable">$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="配置vim"><a href="#配置vim" class="headerlink" title="配置vim"></a>配置vim</h3><p>配置vim用的是<a href="https://github.com/amix/vimrc" target="_blank" rel="noopener">这个repo</a>，需要先安装git。这个repo里要求vim版本比较高，有时需要从头编译。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime</span><br><span class="line">sh ~/.vim_runtime/install_awesome_vimrc.sh</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Weitang Li
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112074287-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
