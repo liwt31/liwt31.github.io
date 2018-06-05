@@ -74,13 +74,64 @@
 
   
     
-    <h3 class="article-title"><a href="/2018/05/09/setup/"><span>自用Linux环境的常用配置</span></a></h3>
+    <h3 class="article-title"><a href="/2018/06/05/evaluate_teacher/"><span>轻松评教</span></a></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2018/05/09/setup/" rel="bookmark">
+      <a href="/2018/06/05/evaluate_teacher/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-06-05T13:01:23.000Z">
+          2018-06-05
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>自本科起每个学期都必须要评教。所谓评教就是在网上给所有这学期的老师助教打分，评了教才能选下学期的课。</p>
+<p>由于每个老师都有七八项指标要打分，有时一门课又有多个老师，实际做起来还是挺麻烦的。</p>
+<p>也知道校内有人做了Chrome插件来自动评教，还能分数随机波动之类的，但是装一个一年用两次的插件成本也不低。</p>
+<p>最近把JS方面的知识了解了一下，这次评教就发现自动评教非常简单，只要在控制台简单一行：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'select option[value="7"]'</span>).attr(<span class="string">'selected'</span>, <span class="string">'selected'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>虽然简陋了一点，感觉比装个插件用起来舒服。计算机真不愧是生活实用技能啊…..</p>
+<p>唯一可惜的就是，我今后评教的机会不多了……</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2018/05/09/linux_env/"><span>自用Linux环境的常用配置</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/05/09/linux_env/" rel="bookmark">
         <time class="entry-date published" datetime="2018-05-09T06:19:26.000Z">
           2018-05-09
         </time>
@@ -382,7 +433,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>之前在研究<a href="https://en.wikipedia.org/wiki/Matrix_product_state" target="_blank" rel="noopener">矩阵乘积态</a>的时候，遇到了大量繁琐的矩阵（其实是张量）点积，看得头晕脑胀不得要领。<a href="http://arxiv.org/abs/1008.3477v2" target="_blank" rel="noopener">The density-matrix renormalization group in the age of matrix product states</a>介绍了一种用图像表示这种点积的方法，初看好似鬼画符，看懂之后却显得非常简洁明了。如下图，即表示了一个六阶张量。</p>
+        <p>之前在研究<a href="https://en.wikipedia.org/wiki/Matrix_product_state" target="_blank" rel="noopener">矩阵乘积态</a>的时候，遇到了大量繁琐的矩阵（其实是张量）点积，看得头晕脑胀不得要领。<a href="http://arxiv.org/abs/1008.3477v2" target="_blank" rel="noopener">The density-matrix renormalization group in the age of matrix product states</a>介绍了一种用图像（diagram）表示这种点积的方法，初看好似鬼画符，看懂之后却显得非常简洁明了。如下图，即表示了一个六阶张量。</p>
 <p><img src="/images/demo.png" alt=""><br>
       
     </div>
