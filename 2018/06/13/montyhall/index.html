@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>一个思考Monty Hall问题的直观角度 | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
+
+  
+  <meta name="author" content="Weitang Li">
+  
+
+  
+  <meta name="description" content="Weitang Li&#39;s blog">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="一个思考Monty Hall问题的直观角度"/>
+
+  <meta property="og:site_name" content="Weitang Li&#39;s blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Weitang Li&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Weitang Li&#39;s blog</a>
+    </h1>
+    <p class="site-description">We&#39;ve havered enough. Let&#39;s get tae work!</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>一个思考Monty Hall问题的直观角度</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/06/13/montyhall/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-06-13T00:45:46.000Z">
+          2018-06-13
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p><a href="https://en.wikipedia.org/wiki/Monty_Hall_problem" target="_blank" rel="noopener">Monty Hall</a>是概率论与数理统计中很经典的例子，非常容易迷惑没有学过条件概率/对该问题警戒心不强的人。如果对条件概率有一定了解，也的确理解了Monty Hall，那么这个问题就不过是课后作业水平了，其实没什么好讨论的。</p>
+<p>不过据说爱因斯坦说过一句话：</p>
+<blockquote>
+<p>If you can’t explain it to a six year old, you don’t understand it yourself.<br>（如果你不能把一个道理向六岁小孩解释清楚，你就没有真正理解它）</p>
+</blockquote>
+<p>我相信概率论的内容（特别是和量子力学比较）应该是符合人的直觉的，所以我这几天睡觉之前总是思考Monty Hall，想给出一个直观的、没有学过概率论的人也能接受的解释。昨天我终于有所得，想到了一个和Monty Hall类似的问题，而大多数人面对这个问题应该会做出正确的选择——</p>
+<a id="more"></a> 
+<blockquote>
+<p>假设你和你的一个朋友玩扑克，规则是你们两个人各随机抽取一张牌，最后谁的点大谁获胜。不妨规定大王&gt;小王&gt;其它。</p>
+</blockquote>
+<p>显然，大家都会认为这是一个无聊的游戏，因为没有任何策略可言，你和你的朋友获胜概率都是\(\frac{1}{2}\)。</p>
+<blockquote>
+<p>现在我想加入你们的游戏，于是我们对规则做一点改动，在抽牌时，由你先随机抽一张，<strong>然后我来检查牌堆，并把牌堆里点数最大的那一张留下，其余的收走</strong>。</p>
+<p>这时，本来应该轮到你的朋友抽牌了，也就是抽仅剩的一张，然后你们二人比较大小，点大者胜。</p>
+<p>可是我跟你的关系很好，于是你可以选择，保留你手里的那张你一开始抽的牌，或者与剩下的那张牌进行交换。</p>
+<p>你会选择怎样的策略？</p>
+</blockquote>
+<p>这时我想所有人都会自然地选择交换，这么做的胜率是\(\frac{53}{54}\approx98\%\)。除非你一开始抽到了大王，否则牌堆里剩下的总是大王，交换则必胜。而一开始抽到大王的概率是很低的。</p>
+<p>我构造这个例子用了两个trick：</p>
+<ol>
+<li>增大了Monty Hall问题中总的选择的数量（从3到54），将交换与不交换两种策略的胜率从直观上差别并不很大的\(\frac{2}{3}\)和\(\frac{1}{3}\)放大到悬殊的\(\frac{53}{54}\)和\(\frac{1}{54}\)； </li>
+<li>加强了主持人“信息输入”的作用，将“开一扇后面是山羊的门”加强到“排除其他所有错误答案”。</li>
+</ol>
+<p>尽管做了这两个加强，问题的本质都还是条件概率。这个例子不失为思考Monty Hall问题的一个直观角度。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Weitang Li
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112074287-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
