@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>《Web前后端漏洞分析与防御》总结 | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
+
+  
+  <meta name="author" content="Weitang Li">
+  
+
+  
+  <meta name="description" content="Weitang Li&#39;s blog">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="《Web前后端漏洞分析与防御》总结"/>
+
+  <meta property="og:site_name" content="Weitang Li&#39;s blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Weitang Li&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Weitang Li&#39;s blog</a>
+    </h1>
+    <p class="site-description">We&#39;ve havered enough. Let&#39;s get tae work!</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>《Web前后端漏洞分析与防御》总结</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/06/20/websafety/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-06-20T09:48:31.000Z">
+          2018-06-20
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>《Web前后端漏洞分析与防御》是慕课网的一门网课，时长约11小时，原名叫做《腾讯大牛教你web前后端漏洞分析与防御》。尽管原名很山寨，这门课的质量还是不错的，主要讲解了XSS、CSRF、点击劫持、中间人攻击、密码安全、SQL注入和文件上传漏洞几个方面。最近我在自己尝试一个小项目，对web安全有些困惑，就看了看这门课程，原来东一榔头西一棒子的认识系统了很多，对自己的小项目避开了大部分雷区也觉得很自豪。</p>
+<a id="more"></a> 
+<h2 id="这门课的目录"><a href="#这门课的目录" class="headerlink" title="这门课的目录"></a>这门课的目录</h2><p>可能是这门课留下的所有文字资料，不过也足够了。</p>
+<h3 id="1-课程介绍"><a href="#1-课程介绍" class="headerlink" title="1. 课程介绍"></a>1. 课程介绍</h3><p>  介绍安全问题在web开发中的重要性，并对课程整体进行介绍</p>
+<ol>
+<li>Web安全课程介绍</li>
+<li>项目总览</li>
+</ol>
+<h3 id="2-环境搭建"><a href="#2-环境搭建" class="headerlink" title="2. 环境搭建"></a>2. 环境搭建</h3><p>  本章节我们会搭建项目所需要的环境</p>
+<ol>
+<li>环境搭建上</li>
+<li>环境搭建下</li>
+</ol>
+<h3 id="3-前端XSS"><a href="#3-前端XSS" class="headerlink" title="3. 前端XSS"></a>3. 前端XSS</h3><p>  系统介绍XSS攻击的原理、危害，以真实案例讲解XSS带来过的损失，最后以实战代码讲解如何防御XSS攻击</p>
+<ol>
+<li>XSS介绍</li>
+<li>XSS攻击类型</li>
+<li>HTML内容和属性转义</li>
+<li>JS转义</li>
+<li>富文本 上</li>
+<li>富文本 下</li>
+<li>CSP</li>
+<li>PHP-XSS</li>
+</ol>
+<h3 id="4-前端CSRF"><a href="#4-前端CSRF" class="headerlink" title="4. 前端CSRF"></a>4. 前端CSRF</h3><p>  系统介绍CSRF攻击的原理、危害，以真实案例讲解CSRF带来过的损失，最后以实战代码讲解如何防御CSRF攻击</p>
+<ol>
+<li>CSRF攻击简介和演示</li>
+<li>CSRF攻击原理和危害</li>
+<li>CSRF防御-samesite</li>
+<li>CSRF防御-验证码</li>
+<li>CSRF防御-token</li>
+<li>CSRF防御-referer</li>
+<li>PHP-CSRF</li>
+</ol>
+<h3 id="5-前端Cookies问题"><a href="#5-前端Cookies问题" class="headerlink" title="5. 前端Cookies问题"></a>5. 前端Cookies问题</h3><p>  介绍Cookies的作用和特性，以及在web开发过程中Cookies的最佳实践，讲解常见的与Cookies相关的安全问题，并以实战代码讲解如何防止安全问题的发生</p>
+<ol>
+<li>Cookies特性</li>
+<li>Cookies作用</li>
+<li>Cookies和XSS CSRF的关系与案例</li>
+<li>Cookies安全策略</li>
+</ol>
+<h3 id="6-前端点击劫持问题"><a href="#6-前端点击劫持问题" class="headerlink" title="6. 前端点击劫持问题"></a>6. 前端点击劫持问题</h3><p>  介绍点击劫持的原理和危害，以真实案例讲解点击劫持带来过的损失，最后以实战代码讲解如何防御点击劫持</p>
+<ol>
+<li>点击劫持演示</li>
+<li>点击劫持防御</li>
+<li>PHP-点击劫持</li>
+</ol>
+<h3 id="7-传输安全"><a href="#7-传输安全" class="headerlink" title="7. 传输安全"></a>7. 传输安全</h3><p>  系统介绍web中使用的HTTP协议的安全问题和危害，以真实案例讲解可能带来的损失。系统讲解HTTPS的原理和实战，以及常见的数据加密方案</p>
+<ol>
+<li>HTTP窃听</li>
+<li>HTTPS原理</li>
+<li>HTTPS部署</li>
+<li>真实服务器申请部署HTTPS</li>
+<li>小结</li>
+</ol>
+<h3 id="8-密码安全"><a href="#8-密码安全" class="headerlink" title="8. 密码安全"></a>8. 密码安全</h3><p>  系统介绍web开发中鉴权相关的知识和密码的存储、验证设计。以真实案例讲解密码设计不当导致过的安全问题。最后以实战代码讲解如何设计安全的密码存储系统</p>
+<ol>
+<li>密码的作用</li>
+<li>密码的存储</li>
+<li>密码不安全的案例</li>
+<li>密码加固</li>
+<li>密码传输安全</li>
+<li>生物密码</li>
+<li>PHP-密码加固</li>
+</ol>
+<h3 id="9-接入层注入问题"><a href="#9-接入层注入问题" class="headerlink" title="9. 接入层注入问题"></a>9. 接入层注入问题</h3><p>  讲解接入层开发中需要考虑的SQL注入原理和危害，以及防御办法。以真实案例讲解SQL注入带来的损失，以实战代码讲解SQL注入的防御方法</p>
+<ol>
+<li>关系型数据库和SQL介绍</li>
+<li>SQL注入前置知识</li>
+<li>SQL注入演示和危害</li>
+<li>SQL注入案例</li>
+<li>SQL注入防御上</li>
+<li>SQL注入防御下</li>
+<li>NoSQL注入和防御</li>
+<li>PHP-SQL注入</li>
+</ol>
+<h3 id="10-接入层上传问题"><a href="#10-接入层上传问题" class="headerlink" title="10. 接入层上传问题"></a>10. 接入层上传问题</h3><p>  讲解接入层开发中需要考虑的文件上传的安全问题，介绍原理和危害，以真实安全讲解其带来的损失。介绍防御的原则，并以实战代码讲解如何避免上传出现安全问题</p>
+<ol>
+<li>上传漏洞简介</li>
+<li>上传漏洞演示</li>
+<li>上传漏洞案例</li>
+<li>上传漏洞防御</li>
+<li>PHP-文件上传</li>
+</ol>
+<h3 id="11-社会工程学和信息泄露"><a href="#11-社会工程学和信息泄露" class="headerlink" title="11. 社会工程学和信息泄露"></a>11. 社会工程学和信息泄露</h3><p>  讲解社会工程学的原理、危害和真实案例带来的损失。讲解OAuth的授权思维，并围绕这个授权思维设计系统的读写规则防止信息大范围泄露</p>
+<ol>
+<li>信息泄露和社会工程学</li>
+<li>社会工程学案例</li>
+<li>OAuth思想介绍</li>
+<li>利用OAuth思想保护用户资料</li>
+</ol>
+<h3 id="12-其他安全问题"><a href="#12-其他安全问题" class="headerlink" title="12. 其他安全问题"></a>12. 其他安全问题</h3><p>  讲解一些其它的安全问题，以实战代码讲解如何进行预防和防御</p>
+<ol>
+<li>DOS攻击</li>
+<li>重放攻击</li>
+</ol>
+<h3 id="13-课程总结"><a href="#13-课程总结" class="headerlink" title="13. 课程总结"></a>13. 课程总结</h3><p>  总结课程的知识点，回顾安全web开发的关键关注点</p>
+<ol>
+<li>面试</li>
+<li>课程总结</li>
+</ol>
+<h2 id="我的感想"><a href="#我的感想" class="headerlink" title="我的感想"></a>我的感想</h2><p>几条对各种攻击的理解和认为的最佳应对，我的小项目怎么做的，以及其它两条感想。</p>
+<h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>全名Cross-site Scripting。XSS的本质是使正常用户浏览的网页包含攻击者的恶意脚本，这些脚本可以让用户登录时就直接把明文用户密码发给攻击者，也登陆后获取Cookie，等等。<br>要实现这个目标，攻击者要假装用户，进行恶意的且会被后台渲染到公共可见的前端的输入，这样用户在浏览时就会遇到攻击者的脚本并执行。举个例子的话，我在某网站评论一段<code>&lt;sciprt src=&#39;malJS.js&#39;&gt;&lt;/sciprt&gt;</code>，如果这个网站的防御没有做好，用户在看到我的评论时就会执行<code>malJS.js</code>脚本。<br>大多数情况下XSS解决起来其实很简单，只需要将各种可能引起XSS的字符比如<code>&lt;</code>进行转义即可，此外很多场景下的一个简单方案是把用户输入放到<code>span</code>标签内。只有在富文本的场景下，XSS会显得比较棘手，这时可以利用白名单机制，在用户输入中仅允许特定的HTML标签，对其它的进行转义或者过滤。</p>
+<h3 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h3><p>全名Cross-site Request Forgery。CSRF的本质是使正常用户在不知情的情况下在访问A网站时提交B网站的表单或请求。攻击者只需要在A网站添加相应的脚本然后引导B网站的用户访问A网站即可。CSRF的威力在于如果用户登录了B网站，那么在A网站提交的表单或请求就带有B网站的Cookie（登录态），可以进行高权限的操作。<br>不难发现这个攻击能够生效的症结在于在A网站提交的表单可以带有B网站的Cookie，这个特性可以说是不合理的。Chrome浏览器的Cookie支持samesite属性，如果开启后Cookie就不能跨站使用，CSRF也就无从谈起，但是这一属性现在基本上只有Chrome支持。作为开发者要解决这个问题最好是在自己的表单中加入一个针对CSRF的Token，对每个Cookie随机生成，后端保存，前端在发送表单或请求时带上这个Token。这样CSRF攻击者虽然可以获得Cookie，但是因为无法获得这个Token，无法获取实质上的登录态。</p>
+<h3 id="点击劫持"><a href="#点击劫持" class="headerlink" title="点击劫持"></a>点击劫持</h3><p>点击劫持是通过诱导用户点击按钮或者进行输入的方式控制用户行为的一种攻击方法。点击劫持让我想起了电影《头号玩家》中的一个情节：反派Boss从VR退回现实时VR遭到了攻击，VR输出了基于现实的，主角们自定义的VR场景，使反派Boss认为自己在现实世界中处于险境，进而做出了对自己不利的行为。这种攻击方法按照本质应该算是中间人攻击，不过和点击劫持也颇为相似。<br>在HTML中实现点击劫持所依赖的根本小技巧是把目标网站做进一个不可见的<code>iframe</code>里，然后在<code>iframe</code>上层通过图片等方式引导用户点击、输入，这样用户认为自己在，比方说，抽奖，实际却在银行里转账。<br>点击劫持并不困难，在HTTP头中有<code>X-Frame-Options</code>字段，设为<code>DENY</code>即可完全禁止自己的网页被嵌入到<code>iframe</code>里，设为<code>SAMEORIGIN</code>也可以防御点击劫持攻击。</p>
+<h3 id="中间人攻击"><a href="#中间人攻击" class="headerlink" title="中间人攻击"></a>中间人攻击</h3><p>中间人攻击是攻击者在对用户与服务器中间的网络有一定控制权时通过监听或者篡改用户与服务器通讯的数据来进行攻击的方式。这个“有一定控制权”说起来好像很玄，其实只要简单接入局域网（比如和用户连同一个Wifi）就能实现“监听”。监听的主要危害是获取用户敏感信息，比如如果前端将用户的明文密码发送到后端进行用户验证，那么中间人就可以监听到这个密码并获取用户权限。而篡改则显而易见更加危险。<br>要解决中间人攻击的方法只有一个，那就是使用HTTPS对服务器身份进行验证并将用户与服务器之间的通讯进行加密。利用第三方机构进行服务器身份验证可以防止攻击者冒充服务器欺骗用户，而加密则可以避免通讯被窃听和篡改，两者结合可以对中间人攻击进行非常有效的防御。HTTPS的普及是个大趋势，现在申请HTTPS的成本已经很低了。</p>
+<h3 id="密码安全"><a href="#密码安全" class="headerlink" title="密码安全"></a>密码安全</h3><p>密码安全其实说白了就一件事，不保存明文用户密码，这个也可以说是常识了。即使加密明文用户密码，其手段也应该足够复杂，如果只是简单md5加密被泄露的加密密码也可以轻易通过彩虹表被还原至明文。还好加密总是比破解容易很多的，因此可以利用为用户的密码生成额外的前缀、后缀（盐）再加密以提高密码强度，使用多种加密技术多次加密等技术提高密码安全性。<br>另外第11章也包含了一些密码安全的方面，简单来说用户的邮箱、密码、身份证号等敏感信息应该与用户的业务数据分开保存。对于容易出漏洞的业务代码而言，由于仅可访问业务数据，一旦发生安全问题不会导致用户敏感信息的大面积泄露。而敏感信息数据库仅负责对用户身份进行验证，成功后颁发一个验证Token，业务代码凭借Token完成与用户身份有关的逻辑。这样敏感数据部分的实现、运维和风控都更加容易。</p>
+<h3 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h3><p>SQL注入利用了Web应用中经常会根据用户输入作为检索词在数据库中检索的特点。当攻击者进行特定的恶意输入而后端利用该输入检索数据库时，这部分检索词中包含的与SQL逻辑相关的部分会改变SQL检索语句本身的语义逻辑，导致不可预计的结果。SQL注入是Web安全中非常经典的问题，包含的内容非常广泛，而且学习这门课之前我也有所了解，这里我就不详细说了。<br>解决SQL注入的最佳方法是使用参数化查询的方法，即把与用户输入有关的SQL查询分为两步，第一步是告诉数据库下一步查询的结构怎样的，相当于定义了一个函数的Prototype，有哪些参数，返回什么值，这一步不涉及用户输入，是程序员在代码里写死的。第二步是告诉数据库具体的参数。这时即使攻击者使用了恶意的用户输入企图改变SQL逻辑，数据库也不会理睬，因为其逻辑已经被代码所规定了。现代SQL查询大多数使用ORM模式，ORM本身对参数化查询做了封装，所以使用ORM基本就保证了对SQL注入的安全性。</p>
+<h3 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h3><p>文件上传漏洞的原理是（没有正确配置的）服务器会把用户上传文件当做代码来执行。这里最典型的就是PHP了。服务器认为攻击者上传了一个图片文件，实际上攻击者上传了一个PHP文件，那么当攻击者想访问他上传的“图片”文件时服务器就会找到这个PHP文件并执行。这相当于攻击者对服务器拥有了控制权。<br>除了PHP或者ASP后端遇到文件上传漏洞的概率不大。解决文件上传漏洞的一个很好的方法是把用户上传的文件放到一个静态文件服务器上，使其不能被执行。</p>
+<h3 id="我的小项目"><a href="#我的小项目" class="headerlink" title="我的小项目"></a>我的小项目</h3><p>我的小项目Web方面是基于<a href="https://github.com/pallets/flask" target="_blank" rel="noopener">Flask</a>和<a href="https://github.com/zzzeek/sqlalchemy" target="_blank" rel="noopener">SQLAlchemy</a>的，利用<a href="https://github.com/lingthio/Flask-User" target="_blank" rel="noopener">Flask-User</a>管理用户。</p>
+<ul>
+<li>XSS方面，由于我的小项目渲染的用户输入不是很多，基本上都放在了<code>span</code>里，所以没有XSS的问题。</li>
+<li>CSRF也用了<a href="https://github.com/lingthio/Flask-User" target="_blank" rel="noopener">Flask-User</a>依赖的<a href="https://github.com/lepture/flask-wtf" target="_blank" rel="noopener">Flask-WTF</a>中的现成CSRF-Token。</li>
+<li>点击劫持的问题在学习这部分内容之前没有留意，了解之后用<a href="https://github.com/GoogleCloudPlatform/flask-talisman" target="_blank" rel="noopener">Flask-Talisman</a>设置了安全的HTTP头。这些HTTP头还包括限制js脚本、图片、字体等资源来源和内嵌脚本的字段，对XSS也有很强的防御作用。</li>
+<li>中间人攻击对我的小项目影响比较大，因为项目中包含用户下载由HTML渲染成的Word文档的场景。该场景中渲染是在前端完成的，而HTML由后端发送。这样如果中间人篡改了后端发送的HTML，就可以在生成的Word文档中嵌入恶意代码，对用户的损害巨大。所幸我在考虑密码安全时就采用了HTTPS的方案，消除了这一安全威胁。</li>
+<li>密码安全依赖于<a href="https://github.com/lingthio/Flask-User" target="_blank" rel="noopener">Flask-User</a>库，这个库默认对用户密码进行bcrypt加密，据说是现在state of the art的加密方式了。特点是加密速度适中且不可被GPU加速（使攻击者难以暴力猜解），还有能调整加密速度（work factor）的参数以保证随着计算机算力发展该技术不会被淘汰。</li>
+<li>SQL注入的问题由<a href="https://github.com/zzzeek/sqlalchemy" target="_blank" rel="noopener">SQLAlchemy</a>解决。</li>
+<li>文件上传漏洞不存在。不光因为是基于<a href="https://github.com/pallets/flask" target="_blank" rel="noopener">Flask</a>，更重要的是我的小项目不涉及用户上传的业务:)</li>
+</ul>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><ul>
+<li>这个课程的录制者（TooBug）在演示攻击者引导用户浏览某网站或者点击某按钮时经常会利用类似“点击这里有钱拿”这样的文本。在学习这门课之前坦率讲或许遇到这样的按钮我真的会点——保持警惕，不泄露身份，不转账，点了不会怎么样。实际上轻轻一点它就真的可能对我产生实际的损害。现在我明白了这样的按钮不能随便点，也深刻地感到了计算机网络的不安全性。另外人类这贪小便宜的弱点究竟是怎么来的呢……</li>
+<li>TooBug对现在的生物密码持谨慎态度，原因是生物密码不具备密码的两个重要特点：不可泄露、允许修改。比如指纹，我相信对于有预谋的人来说获取一个人的指纹太容易了，长相就更不用说。而且即使我知道我的指纹被泄露了，我也没法修改密码，这就非常尴尬了。所以我觉得TooBug的观点还是很有道理的。生物密码解决的痛点有两个，一是用户容易忘了密码，二是复杂的密码带来差的用户体验，但是看起来不足以和其潜在风险相提并论。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>所谓魔高一尺道高一丈，互联网在诞生之初设计上存在缺陷，但总的来说通过前后端、浏览器、第三方的合力攻击者想捞点油水也不那么容易。现在的流行框架对常见Web安全问题都有了解决方案，结合HTTPS，基本上就<strong>可以</strong>做到安全了。至于可以做到却没有做到，那就是另外一个问题了。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Weitang Li
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112074287-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
