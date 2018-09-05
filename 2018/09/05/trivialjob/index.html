@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>记一次杂活 | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
+
+  
+  <meta name="author" content="Weitang Li">
+  
+
+  
+  <meta name="description" content="Weitang Li&#39;s blog">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="记一次杂活"/>
+
+  <meta property="og:site_name" content="Weitang Li&#39;s blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Weitang Li&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Weitang Li&#39;s blog</a>
+    </h1>
+    <p class="site-description">We&#39;ve havered enough. Let&#39;s get tae work!</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>记一次杂活</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/09/05/trivialjob/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-09-05T09:23:06.000Z">
+          2018-09-05
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>昨天接了这样一个活：有500篇文献的记录，将它们导入Web of Science然后生成bib文件，然后交给图书馆查他引。本来带头的老师计划把任务平均分给包括我在内的三个人人工去做，我自己试了试写了个脚本用Selenium自动化地完成了大部分。Selenium自动化测试如果开着浏览器窗口还是很cool的，所以我有点小得意，想po一下代码。但代码其实也没什么可po的，都是很简单的业务代码而已，倒是在这个过程中我有些体会，好像还蛮有意思。</p>
+<a id="more"></a> 
+<h2 id="计算机技术适用于数据密集、结构化或者非结构化的场景"><a href="#计算机技术适用于数据密集、结构化或者非结构化的场景" class="headerlink" title="计算机技术适用于数据密集、结构化或者非结构化的场景"></a>计算机技术适用于数据密集、结构化或者非结构化的场景</h2><p>如果不考虑半结构化的话，结构化或者非结构化，不是已经包含了所有情况了吗？原则上是这样没错，但这一次文献整理的经历让我想引入一个概念：<strong>“反结构化”数据</strong>。我不知道这个概念有没有人提过，但我觉得用在我这里非常合适，它可以说是非结构化数据的一个特例。现在有非常多的处理非结构化数据的方式，但他们的本质基本上都是将非结构化数据在一定程度上结构化，而“反结构化”数据，乃指的是因为各种因素非常难以被结构化的非结构化数据。<br>就拿这次文献整理的例子来说，如果有一个工作表有若干列，记录了文献的标题、作者、期刊、卷期等栏目，则可以说是结构化数据；如果工作表只有一列，记录了这个文献的引用方式（可能有多种！）那么这就可以说是非结构化数据；如果工作表有若干列，且不同行可能列数不等，且每一列中不同行内容不同，如有的是题目有的是作者还有的是引用方式，且一些数据存在错误拼写，且因为错误拼写而存在重复的行，且总的行数不算多，大概数百，那我就更希望把它称作是“反结构化”数据。</p>
+<p>当然，反结构化数据属于非结构化数据的一种，不过我这里想和一般的非结构化数据，特别是非结构化“大”数据区别开来。当数据量很大时，即使数据的结构性再差，总也能试图去找一些模式出来，至少解决一部分问题。我们甚至可以利用数据清洗把非结构化的数据变成结构化的，这相当于人为辅助了计算机的理解。然而其前提是高的数据密度。如果数据量并不大，利用计算机进行数据清洗的单位成本就会变高，因为极限情况下就退化成了由人力不利用计算机进行数据清洗。</p>
+<p>在我们的日常生活特别是线下的生活中，“反结构化”数据大量存在，就比如我自己正在用的（纸质）笔记本，记的有学习总结、读书心得、推导过程、时间计划，字体非常差，且有大量的图形和标记，更棒的是页数不多只有一两百页左右吧。一般情况下，人们不会很喜欢反结构化数据，但是理解起来不会有太多障碍。对于计算机来说就不是这样了。我觉得三十年内，利用OCR把我的这个笔记本上的内容结构化存在电脑里是无法实现的。再比如我这次文献整理有一小部分文献记录没有成功用脚本导入Web of Science，为什么？因为它们代表了反结构化数据。我不是不能写一些判断和逻辑把这部分的记录处理了，但写这样的代码和我自己手动把他们导入进去没什么区别，可能后者还更有趣一些。</p>
+<p>能自动对各种来源未规定模式的数据进行清洗的程序我认为可以算是强人工智能了，因此短期内计算机对“反结构化”数据是无能为力的，这部分工作只能由人来做。</p>
+<h2 id="增大人产生的数据的结构化程度有助于提高效率"><a href="#增大人产生的数据的结构化程度有助于提高效率" class="headerlink" title="增大人产生的数据的结构化程度有助于提高效率"></a>增大人产生的数据的结构化程度有助于提高效率</h2><p>如果我们在生活中能够尽量保持将自己产生的数据以一种结构化的方式存储，理论上将会大大提高效率。许多所谓“效率软件/APP”其实都在做这样一件事。这里还是拿文献举一个例子。跟科研沾边的人难免都会接触下载打印大量的文献。对这些接触到的文献进行增删改查的需求催生了一系列文献管理软件。然而维护自己所产生数据的结构其实是很困难的，因为我们日常生活产生的数据本质上大多数都是非结构乃至反结构的。假如师兄给我E-mail了一篇文献，先在EndNote里面添加文献再去读显然不是人做事的方式。或者我查阅文献时瞟到了一篇看似无关的文献，几天后想再去找就再也找不到，文献管理软件表示此事与我何干。如果能解决自动将人产生的数据结构化的问题那么我们就会得到一个“用户体验非常好”的效率软件，可以拿去卖钱啦。</p>
+<p>一个更加合理的方案可能是在不同主体数据交换的接口上把数据结构化做好。人与计算机的接口能进行比较自由的改造，如果不爽也只能自己背锅，并不是主要矛盾的所在。计算机之间的接口是（聪明）人设计的，有时虽然也犯蠢但总的来说是尽力了，还算差强人意。剩下的人和人之间的接口，在很多情况下是而且应该是非结构化或者反结构化的，但是一旦出现了结构化的可能，是最需要把结构化做好的场景。</p>
+<p>实现这一点的最大障碍可以说是Excel了。简单场景下，把Excel当作csv的GUI编辑器来用，还算不错。但是Excel允许你把问题做的非常复杂和含糊，进行自动化编辑也并非是一件特别令人愉快的事。高素质的用户可以利用Excel做出非常漂亮的工作不假，但同时不能否认这个世界上绝大多数的用户都是低素质的，而你无法避免这些低素质用户利用Excel为他们或者为你策划一场灾难。所以Excel的广泛应用总的来说是有害的。这其实和C++有异曲同工之妙。当然，本人不论是Excel还是C++都是低素质用户。</p>
+<p>另一个障碍是官僚主义导致的接口需求不清，有时在终端只需要很少的一些特定的数据，经过层层转达分包就变成了令人迷惑的混乱需求，造成人力和资源的浪费。就我这次文献处理的经历来说，图书馆端需要的是可以识别的bib文件，到了各个实验室手里就成了填文章信息表格。该表格是用在最终报告里的，格式和bib的格式完全不同，且缺少许多关键的键值对。于是中间需要加一个转换层，把混乱的文章信息表格转换成bib文件，而要这么做需要补充丢失的键值对，要去论文数据库检索到这篇文章才可以。但在数据库中检索这一步其实实验室端在填文章信息表格的时候做过，所以这一步检索一共做了两次（或者更多）。</p>
+<p>所以，对于这样一个需求，我认为合适的方法有两个，第一个是在实验室端就规定好bib文件格式，由人力进行数据库查询及错误处理，然后第二步汇总后利用结构化的信息生成最终报告的表格，将bib文件提交给图书馆；第二个是在实验室端规定简单的格式（primary key），比如DOI，然后第二步汇总后进行数据库的（计算机）批量查询，对共性错误批量处理，生成bib文件及表格等。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Weitang Li
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112074287-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
