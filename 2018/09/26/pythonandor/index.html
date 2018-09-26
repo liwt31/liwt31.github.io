@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Python里的and和or | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
+
+  
+  <meta name="author" content="Weitang Li">
+  
+
+  
+  <meta name="description" content="Weitang Li&#39;s blog">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Python里的and和or"/>
+
+  <meta property="og:site_name" content="Weitang Li&#39;s blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Weitang Li&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Weitang Li&#39;s blog</a>
+    </h1>
+    <p class="site-description">We&#39;ve havered enough. Let&#39;s get tae work!</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Python里的and和or</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/09/26/pythonandor/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-09-26T09:56:27.000Z">
+          2018-09-26
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>Python里的<code>and</code>和<code>or</code>可以说是最基础的小白语法了，今天在看<code>Flask</code>源码的时候有几处关于<code>and</code>和<code>or</code>的地方却感觉看不太懂，如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_env</span><span class="params">()</span>:</span>                                                      </span><br><span class="line">   <span class="string">"""Get the environment the app is running in, indicated by the </span></span><br><span class="line"><span class="string">   :envvar:`FLASK_ENV` environment variable. The default is       </span></span><br><span class="line"><span class="string">   ``'production'``.                                              </span></span><br><span class="line"><span class="string">   """</span>                                                                             </span><br><span class="line">   <span class="keyword">return</span> os.environ.get(<span class="string">'FLASK_ENV'</span>) <span class="keyword">or</span> <span class="string">'production'</span></span><br></pre></td></tr></table></figure></p>
+<p>我觉得非常奇怪，这不是肯定返回<code>True</code>的吗？</p>
+<h3 id="发生了什么"><a href="#发生了什么" class="headerlink" title="发生了什么"></a>发生了什么</h3><p>在我脑海中，<code>os.environ.get(&#39;FLASK_ENV&#39;) or &#39;production&#39;</code>的执行逻辑应该是这样的：</p>
+<ol>
+<li><code>os.environ.get(&#39;FLASK_ENV&#39;)</code> 获得一个返回值，如<code>&#39;development&#39;</code>或<code>None</code></li>
+<li>执行隐式的类型转换<code>bool(&#39;development&#39;)</code>得到<code>True</code>或者<code>bool(None)</code>得到<code>False</code></li>
+<li>对<code>or</code>进行短路求值，如果<code>or</code>之前是<code>True</code>，直接返回<code>True</code></li>
+<li>反之则对<code>or</code>之后的值进行类型转换<code>bool(&#39;production&#39;)</code>得到<code>True</code>，并返回<code>True</code></li>
+<li>综上肯定返回True</li>
+</ol>
+<p>其实如果合理推断一下，应该能猜出来<code>return os.environ.get(&#39;FLASK_ENV&#39;) or &#39;production&#39;</code>的作用是当<code>os.environ.get(&#39;FLASK_ENV&#39;)</code>的返回值不是<code>None</code>的时候，返回其返回值，否则返回<code>&#39;production&#39;</code>，但是这个语法和我之前曾经理解的<code>and</code>和<code>or</code>完全不同。我本来觉得这是<code>return</code>里的一个特例，查了一下才发现这是Python的标准语法。</p>
+<a id="more"></a>
+<h3 id="探索and和or"><a href="#探索and和or" class="headerlink" title="探索and和or"></a>探索and和or</h3><p>在Python里尝试一些<code>and</code>和<code>or</code>的操作，有一些很有意思的结果。首先<code>True</code>和<code>False</code>的<code>and</code>和<code>or</code>操作是很平凡的：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">22</span>]: <span class="keyword">True</span> <span class="keyword">and</span> <span class="keyword">True</span></span><br><span class="line">Out[<span class="number">23</span>]: <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: <span class="keyword">True</span> <span class="keyword">and</span> <span class="keyword">False</span></span><br><span class="line">Out[<span class="number">22</span>]: <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">24</span>]: <span class="keyword">False</span> <span class="keyword">and</span> <span class="keyword">True</span></span><br><span class="line">Out[<span class="number">25</span>]: <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">25</span>]: <span class="keyword">False</span> <span class="keyword">and</span> <span class="keyword">False</span></span><br><span class="line">Out[<span class="number">24</span>]: <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">26</span>]: <span class="keyword">True</span> <span class="keyword">or</span> <span class="keyword">True</span></span><br><span class="line">Out[<span class="number">26</span>]: <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">27</span>]: <span class="keyword">True</span> <span class="keyword">or</span> <span class="keyword">False</span></span><br><span class="line">Out[<span class="number">27</span>]: <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">28</span>]: <span class="keyword">False</span> <span class="keyword">or</span> <span class="keyword">True</span></span><br><span class="line">Out[<span class="number">28</span>]: <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">29</span>]: <span class="keyword">False</span> <span class="keyword">or</span> <span class="keyword">False</span></span><br><span class="line">Out[<span class="number">29</span>]: <span class="keyword">False</span></span><br></pre></td></tr></table></figure></p>
+<p>然而如果我们不使用布尔值作为运算数（operand），结果就开始显得有点匪夷所思了：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">30</span>]: <span class="number">123</span> <span class="keyword">and</span> <span class="number">321</span></span><br><span class="line">Out[<span class="number">30</span>]: <span class="number">321</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">31</span>]: <span class="number">321</span> <span class="keyword">and</span> <span class="number">123</span></span><br><span class="line">Out[<span class="number">31</span>]: <span class="number">123</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">32</span>]: <span class="number">123</span> <span class="keyword">or</span> <span class="number">321</span></span><br><span class="line">Out[<span class="number">32</span>]: <span class="number">123</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">33</span>]: <span class="number">321</span> <span class="keyword">or</span> <span class="number">123</span></span><br><span class="line">Out[<span class="number">33</span>]: <span class="number">321</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到，至少<code>and</code>两个int最后得到其中一个int是不符合语义的。以上测试的123和321从布尔值的意义上来说都是<code>True</code>，人类还相对比较好理解一些，如果我们引入<code>False</code>，情况就会显得非常混乱。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">40</span>]: <span class="number">123</span> <span class="keyword">and</span> <span class="number">0</span></span><br><span class="line">Out[<span class="number">40</span>]: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">41</span>]: <span class="number">0</span> <span class="keyword">and</span> <span class="number">123</span></span><br><span class="line">Out[<span class="number">41</span>]: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">42</span>]: <span class="number">123</span> <span class="keyword">or</span> <span class="number">0</span></span><br><span class="line">Out[<span class="number">42</span>]: <span class="number">123</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">43</span>]: <span class="number">0</span> <span class="keyword">or</span> <span class="number">123</span></span><br><span class="line">Out[<span class="number">43</span>]: <span class="number">123</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">44</span>]: <span class="string">''</span> <span class="keyword">and</span> <span class="number">0</span></span><br><span class="line">Out[<span class="number">44</span>]: <span class="string">''</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">45</span>]: <span class="number">0</span> <span class="keyword">and</span> <span class="string">''</span></span><br><span class="line">Out[<span class="number">45</span>]: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">46</span>]: <span class="number">0</span> <span class="keyword">or</span> <span class="string">''</span></span><br><span class="line">Out[<span class="number">46</span>]: <span class="string">''</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">47</span>]: <span class="string">''</span> <span class="keyword">or</span> <span class="number">0</span></span><br><span class="line">Out[<span class="number">47</span>]: <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>这其中大部分结果都是违反人类直觉的，除了<code>123 or 0</code>和<code>0 or 123</code>之外——这也是开头我提到<code>Flask</code>源码中的用例，可以找到两个值中为<code>True</code>的部分。从这一系列实验中也可以体会出Python关于<code>and</code>和<code>or</code>的特性最别扭的一点是<code>and</code>的返回值只有一个。</p>
+<h3 id="官方文档的说法"><a href="#官方文档的说法" class="headerlink" title="官方文档的说法"></a>官方文档的说法</h3><p>以上这些测试的结果，虽然直观感受令人疑惑，但抛开语义理性分析不难发现规律，其实<a href="https://docs.python.org/3/library/stdtypes.html#boolean-operations-and-or-not" target="_blank" rel="noopener">官方文档</a>里也做了介绍:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x or y</code></td>
+<td>if <code>x</code> is false, then <code>y</code>, else <code>x</code></td>
+</tr>
+<tr>
+<td><code>x and y</code></td>
+<td>if <code>x</code> is false, then <code>x</code>, else <code>y</code></td>
+</tr>
+</tbody>
+</table>
+<p>简单来说，就是短路求值+<strong><code>and</code>和<code>or</code>返回其中一个运算数而不是布尔值</strong>。</p>
+<p>了解了这一点之后，我们可以利用把运算数和结果都看成一个布尔值的方式来理解这些运算的结果了，如<code>&#39;&#39; and 123</code>得到<code>&#39;&#39;</code>即<code>False and True</code>得到<code>False</code>，而<code>&#39;&#39; or 123</code>得到<code>123</code>即<code>False or True</code>得到<code>True</code>。</p>
+<h3 id="我觉得"><a href="#我觉得" class="headerlink" title="我觉得"></a>我觉得</h3><p>我所熟悉的语言并不多，简单测试了一下，C/C++中<code>&amp;&amp;</code>和<code>||</code>的行为是符合人的预期的。<code>123 &amp;&amp; 321</code>返回<code>1</code>，<code>123 &amp;&amp; 0</code>返回<code>0</code>。所以我到现在还是很震惊Python有这么令人难受的语法。虽然这一语法一定程度上允许用更少的代码实现更多的功能，但语义几乎只有有经验的程序员才能正确理解，是对”Explicit is better then implicit”的公然违背。可能是一开始设计语言的时候简单起见做了文档中那样的实现，后来为了后向兼容就作为一个“feature”保持下来了吧。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Weitang Li
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112074287-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
