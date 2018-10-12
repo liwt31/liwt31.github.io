@@ -74,6 +74,51 @@
 
   
     
+    <h3 class="article-title"><a href="/2018/10/12/mul-complexity/"><span>矩阵、张量乘法（numpy.tensordot）的时间复杂度分析</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/10/12/mul-complexity/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-12T07:48:25.000Z">
+          2018-10-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>两个大小都是\(N \times N\)的矩阵相乘，如果使用naive的算法，时间复杂度应该是\(\mathcal{O}(N^3)\)，如果使用一些<a href="https://en.wikipedia.org/wiki/Strassen_algorithm" target="_blank" rel="noopener">高级的算法</a>，可以使幂指数降到3以下。对于一般情况的矩阵乘法，特别是张量乘法（<code>numpy</code>中的<code>tensordot</code>函数），时间复杂度又如何呢？</p>
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2018/09/26/pythonandor/"><span>Python里的and和or</span></a></h3>
     
   
@@ -633,51 +678,6 @@
 </script>
 
 <p>Type in any of 2 variables in frequency, lambda, displacement or HR-factor, and the remaining 2 variables will be calculated automatically.<br>Click “clear values” to unlock auto-locked variables.</p>
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/03/10/energylevelplot/"><span>用matplotlib做能级图</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/03/10/energylevelplot/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-03-10T13:00:50.000Z">
-          2018-03-10
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>最近因为交作业的需要，要做一张研究分子或者原子的电子结构时非常常见的能级图（如下图，来自网络）。<br><img src="/images/level1.jpg" alt=""><br>这张图看着简单，实际做起来还真没有找到现成的工具。现在我手里有一堆能级<code>float</code>数据存在一维<code>numpy</code>数组<code>e_levels</code>里，怎样才能做出类似这样的图呢？</p>
       
     </div>
 

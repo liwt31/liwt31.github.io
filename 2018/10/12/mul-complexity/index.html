@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>矩阵、张量乘法（numpy.tensordot）的时间复杂度分析 | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
+
+  
+  <meta name="author" content="Weitang Li">
+  
+
+  
+  <meta name="description" content="Weitang Li&#39;s blog">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="矩阵、张量乘法（numpy.tensordot）的时间复杂度分析"/>
+
+  <meta property="og:site_name" content="Weitang Li&#39;s blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Weitang Li&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Weitang Li&#39;s blog</a>
+    </h1>
+    <p class="site-description">We&#39;ve havered enough. Let&#39;s get tae work!</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>矩阵、张量乘法（numpy.tensordot）的时间复杂度分析</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/10/12/mul-complexity/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-12T07:48:25.000Z">
+          2018-10-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>两个大小都是\(N \times N\)的矩阵相乘，如果使用naive的算法，时间复杂度应该是\(\mathcal{O}(N^3)\)，如果使用一些<a href="https://en.wikipedia.org/wiki/Strassen_algorithm" target="_blank" rel="noopener">高级的算法</a>，可以使幂指数降到3以下。对于一般情况的矩阵乘法，特别是张量乘法（<code>numpy</code>中的<code>tensordot</code>函数），时间复杂度又如何呢？</p>
+<a id="more"></a> 
+<h2 id="二维矩阵乘法"><a href="#二维矩阵乘法" class="headerlink" title="二维矩阵乘法"></a>二维矩阵乘法</h2><p>首先规定一下记号：\(\mathbf{A}_{MN}\)，表示一个有两个指标，大小是\(M\times N\)的矩阵\(\mathbf{A}\)。那么\(\mathbf{A}_{MN}\mathbf{B}_{NL}\)的时间复杂度是\(\mathcal{O}(MNL)\)。如果我们把乘法的过程用计算机语言表示出来，这一结论就会非常清晰：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C = np.zeros((M, L))</span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> range(M):</span><br><span class="line">    <span class="keyword">for</span> l <span class="keyword">in</span> range(L):</span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> range(N):</span><br><span class="line">            C[m][l] += A[m][n] * B[n][l]</span><br></pre></td></tr></table></figure></p>
+<p>我们也可以简单地验证一下<code>numpy.dot</code>函数是否满足这样的时间复杂度，首先变化\(M\)。为了节省篇幅，一次将其扩大到四倍：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">M = <span class="number">71</span></span><br><span class="line">N = <span class="number">513</span></span><br><span class="line">L = <span class="number">4097</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    m1 = np.random.random((M, N))</span><br><span class="line">    m2 = np.random.random((N, L))</span><br><span class="line">    %timeit m1.dot(m2)</span><br><span class="line">    M *= <span class="number">4</span></span><br></pre></td></tr></table></figure></p>
+<p>输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100 loops, best of 3: 6.82 ms per loop</span><br><span class="line">10 loops, best of 3: 22.5 ms per loop</span><br><span class="line">10 loops, best of 3: 77.5 ms per loop</span><br><span class="line">1 loop, best of 3: 304 ms per loop</span><br><span class="line">1 loop, best of 3: 1.38 s per loop</span><br></pre></td></tr></table></figure></p>
+<p>可见基本是线性的（耗时一次扩大到四倍）。然后变化\(N\)，代码和上面的一段只变了一个字母，输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100 loops, best of 3: 6.79 ms per loop</span><br><span class="line">10 loops, best of 3: 22.1 ms per loop</span><br><span class="line">10 loops, best of 3: 84.4 ms per loop</span><br><span class="line">1 loop, best of 3: 329 ms per loop</span><br><span class="line">1 loop, best of 3: 1.31 s per loop</span><br></pre></td></tr></table></figure></p>
+<p>仍然基本是线性的。最后变化\(L\)，输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100 loops, best of 3: 8.42 ms per loop</span><br><span class="line">10 loops, best of 3: 43.5 ms per loop</span><br><span class="line">10 loops, best of 3: 115 ms per loop</span><br><span class="line">1 loop, best of 3: 408 ms per loop</span><br><span class="line">1 loop, best of 3: 1.88 s per loop</span><br></pre></td></tr></table></figure></p>
+<p>耗时是三组实验中最长的。不论如何，\(\mathbf{A}_{MN}\mathbf{B}_{NL}\)的时间复杂度是\(\mathcal{O}(MNL)\)这一点应该已经得到了实验的证明。</p>
+<h2 id="高维矩阵（张量）乘法-只对一个轴求和"><a href="#高维矩阵（张量）乘法-只对一个轴求和" class="headerlink" title="高维矩阵（张量）乘法-只对一个轴求和"></a>高维矩阵（张量）乘法-只对一个轴求和</h2><p>在<code>numpy</code>中<code>dot</code>，<code>einsum</code>，<code>tensordot</code>等函数都可以做高维矩阵乘法，这里只研究最常见的<code>tensordot</code>。我们从\(\mathbf{A}_{MNL}\mathbf{B}_{LPQ}\)这样一个例子入手。从理论上分析，\(\mathbf{A}_{MNL}\mathbf{B}_{LPQ}\)的时间复杂度是\(\mathcal{O}(MNLPQ)\)，感兴趣的读者可以自己写写代码分析，或者看一看<a href="https://liwt31.github.io/2018/01/22/graphical_matrix/">我之前写的一篇博文</a>。这里简单做一下实验，变化\(M\)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">M = <span class="number">63</span></span><br><span class="line">N = <span class="number">17</span></span><br><span class="line">L = <span class="number">255</span></span><br><span class="line">P = <span class="number">127</span></span><br><span class="line">Q = <span class="number">31</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    m1 = np.random.random((M, N, L))</span><br><span class="line">    m2 = np.random.random((L, P, Q))</span><br><span class="line">    %timeit np.tensordot(m1, m2, <span class="number">1</span>)</span><br><span class="line">    M *= <span class="number">4</span></span><br></pre></td></tr></table></figure></p>
+<p>输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">10 loops, best of 3: 47.6 ms per loop</span><br><span class="line">1 loop, best of 3: 166 ms per loop</span><br><span class="line">1 loop, best of 3: 700 ms per loop</span><br><span class="line">1 loop, best of 3: 2.7 s per loop</span><br><span class="line">1 loop, best of 3: 11.5 s per loop</span><br></pre></td></tr></table></figure></p>
+<p>而变化\(L\)输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">10 loops, best of 3: 46.3 ms per loop</span><br><span class="line">10 loops, best of 3: 116 ms per loop</span><br><span class="line">1 loop, best of 3: 368 ms per loop</span><br><span class="line">1 loop, best of 3: 1.52 s per loop</span><br><span class="line">1 loop, best of 3: 6 s per loop</span><br></pre></td></tr></table></figure></p>
+<p>不难发现耗时与\(M\)和\(L\)都是线性关系，只不过后者速度比前者快。</p>
+<h2 id="高维矩阵（张量）乘法-对多个轴求和"><a href="#高维矩阵（张量）乘法-对多个轴求和" class="headerlink" title="高维矩阵（张量）乘法-对多个轴求和"></a>高维矩阵（张量）乘法-对多个轴求和</h2><p>下面我们再考虑对多个轴求和的情况，这种情况下“数学语言”已经不好给出清晰的描述了。如果想举个例子，也只能啰嗦地说：\(\mathbf{A}_{MNL}\)和\(\mathbf{B}_{NLP}\)之间进行双点积contract掉维数为\(N\)和\(L\)的两个指标。倒是计算机语言还算游刃有余：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C = np.zeros((M, P))</span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> range(M):</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> range(P):</span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> range(N):</span><br><span class="line">            <span class="keyword">for</span> l <span class="keyword">in</span> range(L):</span><br><span class="line">                C[m][p] += A[m][n][l] * B[n][l][p]</span><br></pre></td></tr></table></figure></p>
+<p>也容易据此估计出时间复杂度为\(\mathcal{O}(MNLP)\)。实验一下的话，首先试试\(M\)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">M = <span class="number">63</span></span><br><span class="line">N = <span class="number">31</span></span><br><span class="line">L = <span class="number">255</span></span><br><span class="line">P = <span class="number">127</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    m1 = np.random.random((M, N, L))</span><br><span class="line">    m2 = np.random.random((N, L, P))</span><br><span class="line">    %timeit np.tensordot(m1, m2, <span class="number">2</span>)</span><br><span class="line">    M *= <span class="number">4</span></span><br></pre></td></tr></table></figure></p>
+<p>输出为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100 loops, best of 3: 2.41 ms per loop</span><br><span class="line">100 loops, best of 3: 5.8 ms per loop</span><br><span class="line">10 loops, best of 3: 23.2 ms per loop</span><br><span class="line">10 loops, best of 3: 171 ms per loop</span><br><span class="line">1 loop, best of 3: 817 ms per loop</span><br></pre></td></tr></table></figure></p>
+<p>然后\(N\)和\(L\)分别为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100 loops, best of 3: 2.43 ms per loop</span><br><span class="line">100 loops, best of 3: 8.69 ms per loop</span><br><span class="line">10 loops, best of 3: 33.7 ms per loop</span><br><span class="line">10 loops, best of 3: 138 ms per loop</span><br><span class="line">1 loop, best of 3: 560 ms per loop</span><br></pre></td></tr></table></figure></p>
+<p>和<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">100 loops, best of 3: 2.69 ms per loop</span><br><span class="line">100 loops, best of 3: 9.01 ms per loop</span><br><span class="line">10 loops, best of 3: 36.2 ms per loop</span><br><span class="line">10 loops, best of 3: 140 ms per loop</span><br><span class="line">1 loop, best of 3: 563 ms per loop</span><br></pre></td></tr></table></figure></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>总结规律的话，要想知道矩阵、张量乘法的时间复杂度，就把两个矩阵、张量所有没contract掉的维度乘起来，再把contract掉的维度两个取一个乘起来即可。举个例子：\(\mathbf{A}_{MNL}\mathbf{B}_{LPQ}\)，没有contract掉的维度乘起来即\(NMPQ\)，contract掉的维度有两个\(L\)，只取一个，最后合起来就是\(\mathcal{O}(MNLPQ)\)。</p>
+<p>这一规律其实很好理解。<code>np.tensordot</code>在实现时实际上是对普通的<code>np.dot</code>的一个包装，进行了一些前处理和后处理。所谓前处理，基本上就是通过转置和合并（<code>np.reshape</code>）把两个参与运算的高阶张量分别变成矩阵，其中一个指标是原张量所有没contract掉的指标组成的，维度自然就是这些指标的维度的积，而另一个指标是原张量要进行contract的指标组成的，维度也是这些指标的维度的积。而后处理，就是将<code>np.dot</code>之后的结果再通过<code>np.reshape</code>变回原来的形状。所以张量乘法的时间复杂度与矩阵乘法的时间复杂度其实是一回事。</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Weitang Li
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112074287-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
