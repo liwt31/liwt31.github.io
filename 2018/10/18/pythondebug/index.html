@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>【转载】【翻译】Debugging Python Like a Boss， Python debugging终极指南 | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
+
+  
+  <meta name="author" content="Weitang Li">
+  
+
+  
+  <meta name="description" content="Weitang Li&#39;s blog">
+  
+
+  
+  
+  <meta name="keywords" content="">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="【转载】【翻译】Debugging Python Like a Boss， Python debugging终极指南"/>
+
+  <meta property="og:site_name" content="Weitang Li&#39;s blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Weitang Li&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Weitang Li&#39;s blog</a>
+    </h1>
+    <p class="site-description">We&#39;ve havered enough. Let&#39;s get tae work!</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>【转载】【翻译】Debugging Python Like a Boss， Python debugging终极指南</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/10/18/pythondebug/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-18T03:47:30.000Z">
+          2018-10-18
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>原文：<a href="https://zapier.com/engineering/debugging-python-boss/" target="_blank" rel="noopener">Debugging Python Like a Boss</a>。 作者：<a href="https://github.com/bcooksey" target="_blank" rel="noopener">Brian Cooksey</a>。</p>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_pie</span><span class="params">(self, ingredients)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'******WHAT IS GOING ON HERE******'</span></span><br><span class="line">    <span class="keyword">print</span> ingredients</span><br><span class="line">    self.oven.preheat()</span><br><span class="line">    <span class="keyword">print</span> self.oven.temperature</span><br></pre></td></tr></table></figure>
+<p>上面这段代码是不是和你屡试不爽的debug方法颇为神似？没错，我原来也经常这么干。实事求是讲，这个方法还不赖，你只需要在代码里加一些print，然后把它跑起来，就能知道发生了什么。当然啦，你常常需要在其它输出到STDOUT里的一团乱麻里滚来滚去，但你想要的就在那里——如果你知道你想要的是什么的话。问题是你经常不知道。如果你知道要检查什么东西，你很可能一开始就不需要这些print了。相反，你会在你感觉有问题的地方附近随便扔几个print，然后迭代这些print的位置使之接近有bug的代码。二分查找万岁！</p>
+<p>谢天谢地，我们还有更好的方法。自从C的第一个segfault，一系列被称作debugger的工具就随着每种语言一同出现，Python也不例外。除了自带的debugger，Python社区也开发了很多炫酷的工具，我们将在这个post剩下的内容里对最受欢迎的几个工具做出介绍。</p>
+<a id="more"></a> 
+<h2 id="pdb"><a href="#pdb" class="headerlink" title="pdb"></a>pdb</h2><p><img src="https://user-images.githubusercontent.com/22628546/47143769-8206b480-d2f8-11e8-8448-0aeefe9a962d.png" alt=""></p>
+<p>首先登场的是Python的内置debugger，pdb。pdb支持基本的命令行界面和其他debug工具必备的功能。帮助系统可以指引你使用命令，包括在代码里步进穿行、操纵调用栈或者设置断点。</p>
+<p>pdb缺少一些功能：局部变量的tab补全、各种颜色高亮以及更好的代码、堆栈布局等。</p>
+<p>不论你最终决定使用哪种debugger，你都需要了解pdb，原因有二：1）pdb在Python里总是可用的；2）许多其它的debugger是pdb的超集。所以很可能你已经了解pdb了！</p>
+<p><strong>一句话总结</strong>：坚实的默认选项， 但是如果可能还是用一些更好的吧。</p>
+<h2 id="pydbgr"><a href="#pydbgr" class="headerlink" title="pydbgr"></a>pydbgr</h2><p><img src="https://user-images.githubusercontent.com/22628546/47143772-8501a500-d2f8-11e8-857f-2978a9ccfdf9.png" alt=""></p>
+<p>下一个登场的是pydbgr。<em>译者注：经过译者检查pydbgr已经过时，本节从略</em>。</p>
+<p><strong>一句话总结</strong>：我在日常的web开发中并没觉得pydbgr为pdb增加的功能多么有用。</p>
+<h2 id="pudb"><a href="#pudb" class="headerlink" title="pudb"></a>pudb</h2><p><img src="https://user-images.githubusercontent.com/22628546/47143777-8763ff00-d2f8-11e8-8179-9595595c3a1f.png" alt=""><br>这个debugger很值得注意的一点是它在命令行内集成了一个小的gui。没错，这不是一个分离的窗口，这就是在命令行里。抛开成吨的默认颜色（可用户定制或者从一系列默认主题中选择），这是对debugger用户体验的重大突破。</p>
+<p>左侧面板显示了当前文件的代码（会随着你在堆栈中上上下下而变化）。导航系统非常出色，可以使用方向键（或者“hjkl”）、查找，还可以通过模糊搜索打开其它模块。将这个导航系统和一个执行代码至当前光标的快捷键相结合，你将会得到一个非常符合直觉的在程序中步进的友好方式。当然，pudb也提供了大量常规的断点和步进命令，使你能按自己的意愿控制程序执行。</p>
+<p>右侧面板包括了局部变量、堆栈和现有的断点。在传统的命令行debugger里，你需要输入<code>locals()</code>，<code>where</code>，或者使用tab补全来检查当前栈帧。与此相比这些面板是一个可喜的变化。</p>
+<p>pudb还有另一个小加分项是对“验尸”的支持。当你的程序因为未捕获的异常而终止时，pudb将会提示你查看这个异常并可以直接将你定位到发生异常的地方，而堆栈保持完整。</p>
+<p><strong>一句话总结</strong>：最佳的用户体验；特别适合跟踪堆栈。</p>
+<h2 id="ipdb"><a href="#ipdb" class="headerlink" title="ipdb"></a>ipdb</h2><p><img src="https://user-images.githubusercontent.com/22628546/47143783-8a5eef80-d2f8-11e8-9bcf-ad790ab2df4b.png" alt=""></p>
+<p>最后压轴的是IPython的ipdb。和它的*pdb兄弟们一样，ipdb的交互界面是一个简单的命令行，它的帮助系统也是入门的最好手段。ipdb比较特殊的一点是它使用了一个IPython的Shell，所以像tab补全或者对象检查（object introspection）这些IPython的特性功能可以开箱即用（<em>译者注：pudb也有一个Python的Shell，可以简单evaluate一些值，IPython高级特性支持有限</em>），帮助你理清代码究竟在干什么。加上上佳的语法高亮和一个输出格式优秀的where命令，ipdb是你手刃bug的完美武器。</p>
+<p><strong>一句话总结</strong>：最好用，个人最爱</p>
+<p>最后提一句，依据情况的不同，我有时会换用pudb。pudb对于在多个文件中穿梭搞清楚程序在做什么（比如当你不得不研究一个行为异常的第三方库时）是最好的工具。而我偏好ipdb的原因是因为多数情况下我在研究我非常熟悉的代码，我自己已对大图景了然于胸，更关心一个特定函数现在状态如何。他们就好像倚天剑和屠龙刀，结合起来威力无穷！</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2018 Weitang Li
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112074287-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

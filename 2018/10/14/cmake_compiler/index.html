@@ -3,7 +3,7 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>归档：2018/10 | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
+  <title>为CMake指定编译器 | Weitang Li&#39;s blog | We&#39;ve havered enough. Let&#39;s get tae work!</title>
 
   
   <meta name="author" content="Weitang Li">
@@ -14,12 +14,15 @@
   
 
   
+  
+  <meta name="keywords" content="">
+  
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  
+  <meta property="og:title" content="为CMake指定编译器"/>
 
   <meta property="og:site_name" content="Weitang Li&#39;s blog"/>
 
@@ -69,54 +72,60 @@
 </header>
 
     <main class="site-main posts-loop">
-    
+    <article>
 
-<article>
-
-  <h2 class="article-title ">2018/10</h2>
-
-  <div class="archive">
-    
-      <div class="post archive">
-        <div class="archive-post">
-          <time datetime="2018-10-18T03:47:30.000Z">
-            <a href="/2018/10/18/pythondebug/">2018-10-18</a>
-          </time>
-          
-            <h3 class="archive-title"><a href="/2018/10/18/pythondebug/"><span>【转载】【翻译】Debugging Python Like a Boss， Python debugging终极指南</span></a></h3>
-          
-        </div>
-      </div>
-    
-      <div class="post archive">
-        <div class="archive-post">
-          <time datetime="2018-10-14T09:10:14.000Z">
-            <a href="/2018/10/14/cmake_compiler/">2018-10-14</a>
-          </time>
-          
-            <h3 class="archive-title"><a href="/2018/10/14/cmake_compiler/"><span>为CMake指定编译器</span></a></h3>
-          
-        </div>
-      </div>
-    
-      <div class="post archive">
-        <div class="archive-post">
-          <time datetime="2018-10-12T07:48:25.000Z">
-            <a href="/2018/10/12/mul-complexity/">2018-10-12</a>
-          </time>
-          
-            <h3 class="archive-title"><a href="/2018/10/12/mul-complexity/"><span>矩阵、张量乘法（numpy.tensordot）的时间复杂度分析</span></a></h3>
-          
-        </div>
-      </div>
-    
-    <nav class="pagination">
   
+    
+    <h3 class="article-title"><span>为CMake指定编译器</span></h3>
+    
   
-</nav>
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/10/14/cmake_compiler/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-14T09:10:14.000Z">
+          2018-10-14
+        </time>
+      </a>
+    </span>
   </div>
 
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>为某某程序指定某某环境，让人一下就想到了<code>PATH</code>。然而，CMake并不支持把<code>gcc</code>或者<code>g++</code>放到<code>PATH</code>里来指定编译器。对于简单的特别是自用的项目，可以通过设置CMakeList文件里的变量指定CMake使用的编译器，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set(CMAKE_C_COMPILER &quot;/usr/bin/gcc&quot;)</span><br><span class="line">set(CMAKE_CXX_COMPILER &quot;/usr/bin/g++&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>对于复杂的项目，执行CMake时可能还用到了<code>include(GNUInstallDirs)</code>、<code>include(CheckCXXCompilerFlag)</code>等指令，在文件里设定变量的方式就有些勉强了。这时有两种方案：</p>
+<ol>
+<li><p>设定环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export CC=`which mygcc`</span><br><span class="line">export CXX=`which myg++`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用CMake参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_C_COMPILE=`which mygcc` CMAKE_CXX_COMPILER=`which myg++` ..</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
 </article>
+
+
     </main>
 
     <footer class="site-footer">
