@@ -74,6 +74,51 @@
 
   
     
+    <h3 class="article-title"><a href="/2018/10/27/timsort/"><span>CPython源码阅读——timsort</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/10/27/timsort/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-10-27T12:56:19.000Z">
+          2018-10-27
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>对timsort的简介请见<a href="https://en.wikipedia.org/wiki/Timsort" target="_blank" rel="noopener">Wiki</a>或者<a href="https://svn.python.org/projects/python/trunk/Objects/listsort.txt" target="_blank" rel="noopener">Tim本人的小文章</a>，本文主要分析CPython的实现部分，不对原理做具体介绍。<br>版本Python3.7。代码位于<a href="https://github.com/python/cpython/blob/3.7/Objects/listobject.c" target="_blank" rel="noopener">Objects/listobject.c</a>中，大概从1000行到2000行，占据整个list实现的三分之一。本文把所有的timsort源码基本上都粘贴过来了，所以也不会短。<br>这段代码看起来其实很有意思，因为注释得比较详尽，画风稳中带皮，不失为消遣娱乐之佳品。有人说CPython这部分代码很难懂，我实在不能苟同。</p>
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2018/10/25/mergesort/"><span>NumPy源码阅读——归并排序</span></a></h3>
     
   
@@ -97,7 +142,7 @@
         <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.sort(a, kind=<span class="string">'mergesort'</span>)</span><br></pre></td></tr></table></figure>
 <p>排序是计算机科学最重要的内容之一，NumPy作为大名鼎鼎的数值运算库对排序也有良好的支持。然而如果你一时好奇想一窥NumPy的排序源码，看看是不是有什么惊天动地的优化，却没那么容易。因为NumPy的排序功能完全由C实现，只靠<code>pip install numpy</code>得到的二进制文件是无法阅读这部分源码的。想知道上面这行排序代码背后是什么故事，只能<a href="https://github.com/numpy/numpy" target="_blank" rel="noopener">去GitHub看官方的repo</a>。<br>本文将从两个角度来解读NumPy（版本：1.15）中归并排序的源码：</p>
 <ol>
-<li>算法角度——NumPy这一鼎鼎大名的数值运算库是怎样进行归并排序的。</li>
+<li>算法角度——NumPy是怎样进行归并排序的。</li>
 <li>工程角度——这一排序算法是如何成为Python中易用的接口的。</li>
 </ol>
       
@@ -489,56 +534,6 @@
     <div class="entry">
       
         <p>《Web前后端漏洞分析与防御》是慕课网的一门网课，时长约11小时，原名叫做《腾讯大牛教你web前后端漏洞分析与防御》。尽管原名很山寨，这门课的质量还是不错的，主要讲解了XSS、CSRF、点击劫持、中间人攻击、密码安全、SQL注入和文件上传漏洞几个方面。最近我在自己尝试一个小项目，对web安全有些困惑，就看了看这门课程，原来东一榔头西一棒子的认识系统了很多，对自己的小项目避开了大部分雷区也觉得很自豪。</p>
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2018/06/13/montyhall/"><span>一个思考Monty Hall问题的直观角度</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2018/06/13/montyhall/" rel="bookmark">
-        <time class="entry-date published" datetime="2018-06-13T00:45:46.000Z">
-          2018-06-13
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p><a href="https://en.wikipedia.org/wiki/Monty_Hall_problem" target="_blank" rel="noopener">Monty Hall</a>是概率论与数理统计中很经典的例子，非常容易迷惑没有学过条件概率/对该问题警戒心不强的人。如果对条件概率有一定了解，也的确理解了Monty Hall，那么这个问题就不过是课后作业水平了，其实没什么好讨论的。</p>
-<p>不过据说爱因斯坦说过一句话：</p>
-<blockquote>
-<p>If you can’t explain it to a six year old, you don’t understand it yourself.<br>（如果你不能把一个道理向六岁小孩解释清楚，你就没有真正理解它）</p>
-</blockquote>
-<p>我相信概率论的内容（特别是和量子力学比较）应该是符合人的直觉的，所以我这几天睡觉之前总是思考Monty Hall，想给出一个直观的、没有学过概率论的人也能接受的解释。昨天我终于有所得，想到了一个和Monty Hall类似的问题，而大多数人面对这个问题应该会做出正确的选择——</p>
       
     </div>
 
