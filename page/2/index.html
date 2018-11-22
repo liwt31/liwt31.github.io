@@ -12,7 +12,7 @@
 
 
 
-<html class="theme-next mist" lang="zh-CN">
+<html class="theme-next mist" lang="en">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -112,7 +112,7 @@
 <meta property="og:url" content="https://liwt31.github.io/page/2/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
 <meta property="og:description" content="Weitang Li&apos;s blog">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Weitang Li&#39;s blog">
 <meta name="twitter:description" content="Weitang Li&apos;s blog">
@@ -191,7 +191,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
   
   
@@ -222,7 +222,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -242,7 +242,7 @@
           
           <li class="menu-item menu-item-home">
     <a href="/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
   </li>
         
         
@@ -250,7 +250,7 @@
           
           <li class="menu-item menu-item-about">
     <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
   </li>
         
         
@@ -258,7 +258,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
   </li>
 
       
@@ -293,6 +293,163 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/06/25/matrix2latex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/25/matrix2latex/" itemprop="url">
+                  将sympy Matrix转化为LaTeX代码——快速绘制大型LaTeX矩阵
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-06-25 22:37:34" itemprop="dateCreated datePublished" datetime="2018-06-25T22:37:34+08:00">2018-06-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-06-26 21:04:52" itemprop="dateModified" datetime="2018-06-26T21:04:52+08:00">2018-06-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>\(\LaTeX\)中绘制矩阵的基本语法是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">\left[</span><br><span class="line">    \begin&#123;array&#125;&#123;ccc&#125;</span><br><span class="line">        0        &amp;   y    &amp; \alpha \\</span><br><span class="line">        \omega g &amp;   x^2  &amp; 5      \\</span><br><span class="line">        e^&#123;i\pi&#125; &amp;   ab   &amp; \omega \\</span><br><span class="line">    \end&#123;array&#125;</span><br><span class="line">\right]</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://user-images.githubusercontent.com/22628546/41883724-9a86a07c-7922-11e8-8cf4-034a2b00f30e.png" alt="image"><br>此外使用<code>bmatrix</code>等环境也ok。这种语法对于小型矩阵比如例子中的\(3\times 3\)矩阵来说，是很方便的。然而对于比较大型的矩阵，比如\(12\times 12\)的矩阵，直接用\(\LaTeX\)来写就显得有点蛋疼了，光是实现有效编写大型\(\LaTeX\)矩阵的前提——<code>&amp;</code>对齐，就足以使人痛不欲生。如果能指定矩阵的逻辑，然后自动生成\(\LaTeX\)代码就好了！<code>Python</code>的<code>sympy</code>库就可以很好地完成这个任务。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/25/matrix2latex/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -348,14 +505,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-06-20 17:48:31" itemprop="dateCreated datePublished" datetime="2018-06-20T17:48:31+08:00">2018-06-20</time>
+              <time title="Created: 2018-06-20 17:48:31" itemprop="dateCreated datePublished" datetime="2018-06-20T17:48:31+08:00">2018-06-20</time>
             
 
             
@@ -370,9 +527,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">更新于</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="修改时间：2018-06-25 22:36:49" itemprop="dateModified" datetime="2018-06-25T22:36:49+08:00">2018-06-25</time>
+                <time title="Modified: 2018-06-25 22:36:49" itemprop="dateModified" datetime="2018-06-25T22:36:49+08:00">2018-06-25</time>
               
             
           </span>
@@ -410,7 +567,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/06/20/websafety/#more" rel="contents">
-              阅读全文 &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -504,14 +661,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-06-13 08:45:46" itemprop="dateCreated datePublished" datetime="2018-06-13T08:45:46+08:00">2018-06-13</time>
+              <time title="Created: 2018-06-13 08:45:46" itemprop="dateCreated datePublished" datetime="2018-06-13T08:45:46+08:00">2018-06-13</time>
             
 
             
@@ -526,9 +683,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">更新于</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="修改时间：2018-06-20 17:53:48" itemprop="dateModified" datetime="2018-06-20T17:53:48+08:00">2018-06-20</time>
+                <time title="Modified: 2018-06-20 17:53:48" itemprop="dateModified" datetime="2018-06-20T17:53:48+08:00">2018-06-20</time>
               
             
           </span>
@@ -571,7 +728,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/06/13/montyhall/#more" rel="contents">
-              阅读全文 &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -665,14 +822,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-06-05 21:01:23 / 修改时间：21:10:14" itemprop="dateCreated datePublished" datetime="2018-06-05T21:01:23+08:00">2018-06-05</time>
+              <time title="Created: 2018-06-05 21:01:23 / Modified: 21:10:14" itemprop="dateCreated datePublished" datetime="2018-06-05T21:01:23+08:00">2018-06-05</time>
             
 
             
@@ -810,14 +967,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-05-09 14:19:26" itemprop="dateCreated datePublished" datetime="2018-05-09T14:19:26+08:00">2018-05-09</time>
+              <time title="Created: 2018-05-09 14:19:26" itemprop="dateCreated datePublished" datetime="2018-05-09T14:19:26+08:00">2018-05-09</time>
             
 
             
@@ -832,9 +989,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">更新于</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="修改时间：2018-09-26 22:42:41" itemprop="dateModified" datetime="2018-09-26T22:42:41+08:00">2018-09-26</time>
+                <time title="Modified: 2018-11-21 23:16:09" itemprop="dateModified" datetime="2018-11-21T23:16:09+08:00">2018-11-21</time>
               
             
           </span>
@@ -872,7 +1029,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/05/09/linux_env/#more" rel="contents">
-              阅读全文 &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -966,14 +1123,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-03-23 20:03:37" itemprop="dateCreated datePublished" datetime="2018-03-23T20:03:37+08:00">2018-03-23</time>
+              <time title="Created: 2018-03-23 20:03:37" itemprop="dateCreated datePublished" datetime="2018-03-23T20:03:37+08:00">2018-03-23</time>
             
 
             
@@ -988,9 +1145,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">更新于</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="修改时间：2018-06-13 09:14:28" itemprop="dateModified" datetime="2018-06-13T09:14:28+08:00">2018-06-13</time>
+                <time title="Modified: 2018-06-13 09:14:28" itemprop="dateModified" datetime="2018-06-13T09:14:28+08:00">2018-06-13</time>
               
             
           </span>
@@ -1181,7 +1338,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/23/normal-mode/#more" rel="contents">
-              阅读全文 &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1275,14 +1432,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-03-10 21:00:50" itemprop="dateCreated datePublished" datetime="2018-03-10T21:00:50+08:00">2018-03-10</time>
+              <time title="Created: 2018-03-10 21:00:50" itemprop="dateCreated datePublished" datetime="2018-03-10T21:00:50+08:00">2018-03-10</time>
             
 
             
@@ -1297,9 +1454,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">更新于</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="修改时间：2018-03-11 15:32:19" itemprop="dateModified" datetime="2018-03-11T15:32:19+08:00">2018-03-11</time>
+                <time title="Modified: 2018-03-11 15:32:19" itemprop="dateModified" datetime="2018-03-11T15:32:19+08:00">2018-03-11</time>
               
             
           </span>
@@ -1337,7 +1494,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/10/energylevelplot/#more" rel="contents">
-              阅读全文 &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1431,14 +1588,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-01-22 17:13:14" itemprop="dateCreated datePublished" datetime="2018-01-22T17:13:14+08:00">2018-01-22</time>
+              <time title="Created: 2018-01-22 17:13:14" itemprop="dateCreated datePublished" datetime="2018-01-22T17:13:14+08:00">2018-01-22</time>
             
 
             
@@ -1453,9 +1610,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">更新于</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="修改时间：2018-09-26 22:09:59" itemprop="dateModified" datetime="2018-09-26T22:09:59+08:00">2018-09-26</time>
+                <time title="Modified: 2018-09-26 22:09:59" itemprop="dateModified" datetime="2018-09-26T22:09:59+08:00">2018-09-26</time>
               
             
           </span>
@@ -1494,7 +1651,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/01/22/graphical_matrix/#more" rel="contents">
-              阅读全文 &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1588,14 +1745,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-01-17 21:30:27" itemprop="dateCreated datePublished" datetime="2018-01-17T21:30:27+08:00">2018-01-17</time>
+              <time title="Created: 2018-01-17 21:30:27" itemprop="dateCreated datePublished" datetime="2018-01-17T21:30:27+08:00">2018-01-17</time>
             
 
             
@@ -1610,9 +1767,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">更新于</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="修改时间：2018-01-24 11:47:31" itemprop="dateModified" datetime="2018-01-24T11:47:31+08:00">2018-01-24</time>
+                <time title="Modified: 2018-01-24 11:47:31" itemprop="dateModified" datetime="2018-01-24T11:47:31+08:00">2018-01-24</time>
               
             
           </span>
@@ -1650,7 +1807,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/01/17/svm/#more" rel="contents">
-              阅读全文 &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -1744,14 +1901,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
 
               
                 
               
 
-              <time title="创建时间：2018-01-09 11:45:36" itemprop="dateCreated datePublished" datetime="2018-01-09T11:45:36+08:00">2018-01-09</time>
+              <time title="Created: 2018-01-09 11:45:36" itemprop="dateCreated datePublished" datetime="2018-01-09T11:45:36+08:00">2018-01-09</time>
             
 
             
@@ -1766,9 +1923,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">更新于</span>
+                  <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="修改时间：2018-10-31 10:07:47" itemprop="dateModified" datetime="2018-10-31T10:07:47+08:00">2018-10-31</time>
+                <time title="Modified: 2018-10-31 10:07:47" itemprop="dateModified" datetime="2018-10-31T10:07:47+08:00">2018-10-31</time>
               
             
           </span>
@@ -1806,163 +1963,7 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/01/09/lightsail/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/01/05/ec2_ipv6_ss/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Weitang Li">
-      <meta itemprop="description" content="Weitang Li's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Weitang Li's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/05/ec2_ipv6_ss/" itemprop="url">
-                  AWS-EC2配置IPv6地址+ss实现校园网免流量费上网
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-05 22:02:58" itemprop="dateCreated datePublished" datetime="2018-01-05T22:02:58+08:00">2018-01-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-04 16:52:46" itemprop="dateModified" datetime="2018-05-04T16:52:46+08:00">2018-05-04</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我日常使用的校园网每月除去免费流量外流量计费为2元/GB。当然这个规定只针对IPv4，“教学科研”用的IPv6是不受限制的。今天折腾AWS的时候突然想到可以用IPv6服务器做代理实现免流量上网，如果使用得当每月可以省下二三十元的流量费，基本刚好把租服务器的钱赚了回来，等于白用一个V#P:N。配置的过程中踩了一些坑，记录如下。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/05/ec2_ipv6_ss/#more" rel="contents">
-              阅读全文 &raquo;
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -2006,7 +2007,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2049,8 +2050,8 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
-                    <span class="site-state-item-name">日志</span>
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -2121,7 +2122,7 @@
 
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.4.4</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.4.4</div>
 
 
 
@@ -2129,7 +2130,7 @@
 
 
 
-  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
 
 
 
