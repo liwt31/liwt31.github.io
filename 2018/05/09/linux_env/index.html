@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
 <meta property="og:description" content="Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-11-21T15:16:09.297Z">
+<meta property="og:updated_time" content="2018-11-22T05:35:52.629Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自用Linux环境的常用配置">
 <meta name="twitter:description" content="Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。">
@@ -368,7 +368,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-21 23:16:09" itemprop="dateModified" datetime="2018-11-21T23:16:09+08:00">2018-11-21</time>
+                <time title="Modified: 2018-11-22 13:35:52" itemprop="dateModified" datetime="2018-11-22T13:35:52+08:00">2018-11-22</time>
               
             
           </span>
@@ -407,7 +407,7 @@
 <h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><p>可以认为zsh是一个代替Bash的shell，<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>是其配置文件。配置步骤:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装zsh，以Ubuntu为例</span></span><br><span class="line">apt install zsh</span><br><span class="line"><span class="comment"># 设置zsh为默认shell</span></span><br><span class="line">chsh -s $(<span class="built_in">which</span> zsh)</span><br><span class="line"><span class="comment"># 安装oh-my-zsh</span></span><br><span class="line">sh -c <span class="string">"<span class="variable">$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>"</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="配置vim"><a href="#配置vim" class="headerlink" title="配置vim"></a>配置vim</h3><p>配置vim用的是<a href="https://github.com/amix/vimrc" target="_blank" rel="noopener">这个repo</a>，需要先安装git。这个repo里要求vim版本比较高，有时需要从头编译。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime</span><br><span class="line">sh ~/.vim_runtime/install_awesome_vimrc.sh</span><br></pre></td></tr></table></figure></p>
 <p>如果需要用vim写Python代码，很可能需要将Python和vim一起编译，这时需要关注<code>--enable-pythoninterp</code>、<code>--with-python-config-dir=</code>等configure选项，同时保持在做configure时处于想与vim一起编译的python环境中。<code>--with-python-config-dir</code>一般找python安装路径中<code>lib/python2.7/config</code>文件夹。如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=<span class="variable">$HOME</span> \</span><br><span class="line">            --<span class="built_in">enable</span>-pythoninterp=yes \</span><br><span class="line">            --with-python-config-dir=<span class="variable">$HOME</span>/.conda/envs/jedi/lib/python2.7/config</span><br></pre></td></tr></table></figure></p>
-<h3 id="配置Terminal真彩色"><a href="#配置Terminal真彩色" class="headerlink" title="配置Terminal真彩色"></a>配置Terminal真彩色</h3><p>主要是让vim能正确显示颜色。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export TERM=term-256color</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置Terminal真彩色"><a href="#配置Terminal真彩色" class="headerlink" title="配置Terminal真彩色"></a>配置Terminal真彩色</h3><p>主要是让vim能正确显示颜色。在<code>.zshrc</code>中加入如下内容：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">TERM</span>=term-256color</span><br></pre></td></tr></table></figure></p>
 <p>不同发行版可能略有差异，若有问题再Google解决。</p>
 
       
