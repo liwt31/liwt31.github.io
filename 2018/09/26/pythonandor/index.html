@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
 <meta property="og:description" content="Python里的and和or可以说是最基础的小白语法了，今天在看Flask源码的时候有几处关于and和or的地方却感觉看不太懂，如：123456def get_env():                                                         &quot;&quot;&quot;Get the environment the app is running in, indicated b">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-27T02:21:00.153Z">
+<meta property="og:updated_time" content="2018-12-30T12:27:13.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python里的and和or">
 <meta name="twitter:description" content="Python里的and和or可以说是最基础的小白语法了，今天在看Flask源码的时候有几处关于and和or的地方却感觉看不太懂，如：123456def get_env():                                                         &quot;&quot;&quot;Get the environment the app is running in, indicated b">
@@ -368,7 +368,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-09-27 10:21:00" itemprop="dateModified" datetime="2018-09-27T10:21:00+08:00">2018-09-27</time>
+                <time title="Modified: 2018-12-30 20:27:13" itemprop="dateModified" datetime="2018-12-30T20:27:13+08:00">2018-12-30</time>
               
             
           </span>
@@ -439,7 +439,9 @@
 <p>简单来说，就是短路求值+<strong><code>and</code>和<code>or</code>返回其中一个运算数而不是布尔值</strong>。</p>
 <p>了解了这一点之后，我们可以利用把运算数和结果都看成一个布尔值的方式来理解这些运算的结果了，如<code>&#39;&#39; and 123</code>得到<code>&#39;&#39;</code>即<code>False and True</code>得到<code>False</code>，而<code>&#39;&#39; or 123</code>得到<code>123</code>即<code>False or True</code>得到<code>True</code>。</p>
 <h3 id="我觉得"><a href="#我觉得" class="headerlink" title="我觉得"></a>我觉得</h3><p>我所熟悉的语言并不多，简单测试了一下，C/C++中<code>&amp;&amp;</code>和<code>||</code>的行为是符合人的预期的。<code>123 &amp;&amp; 321</code>返回<code>1</code>，<code>123 &amp;&amp; 0</code>返回<code>0</code>。所以我到现在还是很震惊Python有这么令人难受的语法。不可否认，这一语法一定程度上允许用更少的代码实现更多的功能，比如现在我希望按照<code>str1 &gt; str2 &gt; str3</code>的顺序找出其中第一个不为空的字符串，可以简单地这样写：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ret_str = str1 <span class="keyword">or</span> str2 <span class="keyword">or</span> str3</span><br></pre></td></tr></table></figure></p>
-<p>但语义几乎只有有经验的程序员才能正确理解，是对”Explicit is better then implicit”的公然违背。可能是一开始设计语言的时候做了文档中那样的实现，后来为了后向兼容就作为一个“feature”保持下来了吧。</p>
+<p>但语义几乎只有有经验的程序员才能正确理解，是对”Explicit is better then implicit”的公然违背。为什么Python要采用这种实现呢？这个问题可能要从Python的字节码和编译器里找答案。假如我有这样一个函数：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">()</span>:</span> </span><br><span class="line">    a = b <span class="keyword">and</span> c <span class="keyword">and</span> d <span class="keyword">and</span> e</span><br></pre></td></tr></table></figure></p>
+<p>编译后“反汇编”得到的结果是：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>           <span class="number">0</span> LOAD_GLOBAL              <span class="number">0</span> (b)</span><br><span class="line">            <span class="number">2</span> JUMP_IF_FALSE_OR_POP    <span class="number">14</span></span><br><span class="line">            <span class="number">4</span> LOAD_GLOBAL              <span class="number">1</span> (c)</span><br><span class="line">            <span class="number">6</span> JUMP_IF_FALSE_OR_POP    <span class="number">14</span></span><br><span class="line">            <span class="number">8</span> LOAD_GLOBAL              <span class="number">2</span> (d)</span><br><span class="line">           <span class="number">10</span> JUMP_IF_FALSE_OR_POP    <span class="number">14</span></span><br><span class="line">           <span class="number">12</span> LOAD_GLOBAL              <span class="number">3</span> (e)</span><br><span class="line">      &gt;&gt;   <span class="number">14</span> STORE_FAST               <span class="number">0</span> (a)</span><br><span class="line">           <span class="number">16</span> LOAD_CONST               <span class="number">0</span> (None)</span><br><span class="line">           <span class="number">18</span> RETURN_VALUE</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，短路求值是通过判断真假后进行jump实现的，而判断真假在解释器（<code>ceval</code>）层面进行，并不存在类似于将<code>b and c</code>转化为<code>bool(b) and bool(c)</code>之类的过程。如果满足jump条件，在解释器栈顶的元素不会做任何修改，也就不存在类型转换的过程。到此为止，Python编译器的实现和其他语言（比如C）还是一致的，不同之处在于Python在jump之后<br>直接利用栈顶元素对左侧运算符赋值，而其他语言会jump到利用bool值对左侧运算符赋值的代码块。假如说Python也希望这样的行为，编译出的代码应该为：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>           <span class="number">0</span> LOAD_GLOBAL              <span class="number">0</span> (b)</span><br><span class="line">            <span class="number">2</span> POP_JUMP_IF_FALSE       <span class="number">14</span></span><br><span class="line">            <span class="number">4</span> LOAD_GLOBAL              <span class="number">1</span> (c)</span><br><span class="line">            <span class="number">6</span> POP_JUMP_IF_FALSE       <span class="number">14</span></span><br><span class="line">            <span class="number">8</span> LOAD_GLOBAL              <span class="number">2</span> (d)</span><br><span class="line">           <span class="number">10</span> POP_JUMP_IF_FALSE       <span class="number">14</span></span><br><span class="line">           <span class="number">12</span> LOAD_GLOBAL              <span class="number">3</span> (e)</span><br><span class="line">      &gt;&gt;   <span class="number">14</span> LOAD_CONST               <span class="number">0</span> (True)</span><br><span class="line">           <span class="number">16</span> JUMP_ABSOLUTE           <span class="number">20</span> </span><br><span class="line">           <span class="number">18</span> LOAD_CONST               <span class="number">1</span> (False)            </span><br><span class="line">      &gt;&gt;   <span class="number">20</span> STORE_FAST               <span class="number">0</span> (a)</span><br><span class="line">           <span class="number">22</span> LOAD_CONST               <span class="number">2</span> (None)</span><br><span class="line">           <span class="number">24</span> RETURN_VALUE</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -549,7 +551,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -623,7 +625,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

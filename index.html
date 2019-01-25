@@ -309,6 +309,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/01/25/seterr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/25/seterr/" itemprop="url">
+                  珍爱生命，使用numpy.seterr
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-01-25 17:10:17 / Modified: 17:55:20" itemprop="dateCreated datePublished" datetime="2019-01-25T17:10:17+08:00">2019-01-25</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><code>inf</code>或者<code>NaN</code>是数值计算中最臭名昭著的两个变量了，他们性质诡异，而且往往会带来极其难以排查的bug：</p>
+<ul>
+<li>一般而言正常配置的计算过程是不会出现<code>inf</code>或者<code>NaN</code>的，一旦出现往往意味着计算过程在某个地方出了问题。但根据浮点数的定义<code>inf</code>和<code>NaN</code>是有效的浮点数，因此这一bug暂时不会引起任何副作用，直到运行了对<code>inf</code>或者<code>NaN</code>进行检查的函数才会报错，甚至一直不报错显示到前端。</li>
+</ul>
+<p>幸运的是，如果程序是以NumPy作为数值运算的基础，可以利用<code>numpy.seterr</code>进行全局配置，使NumPy在遇到这类数值错误（比如说浮点数溢出）时立即报错/警告/调用回调函数。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/01/25/seterr/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/11/20/fast_merge/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -372,7 +520,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-01 09:15:45" itemprop="dateModified" datetime="2018-12-01T09:15:45+08:00">2018-12-01</time>
+                <time title="Modified: 2019-01-14 14:17:05" itemprop="dateModified" datetime="2019-01-14T14:17:05+08:00">2019-01-14</time>
               
             
           </span>
@@ -986,7 +1134,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-10-19 09:33:35" itemprop="dateModified" datetime="2018-10-19T09:33:35+08:00">2018-10-19</time>
+                <time title="Modified: 2018-12-13 22:44:15" itemprop="dateModified" datetime="2018-12-13T22:44:15+08:00">2018-12-13</time>
               
             
           </span>
@@ -1181,14 +1329,14 @@
       
         
           
-            <p>为某某程序指定某某环境，让人一下就想到了<code>PATH</code>。然而，CMake并不支持把<code>gcc</code>或者<code>g++</code>放到<code>PATH</code>里来指定编译器。对于简单的特别是自用的项目，可以通过设置CMakeList文件里的变量指定CMake使用的编译器，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set(CMAKE_C_COMPILER &quot;/usr/bin/gcc&quot;)</span><br><span class="line">set(CMAKE_CXX_COMPILER &quot;/usr/bin/g++&quot;)</span><br></pre></td></tr></table></figure></p>
+            <p>为某某程序指定某某环境，让人一下就想到了<code>PATH</code>。然而，CMake并不支持把<code>gcc</code>或者<code>g++</code>放到<code>PATH</code>里来指定编译器。对于简单的特别是自用的项目，可以通过设置CMakeList文件里的变量指定CMake使用的编译器，如：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_C_COMPILER <span class="string">"/usr/bin/gcc"</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_COMPILER <span class="string">"/usr/bin/g++"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
 <p>对于复杂的项目，执行CMake时可能还用到了<code>include(GNUInstallDirs)</code>、<code>include(CheckCXXCompilerFlag)</code>等指令，在文件里设定变量的方式就有些勉强了。这时有两种方案：</p>
 <ol>
 <li><p>设定环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export CC=`which mygcc`</span><br><span class="line">export CXX=`which myg++`</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">CC</span>=`which mygcc`</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">CXX</span>=`which myg++`</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>使用CMake参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_C_COMPILE=`which mygcc` CMAKE_CXX_COMPILER=`which myg++` ..</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_C_COMPILE=`which mygcc` CMAKE_CXX_COMPILER=`which myg++` ..</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>注意这两种情况下的“形参”并不相同。见<a href="https://gitlab.kitware.com/cmake/community/wikis/FAQ#how-do-i-use-a-different-compiler" target="_blank" rel="noopener">cmake wiki</a>。</p>
@@ -1464,7 +1612,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-09-27 10:21:00" itemprop="dateModified" datetime="2018-09-27T10:21:00+08:00">2018-09-27</time>
+                <time title="Modified: 2018-12-30 20:27:13" itemprop="dateModified" datetime="2018-12-30T20:27:13+08:00">2018-12-30</time>
               
             
           </span>
@@ -1706,150 +1854,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/09/05/trivialjob/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Weitang Li">
-      <meta itemprop="description" content="Weitang Li's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Weitang Li's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/05/trivialjob/" itemprop="url">
-                  记一次杂活
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-05 17:23:06 / Modified: 17:31:29" itemprop="dateCreated datePublished" datetime="2018-09-05T17:23:06+08:00">2018-09-05</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>昨天接了这样一个活：有500篇文献的记录，将它们导入Web of Science然后生成bib文件，然后交给图书馆查他引。本来带头的老师计划把任务平均分给包括我在内的三个人人工去做，我自己试了试写了个脚本用Selenium自动化地完成了大部分。Selenium自动化测试如果开着浏览器窗口还是很cool的，所以我有点小得意，想po一下代码。但代码其实也没什么可po的，都是很简单的业务代码而已，倒是在这个过程中我有些体会，好像还蛮有意思。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/09/05/trivialjob/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1897,7 +1901,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1955,7 +1959,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

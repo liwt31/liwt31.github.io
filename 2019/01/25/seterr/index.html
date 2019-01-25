@@ -106,24 +106,24 @@
 
 
 
-  <meta name="description" content="Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。">
+  <meta name="description" content="inf或者NaN是数值计算中最臭名昭著的两个变量了，他们性质诡异，而且往往会带来极其难以排查的bug：  一般而言正常配置的计算过程是不会出现inf或者NaN的，一旦出现往往意味着计算过程在某个地方出了问题。但根据浮点数的定义inf和NaN是有效的浮点数，因此这一bug暂时不会引起任何副作用，直到运行了对inf或者NaN进行检查的函数才会报错，甚至一直不报错显示到前端。  幸运的是，如果程序是以N">
 <meta property="og:type" content="article">
-<meta property="og:title" content="自用Linux环境的常用配置">
-<meta property="og:url" content="https://liwt31.github.io/2018/05/09/linux_env/index.html">
+<meta property="og:title" content="珍爱生命，使用numpy.seterr">
+<meta property="og:url" content="https://liwt31.github.io/2019/01/25/seterr/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
-<meta property="og:description" content="Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。">
+<meta property="og:description" content="inf或者NaN是数值计算中最臭名昭著的两个变量了，他们性质诡异，而且往往会带来极其难以排查的bug：  一般而言正常配置的计算过程是不会出现inf或者NaN的，一旦出现往往意味着计算过程在某个地方出了问题。但根据浮点数的定义inf和NaN是有效的浮点数，因此这一bug暂时不会引起任何副作用，直到运行了对inf或者NaN进行检查的函数才会报错，甚至一直不报错显示到前端。  幸运的是，如果程序是以N">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-11-22T05:35:52.629Z">
+<meta property="og:updated_time" content="2019-01-25T09:55:20.338Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自用Linux环境的常用配置">
-<meta name="twitter:description" content="Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。">
+<meta name="twitter:title" content="珍爱生命，使用numpy.seterr">
+<meta name="twitter:description" content="inf或者NaN是数值计算中最臭名昭著的两个变量了，他们性质诡异，而且往往会带来极其难以排查的bug：  一般而言正常配置的计算过程是不会出现inf或者NaN的，一旦出现往往意味着计算过程在某个地方出了问题。但根据浮点数的定义inf和NaN是有效的浮点数，因此这一bug暂时不会引起任何副作用，直到运行了对inf或者NaN进行检查的函数才会报错，甚至一直不报错显示到前端。  幸运的是，如果程序是以N">
 
 
 
 
 
 
-  <link rel="canonical" href="https://liwt31.github.io/2018/05/09/linux_env/"/>
+  <link rel="canonical" href="https://liwt31.github.io/2019/01/25/seterr/"/>
 
 
 
@@ -133,7 +133,7 @@
   };
 </script>
 
-  <title>自用Linux环境的常用配置 | Weitang Li's blog</title>
+  <title>珍爱生命，使用numpy.seterr | Weitang Li's blog</title>
   
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/05/09/linux_env/">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/01/25/seterr/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Weitang Li">
@@ -326,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">自用Linux环境的常用配置
+          <h1 class="post-title" itemprop="name headline">珍爱生命，使用numpy.seterr
               
             
           </h1>
@@ -351,24 +351,12 @@
                 
               
 
-              <time title="Created: 2018-05-09 14:19:26" itemprop="dateCreated datePublished" datetime="2018-05-09T14:19:26+08:00">2018-05-09</time>
+              <time title="Created: 2019-01-25 17:10:17 / Modified: 17:55:20" itemprop="dateCreated datePublished" datetime="2019-01-25T17:10:17+08:00">2019-01-25</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-11-22 13:35:52" itemprop="dateModified" datetime="2018-11-22T13:35:52+08:00">2018-11-22</time>
               
             
           </span>
@@ -401,14 +389,21 @@
       
 
       
-        <p>Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。<br>目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。</p>
-<a id="more"></a> 
-<h3 id="配置软件包管理器的源"><a href="#配置软件包管理器的源" class="headerlink" title="配置软件包管理器的源"></a>配置软件包管理器的源</h3><p>软件包管理器，如Ubuntu中的<code>apt</code>，一般是从cdn中拿数据来更新、下载软件的。由于本人配置的Linux系统绝大多数位于清华大学校园内，因此可以用清华大学的mirror来加速更新、下载。<strong>感谢<a href="https://tuna.moe/" target="_blank" rel="noopener">清华大学TUNA协会</a>为提升广大老师同学生活幸福度所做出的努力。</strong>常用mirror的配置方法：<a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="noopener">ubuntu</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn/help/centos/" target="_blank" rel="noopener">centos</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/" target="_blank" rel="noopener">Anaconda</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/" target="_blank" rel="noopener">pypi</a>。也有一键式配置的脚本<a href="https://github.com/tuna/oh-my-tuna" target="_blank" rel="noopener">oh-my-tuna</a><br>说真的，一年前的我要知道还有这种好事，估计能省下来100个小时的时间。当然话说回来，没有当年的折腾也没有今天的自己。</p>
-<h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><p>可以认为zsh是一个代替Bash的shell，<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>是其配置文件。配置步骤:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装zsh，以Ubuntu为例</span></span><br><span class="line">apt install zsh</span><br><span class="line"><span class="comment"># 设置zsh为默认shell</span></span><br><span class="line">chsh -s $(<span class="built_in">which</span> zsh)</span><br><span class="line"><span class="comment"># 安装oh-my-zsh</span></span><br><span class="line">sh -c <span class="string">"<span class="variable">$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)</span>"</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="配置vim"><a href="#配置vim" class="headerlink" title="配置vim"></a>配置vim</h3><p>配置vim用的是<a href="https://github.com/amix/vimrc" target="_blank" rel="noopener">这个repo</a>，需要先安装git。这个repo里要求vim版本比较高，有时需要从头编译。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime</span><br><span class="line">sh ~/.vim_runtime/install_awesome_vimrc.sh</span><br></pre></td></tr></table></figure></p>
-<p>如果需要用vim写Python代码，很可能需要将Python和vim一起编译，这时需要关注<code>--enable-pythoninterp</code>、<code>--with-python-config-dir=</code>等configure选项，同时保持在做configure时处于想与vim一起编译的python环境中。<code>--with-python-config-dir</code>一般找python安装路径中<code>lib/python2.7/config</code>文件夹。如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=<span class="variable">$HOME</span> \</span><br><span class="line">            --<span class="built_in">enable</span>-pythoninterp=yes \</span><br><span class="line">            --with-python-config-dir=<span class="variable">$HOME</span>/.conda/envs/jedi/lib/python2.7/config</span><br></pre></td></tr></table></figure></p>
-<h3 id="配置Terminal真彩色"><a href="#配置Terminal真彩色" class="headerlink" title="配置Terminal真彩色"></a>配置Terminal真彩色</h3><p>主要是让vim能正确显示颜色。在<code>.zshrc</code>中加入如下内容：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">TERM</span>=term-256color</span><br></pre></td></tr></table></figure></p>
-<p>不同发行版可能略有差异，若有问题再Google解决。</p>
+        <p><code>inf</code>或者<code>NaN</code>是数值计算中最臭名昭著的两个变量了，他们性质诡异，而且往往会带来极其难以排查的bug：</p>
+<ul>
+<li>一般而言正常配置的计算过程是不会出现<code>inf</code>或者<code>NaN</code>的，一旦出现往往意味着计算过程在某个地方出了问题。但根据浮点数的定义<code>inf</code>和<code>NaN</code>是有效的浮点数，因此这一bug暂时不会引起任何副作用，直到运行了对<code>inf</code>或者<code>NaN</code>进行检查的函数才会报错，甚至一直不报错显示到前端。</li>
+</ul>
+<p>幸运的是，如果程序是以NumPy作为数值运算的基础，可以利用<code>numpy.seterr</code>进行全局配置，使NumPy在遇到这类数值错误（比如说浮点数溢出）时立即报错/警告/调用回调函数。</p>
+<a id="more"></a>
+<p>这个函数的使用方法在<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.seterr.html" target="_blank" rel="noopener">文档</a>中已经有了详细的介绍，API全面好用，不用多说。下面介绍一点我自己琢磨出来的最佳实践。</p>
+<p>文档中可以看出，目前NumPy支持的运算错误包括四种，定义于<a href="http://en.wikipedia.org/wiki/IEEE_754" target="_blank" rel="noopener">IEEE 754 标准</a>：</p>
+<ul>
+<li>被0除(divide by zero)。</li>
+<li>上溢出(overflow)，最常见的情况就是一个大的数被放到了exp的上面进而导致<code>inf</code>溢出。</li>
+<li>下溢出(underflow)，和上溢出恰好相反，一个非常小（绝对值很大）的数被放到exp的上面，导致最后的结果是0。</li>
+<li>无效操作(invalid operation)，比如对负数开方，结果是<code>NaN</code>。</li>
+</ul>
+<p><strong>这四种情况中，一般来说只有三个负面作用比较大，那就是被0除，上溢出和无效操作</strong>。为什么下溢出负面作用小呢？因为下溢出本身不产生<code>inf</code>或者<code>NaN</code>，引起的误差可以认为是广义的浮点误差，一般来说计算可以继续。比如说某个物体移动的速度指数衰减，那么我们在时间\(t\)很大的时候可以自然地认为它的速度就是0，它在一段时间的位移也是0，得到的总体来说是可靠的结果。相反，如果某个物体的移动速度是指数增长的，在较大的\(t\)时刻其速度就变成了<code>inf</code>，位移也是<code>inf</code>，虽然从数学定义上来说不算错，但这样的计算显然是不可继续的，得到的结果显示到前端也是非常不友好的。<br>因此虽然<code>seterr</code>函数支持一个<code>all</code>的关键字一次性为所有可能的数值错误配置处理方式，一般而言对于被0除、上溢出和无效操作可以设置较高的错误级别，而对下溢出保持默认的<code>ignore</code>或者设置成<code>warn</code>即可。</p>
 
       
     </div>
@@ -436,8 +431,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/23/normal-mode/" rel="next" title="Normal Mode (Huang-Rhys Factor) Calculator">
-                <i class="fa fa-chevron-left"></i> Normal Mode (Huang-Rhys Factor) Calculator
+              <a href="/2018/11/20/fast_merge/" rel="next" title="Mergesort is faster than Quicksort">
+                <i class="fa fa-chevron-left"></i> Mergesort is faster than Quicksort
               </a>
             
           </div>
@@ -445,10 +440,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/05/evaluate_teacher/" rel="prev" title="轻松评教">
-                轻松评教 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -493,17 +484,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -562,22 +544,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置软件包管理器的源"><span class="nav-number">1.</span> <span class="nav-text">配置软件包管理器的源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置oh-my-zsh"><span class="nav-number">2.</span> <span class="nav-text">配置oh-my-zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置vim"><span class="nav-number">3.</span> <span class="nav-text">配置vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置Terminal真彩色"><span class="nav-number">4.</span> <span class="nav-text">配置Terminal真彩色</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
