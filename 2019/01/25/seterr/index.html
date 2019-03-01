@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
 <meta property="og:description" content="inf或者NaN是数值计算中最臭名昭著的两个变量了，他们性质诡异，而且往往会带来极其难以排查的bug：  一般而言正常配置的计算过程是不会出现inf或者NaN的，一旦出现往往意味着计算过程在某个地方出了问题。但根据浮点数的定义inf和NaN是有效的浮点数，因此这一bug暂时不会引起任何副作用，直到运行了对inf或者NaN进行检查的函数才会报错，甚至一直不报错显示到前端。  幸运的是，如果程序是以N">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-25T09:55:20.338Z">
+<meta property="og:updated_time" content="2019-02-15T05:14:21.141Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="珍爱生命，使用numpy.seterr">
 <meta name="twitter:description" content="inf或者NaN是数值计算中最臭名昭著的两个变量了，他们性质诡异，而且往往会带来极其难以排查的bug：  一般而言正常配置的计算过程是不会出现inf或者NaN的，一旦出现往往意味着计算过程在某个地方出了问题。但根据浮点数的定义inf和NaN是有效的浮点数，因此这一bug暂时不会引起任何副作用，直到运行了对inf或者NaN进行检查的函数才会报错，甚至一直不报错显示到前端。  幸运的是，如果程序是以N">
@@ -351,12 +351,24 @@
                 
               
 
-              <time title="Created: 2019-01-25 17:10:17 / Modified: 17:55:20" itemprop="dateCreated datePublished" datetime="2019-01-25T17:10:17+08:00">2019-01-25</time>
+              <time title="Created: 2019-01-25 17:10:17" itemprop="dateCreated datePublished" datetime="2019-01-25T17:10:17+08:00">2019-01-25</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-15 13:14:21" itemprop="dateModified" datetime="2019-02-15T13:14:21+08:00">2019-02-15</time>
               
             
           </span>
@@ -404,6 +416,7 @@
 <li>无效操作(invalid operation)，比如对负数开方，结果是<code>NaN</code>。</li>
 </ul>
 <p><strong>这四种情况中，一般来说只有三个负面作用比较大，那就是被0除，上溢出和无效操作</strong>。为什么下溢出负面作用小呢？因为下溢出本身不产生<code>inf</code>或者<code>NaN</code>，引起的误差可以认为是广义的浮点误差，一般来说计算可以继续。比如说某个物体移动的速度指数衰减，那么我们在时间\(t\)很大的时候可以自然地认为它的速度就是0，它在一段时间的位移也是0，得到的总体来说是可靠的结果。相反，如果某个物体的移动速度是指数增长的，在较大的\(t\)时刻其速度就变成了<code>inf</code>，位移也是<code>inf</code>，虽然从数学定义上来说不算错，但这样的计算显然是不可继续的，得到的结果显示到前端也是非常不友好的。<br>因此虽然<code>seterr</code>函数支持一个<code>all</code>的关键字一次性为所有可能的数值错误配置处理方式，一般而言对于被0除、上溢出和无效操作可以设置较高的错误级别，而对下溢出保持默认的<code>ignore</code>或者设置成<code>warn</code>即可。</p>
+<p>另外Python语言本身对内置的<code>float</code>也带有一个类似的功能，定义于<a href="https://docs.python.org/3.6/library/fpectl.html" target="_blank" rel="noopener"><code>fpectl</code></a>模块中。但Python毕竟不是专注于数值计算的库而是一个应用广泛的编程语言，这一模块受到很多限制，默认不被包含在Python中。</p>
 
       
     </div>
@@ -440,6 +453,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/28/numpy_view/" rel="prev" title="警惕NumPy切片视图(Slice View)中的“内存泄漏”陷阱">
+                警惕NumPy切片视图(Slice View)中的“内存泄漏”陷阱 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -500,7 +517,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

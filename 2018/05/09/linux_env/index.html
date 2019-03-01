@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
 <meta property="og:description" content="Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-11-22T05:35:52.629Z">
+<meta property="og:updated_time" content="2019-02-24T12:38:33.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自用Linux环境的常用配置">
 <meta name="twitter:description" content="Github上已经有很多repo存配置Linux环境的脚本了，我这里用博客形式记录是想不那么正式，随意一些。毕竟放在Github上总让人觉得必须要“编译通过”才能算是一个合格的repo。目前我配置自用的Linux环境常做的有如下几件事：配置软件包管理器的源、oh-my-zsh和vim。">
@@ -368,7 +368,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-22 13:35:52" itemprop="dateModified" datetime="2018-11-22T13:35:52+08:00">2018-11-22</time>
+                <time title="Modified: 2019-02-24 20:38:33" itemprop="dateModified" datetime="2019-02-24T20:38:33+08:00">2019-02-24</time>
               
             
           </span>
@@ -408,7 +408,8 @@
 <h3 id="配置vim"><a href="#配置vim" class="headerlink" title="配置vim"></a>配置vim</h3><p>配置vim用的是<a href="https://github.com/amix/vimrc" target="_blank" rel="noopener">这个repo</a>，需要先安装git。这个repo里要求vim版本比较高，有时需要从头编译。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime</span><br><span class="line">sh ~/.vim_runtime/install_awesome_vimrc.sh</span><br></pre></td></tr></table></figure></p>
 <p>如果需要用vim写Python代码，很可能需要将Python和vim一起编译，这时需要关注<code>--enable-pythoninterp</code>、<code>--with-python-config-dir=</code>等configure选项，同时保持在做configure时处于想与vim一起编译的python环境中。<code>--with-python-config-dir</code>一般找python安装路径中<code>lib/python2.7/config</code>文件夹。如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=<span class="variable">$HOME</span> \</span><br><span class="line">            --<span class="built_in">enable</span>-pythoninterp=yes \</span><br><span class="line">            --with-python-config-dir=<span class="variable">$HOME</span>/.conda/envs/jedi/lib/python2.7/config</span><br></pre></td></tr></table></figure></p>
 <h3 id="配置Terminal真彩色"><a href="#配置Terminal真彩色" class="headerlink" title="配置Terminal真彩色"></a>配置Terminal真彩色</h3><p>主要是让vim能正确显示颜色。在<code>.zshrc</code>中加入如下内容：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">TERM</span>=term-256color</span><br></pre></td></tr></table></figure></p>
-<p>不同发行版可能略有差异，若有问题再Google解决。</p>
+<p>不同发行版可能略有差异，如Ubuntu16.04可用<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">TERM</span>=gnome-256color</span><br></pre></td></tr></table></figure></p>
+<p>决定变量内容的一般方法是到<code>/usr/share/terminfo/</code>中找合理的选项。若有问题再Google解决。</p>
 
       
     </div>
@@ -518,7 +519,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
