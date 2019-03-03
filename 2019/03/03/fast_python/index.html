@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Recently I was trying to improve the performance of some of my Python code by writing C/C++ extensions. Before I started I thought “well, I should be able to get 10x to 100x performance boost without">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pure Python Might be Faster than You Think">
+<meta property="og:url" content="https://liwt31.github.io/2019/03/03/fast_python/index.html">
+<meta property="og:site_name" content="Weitang Li&#39;s blog">
+<meta property="og:description" content="Recently I was trying to improve the performance of some of my Python code by writing C/C++ extensions. Before I started I thought “well, I should be able to get 10x to 100x performance boost without">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-03T09:34:15.896Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pure Python Might be Faster than You Think">
+<meta name="twitter:description" content="Recently I was trying to improve the performance of some of my Python code by writing C/C++ extensions. Before I started I thought “well, I should be able to get 10x to 100x performance boost without">
+
+
+
+
+
+
+  <link rel="canonical" href="https://liwt31.github.io/2019/03/03/fast_python/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Pure Python Might be Faster than You Think | Weitang Li's blog</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112074287-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112074287-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Weitang Li's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">We've havered enough. Let's get tae work!</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/03/03/fast_python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pure Python Might be Faster than You Think
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-03 13:51:34 / Modified: 17:34:15" itemprop="dateCreated datePublished" datetime="2019-03-03T13:51:34+08:00">2019-03-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Recently I was trying to improve the performance of some of my Python code by writing C/C++ extensions. Before I started I thought “well, I should be able to get 10x to 100x performance boost without much effort”. But eventually I could only speed my program up for 2 to 3 times, with much effort. The gain in performance is too little to compensate the pain in development. To be honest, if it’s someone else’s code I’d probably say “hey, let’s just revert to the Python version Okay?”. At first I thought the poor performance is due to some mistakes in my C/C++ extension, but then I realized that it is due to my code is closely related to calling lib functions. What is that supposed to mean? Compare the following C++ and Python code that do set intersection, which is the simplified version of some of my code that I wished to gain much better performance with C/C++ extension.</p>
+<ul>
+<li><p>C++</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> s1 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line"><span class="keyword">auto</span> s2 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line"><span class="keyword">auto</span> s3 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line"><span class="comment">// s1 and s2 initlized...</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> j: s1)&#123;</span><br><span class="line">    <span class="keyword">if</span>(s2.find(j) != s2.end())&#123;</span><br><span class="line">        s3.insert(j);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s1 = set()</span><br><span class="line">s2 = set()</span><br><span class="line"><span class="comment"># s1 and s2 initlized...</span></span><br><span class="line">s3 = s1.intersection(s2)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>The two codes essentially do the same thing, and their cores are calling lib functions. For C++, it’s <code>find</code> and <code>insert</code>. And for Python, it’s <code>intersection</code>. This post will show why <strong>any attempt to speed up this python code is almost certainly in vain</strong>. The reasons are two-fold. For code like this:</p>
+<ul>
+<li>The time cost of Python is mostly in C level (for CPython) rather than Python level.</li>
+<li>The C level code for Python is very well constructed.</li>
+</ul>
+<a id="more"></a>
+<h2 id="C-C-or-Python-which-is-faster-on-set-intersection"><a href="#C-C-or-Python-which-is-faster-on-set-intersection" class="headerlink" title="C/C++ or Python, which is faster on set intersection?"></a>C/C++ or Python, which is faster on set intersection?</h2><p>One would easily expect the C++ version would do much better in this set intersection job. But let’s do two complete benchmarks on set intersection, at least to see if Python is almost as fast as C/C++. The set size is \(10^5\) and the intersection loops for 100 times.</p>
+<h3 id="Complete-benchmark-code-for-C"><a href="#Complete-benchmark-code-for-C" class="headerlink" title="Complete benchmark code for C++"></a>Complete benchmark code for C++</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> SZ = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> s1 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">    <span class="keyword">auto</span> s2 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">    <span class="keyword">auto</span> s3 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; SZ; i++)&#123;</span><br><span class="line">        s1.insert(rand() % SZ);</span><br><span class="line">        s2.insert(rand() % SZ);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> j: s1)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s2.find(j) != s2.end())&#123;</span><br><span class="line">                s3.insert(j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        s3.clear();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Compile with <code>O3</code> optimization:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -std=c++11 -O3 test_set.cpp</span><br></pre></td></tr></table></figure></p>
+<p>And test the time cost:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ time ./a.out</span><br><span class="line">./a.out  1.19s user 0.01s system 99% cpu 1.202 total</span><br></pre></td></tr></table></figure></p>
+<p>That’s about 1 sec. A back-of-the-envelope calculation: set size equals \(10^5\), which loops for \(10^2\) times, so total time cost equals \(10^7\). Considering both lookup and insertion requires hashing and random access to a large container inevitably leads to cache miss, the performance is acceptable. What about Python then?</p>
+<h3 id="Complete-benchmark-code-for-python"><a href="#Complete-benchmark-code-for-python" class="headerlink" title="Complete benchmark code for python"></a>Complete benchmark code for python</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">SZ = <span class="number">100000</span></span><br><span class="line"></span><br><span class="line">s1 = set()</span><br><span class="line">s2 = set()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(SZ):</span><br><span class="line">    s1.add(random.randint(<span class="number">0</span>, SZ))</span><br><span class="line">    s2.add(random.randint(<span class="number">0</span>, SZ))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    s3 = s1.intersection(s2)</span><br></pre></td></tr></table></figure>
+<p>Then test the time cost directly：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ time python test_set.py</span><br><span class="line">python p.py  0.97s user 0.04s system 99% cpu 1.010 total</span><br></pre></td></tr></table></figure></p>
+<p>It costs less than 1 sec and is even faster than C/C++! This result is totally reproducible, and there’s no obvious issue with the C++ intersection code (see <a href="https://stackoverflow.com/questions/47901339/unordered-set-intersection-in-c" target="_blank" rel="noopener">this</a>). So, it seems that the C code laying under Python is extremely efficient, but with smaller container size and larger loop cycles which is probably more realistic, C++ should be able to beat Python. By maintaining the whole computational cost constant and shrinking the size of the set at the same time, the threshold at which C++ overcomes Python can be found: </p>
+<table>
+<thead>
+<tr>
+<th>set size</th>
+<th>loop cycles</th>
+<th>C++ time</th>
+<th>Python time</th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\(10^5\)</td>
+<td>\(10^2\)</td>
+<td>1.20 s</td>
+<td>0.97 s</td>
+<td>1.2</td>
+</tr>
+<tr>
+<td>\(10^4\)</td>
+<td>\(10^3\)</td>
+<td>0.51 s</td>
+<td>0.37 s</td>
+<td>1.4</td>
+</tr>
+<tr>
+<td>\(10^3\)</td>
+<td>\(10^4\)</td>
+<td>0.33 s</td>
+<td>0.21 s</td>
+<td>1.6</td>
+</tr>
+<tr>
+<td>\(10^2\)</td>
+<td>\(10^5\)</td>
+<td>0.27 s</td>
+<td>0.14 s</td>
+<td>1.9</td>
+</tr>
+<tr>
+<td>\(10^1\)</td>
+<td>\(10^6\)</td>
+<td>0.27 s</td>
+<td>0.35 s</td>
+<td>0.77</td>
+</tr>
+</tbody>
+</table>
+<p>The result is unexpected —- only when the size is about 10 does C++ become faster than Python! With size 100, the speed of Python is twice of the speed of C++! When the set becomes smaller, the speed of C++ and Python both increase initially, arguably due to improvement of data locality. But the speed of Python decreases when the loop cycles hit \(10^6\) because of the accumulated overhead for every loop at interpreter level.<br>Why’s Python so fast? Looking at the code for set intersection gives the answer:<br><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (set_next((PySetObject *)other, &amp;pos, &amp;entry)) &#123;</span><br><span class="line">    <span class="built_in">key</span> = entry-&gt;<span class="built_in">key</span>;</span><br><span class="line">    hash = entry-&gt;hash;</span><br><span class="line">    rv = set_contains_entry(so, <span class="built_in">key</span>, hash);</span><br><span class="line">    <span class="keyword">if</span> (rv &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        Py_DECREF(result);</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (rv) &#123;</span><br><span class="line">        <span class="keyword">if</span> (set_add_entry(result, <span class="built_in">key</span>, hash)) &#123;</span><br><span class="line">            Py_DECREF(result);</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>For the naive C++ code, hash is done twice for each intersection integer. For Python, no hash is done:</p>
+<ul>
+<li>Python supports adding element to set with given hash value, reducing 1 hash.</li>
+<li>Python stores hash value along with data elements in the set, reducing 1 hash.</li>
+</ul>
+<h2 id="Still-C-C-is-faster-than-Python-generally"><a href="#Still-C-C-is-faster-than-Python-generally" class="headerlink" title="Still, C/C++ is faster than Python generally"></a>Still, C/C++ is faster than Python generally</h2><p>We’ve seen lots of <a href="https://benchmarksgame-team.pages.debian.net/benchmarksgame/faster/python3-gcc.html" target="_blank" rel="noopener">benchmarks</a> telling that C/C++ is about 10x to 100x faster then Python. How can the benchmark and this post reconcile? For the 100x difference to be correct, the following statement must stand:</p>
+<ul>
+<li>The Python version should do more than \(10^7\) loops per sec to compete with C/C++ version.</li>
+</ul>
+<p>This happens to most benchmarks, but not to many real-world applications. Benchmarks typically are loop-intensive as they intend to accomplish something meaningful in a handful of code with minimal dependency. They also have a preference for numerical operations, because it’s basic and prevailing, but this is Python’s exact weak point. In real world applications, programs tend to call lots of lib functions and few will do more than \(10^7\) loops per sec. When the majority of time is spent on lib function instead of arithmetic operation, Python’s outstanding lib is able to provide us many surprises. It’s CPython that invented Timsort, a very advanced sorting algorithm, and compact dict, an \(\mathcal{O}(1)\) time cost ordered dict.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>TL;DR: <strong>Only Python code that do more than \(10^7\) loops per sec has the potential for 10x-100x speedup with C/C++ extension</strong>. The code I wished to improve generally has \(10^5\) to \(10^6\) loops per sec. In each loop, a significant number of Python functions are called. In this case, the room for further performance optimization is really small, as Python libs are very well tuned. If these Python libs are replaced with C/C++ lib, the speed might even become slower. There are exceptions, of course, for example, an array of 64-bit int is better than a list of Python int in many ways. But care must be taken when trying to do such optimizations.</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/28/numpy_view/" rel="next" title="警惕NumPy切片视图(Slice View)中的“内存泄漏”陷阱">
+                <i class="fa fa-chevron-left"></i> 警惕NumPy切片视图(Slice View)中的“内存泄漏”陷阱
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Weitang Li</p>
+              <p class="site-description motion-element" itemprop="description">Weitang Li's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liwt31" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:liwt31@163.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-C-or-Python-which-is-faster-on-set-intersection"><span class="nav-number">1.</span> <span class="nav-text">C/C++ or Python, which is faster on set intersection?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Complete-benchmark-code-for-C"><span class="nav-number">1.1.</span> <span class="nav-text">Complete benchmark code for C++</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Complete-benchmark-code-for-python"><span class="nav-number">1.2.</span> <span class="nav-text">Complete benchmark code for python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Still-C-C-is-faster-than-Python-generally"><span class="nav-number">2.</span> <span class="nav-text">Still, C/C++ is faster than Python generally</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">3.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weitang Li</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
