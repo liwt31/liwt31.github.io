@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="“你印象最深的一次debug经历是什么？”——这是一道经典的面试问题。为了准备面试，我平时为这个问题积累了不少素材，其中有倒推发现原paper推导错误的，有因为debug需求而专门写了工具的，可总觉得好像不够火候。 我人生中所缺少的这终极bug，上个星期终于来了。我花了一个星期的时间，到昨天已经绝望，谁知柳暗花明醍醐灌顶，今天终于将其攻克，感觉有50%概率这会是我这辈子中印象最深的一次debug。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次刻骨铭心的debug">
+<meta property="og:url" content="https://liwt31.github.io/2019/03/08/the_debug/index.html">
+<meta property="og:site_name" content="Weitang Li&#39;s blog">
+<meta property="og:description" content="“你印象最深的一次debug经历是什么？”——这是一道经典的面试问题。为了准备面试，我平时为这个问题积累了不少素材，其中有倒推发现原paper推导错误的，有因为debug需求而专门写了工具的，可总觉得好像不够火候。 我人生中所缺少的这终极bug，上个星期终于来了。我花了一个星期的时间，到昨天已经绝望，谁知柳暗花明醍醐灌顶，今天终于将其攻克，感觉有50%概率这会是我这辈子中印象最深的一次debug。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://user-images.githubusercontent.com/22628546/54065109-aab32a80-4256-11e9-9570-8abc5e313d0d.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/22628546/54065108-aab32a80-4256-11e9-832f-3c5102a92bf9.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/22628546/54065575-c1a94b00-425d-11e9-9e2b-3018c77042ab.png">
+<meta property="og:updated_time" content="2019-03-09T08:38:49.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次刻骨铭心的debug">
+<meta name="twitter:description" content="“你印象最深的一次debug经历是什么？”——这是一道经典的面试问题。为了准备面试，我平时为这个问题积累了不少素材，其中有倒推发现原paper推导错误的，有因为debug需求而专门写了工具的，可总觉得好像不够火候。 我人生中所缺少的这终极bug，上个星期终于来了。我花了一个星期的时间，到昨天已经绝望，谁知柳暗花明醍醐灌顶，今天终于将其攻克，感觉有50%概率这会是我这辈子中印象最深的一次debug。">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/22628546/54065109-aab32a80-4256-11e9-9570-8abc5e313d0d.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://liwt31.github.io/2019/03/08/the_debug/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>记一次刻骨铭心的debug | Weitang Li's blog</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112074287-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112074287-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Weitang Li's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">We've havered enough. Let's get tae work!</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/03/08/the_debug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">记一次刻骨铭心的debug
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-08 20:23:21" itemprop="dateCreated datePublished" datetime="2019-03-08T20:23:21+08:00">2019-03-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-09 16:38:49" itemprop="dateModified" datetime="2019-03-09T16:38:49+08:00">2019-03-09</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>“你印象最深的一次debug经历是什么？”——这是一道经典的面试问题。为了准备面试，我平时为这个问题积累了不少素材，其中有倒推发现原paper推导错误的，有因为debug需求而专门写了工具的，可总觉得好像不够火候。</p>
+<p>我人生中所缺少的这终极bug，上个星期终于来了。我花了一个星期的时间，到昨天已经绝望，谁知柳暗花明醍醐灌顶，今天终于将其攻克，感觉有50%概率这会是我这辈子中印象最深的一次debug。</p>
+<p>这次的bug有以下几个特点：</p>
+<ul>
+<li>是第三方库的bug。所以必须要去看第三方库的源代码，搞清楚人家的代码是干什么的，然后自己hack，自己编译。</li>
+<li>是一个<em>Higgs-Bugson</em>。只存在于日志中，通过生产环境复现。这一个特性有两个结果：<ul>
+<li>枪毙了基于断点的debug方法，因为事先不知道bug会在什么时候发生。</li>
+<li>第三方库的开发人员不可能有效参与debug过程。</li>
+</ul>
+</li>
+<li>最最重要的是：<strong>情节曲折离奇；结局出人意料，又在情理之中</strong>。</li>
+<li>debug过程使我掌握了一个内存调度算法，收获了一些debug技巧，加深了对程序语言的特性的认识。</li>
+</ul>
+<a id="more"></a>
+<h1 id="楔子"><a href="#楔子" class="headerlink" title="楔子"></a>楔子</h1><p>最近在开发一个Python数值计算的库，其中与GPU交互的部分选择了<a href="https://github.com/cupy/cupy/" target="_blank" rel="noopener">cupy</a>作为接口。代码写好了之后，跑简单的测试没问题，一跑长时间的任务就会出现这样的错误：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  File <span class="string">"cupy/cuda/memory.pyx"</span>, line <span class="number">521</span>, <span class="keyword">in</span> cupy<span class="selector-class">.cuda</span><span class="selector-class">.memory</span><span class="selector-class">.alloc</span></span><br><span class="line">  File <span class="string">"cupy/cuda/memory.pyx"</span>, line <span class="number">1098</span>, <span class="keyword">in</span> cupy<span class="selector-class">.cuda</span><span class="selector-class">.memory</span><span class="selector-class">.MemoryPool</span><span class="selector-class">.malloc</span></span><br><span class="line">  File <span class="string">"cupy/cuda/memory.pyx"</span>, line <span class="number">1119</span>, <span class="keyword">in</span> cupy<span class="selector-class">.cuda</span><span class="selector-class">.memory</span><span class="selector-class">.MemoryPool</span><span class="selector-class">.malloc</span></span><br><span class="line">  File <span class="string">"cupy/cuda/memory.pyx"</span>, line <span class="number">933</span>, <span class="keyword">in</span> cupy<span class="selector-class">.cuda</span><span class="selector-class">.memory</span><span class="selector-class">.SingleDeviceMemoryPool</span><span class="selector-class">.malloc</span></span><br><span class="line">  File <span class="string">"cupy/cuda/memory.pyx"</span>, line <span class="number">949</span>, <span class="keyword">in</span> cupy<span class="selector-class">.cuda</span><span class="selector-class">.memory</span><span class="selector-class">.SingleDeviceMemoryPool</span>._malloc</span><br><span class="line">  File <span class="string">"cupy/cuda/memory.pyx"</span>, line <span class="number">698</span>, <span class="keyword">in</span> cupy<span class="selector-class">.cuda</span><span class="selector-class">.memory</span>._get_chunk</span><br><span class="line">  File <span class="string">"cupy/cuda/memory.pyx"</span>, line <span class="number">224</span>, <span class="keyword">in</span> cupy<span class="selector-class">.cuda</span><span class="selector-class">.memory</span>._Chunk.split</span><br><span class="line">AssertionError</span><br></pre></td></tr></table></figure></p>
+<p>这是Traceback的下半部分。上半部分基本上是我写的数值计算代码，每次的调用堆栈都不一样，显然和这个bug没有直接关系。这个Traceback提供的信息非常有限，只能大概确定这个bug和<code>cupy</code>的GPU内存调度算法失效有关。</p>
+<p>首先上Github查issue，发现没有任何信息。然后尝试多个不同的环境，比如不同GPU，CUDA版本，<code>cupy</code>版本等等，发现时间一长这个错误都会出现。短的可能十分钟，长的要十几个小时。与此同时简单研究了一下文档，发现可以手动关闭<code>cupy</code>的内存调度，每次创建数组直接调用<code>cudaMalloc</code>，绕开这一部分代码。在关闭了<code>cupy</code>内存调度之后这个bug果然消失了，代价是计算速度慢了3到4倍，这对于一个数值计算库来说显然是不可接受的。于是咬咬牙准备好好查一查bug的来源。</p>
+<p>以下所有<code>cupy</code>代码适用但不限于5.2.0和5.3.0版本。</p>
+<h1 id="cupy的GPU内存调度算法"><a href="#cupy的GPU内存调度算法" class="headerlink" title="cupy的GPU内存调度算法"></a><code>cupy</code>的GPU内存调度算法</h1><p>从<code>AssertionError</code>的调用堆栈上来看，是在分配内存的时候发生的错误，最后调用的<code>split</code>函数如下（Cython）：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cpdef _Chunk split(self, size_t size):</span><br><span class="line">    <span class="string">"""Split contiguous block of a larger allocation"""</span></span><br><span class="line">    cdef _Chunk remaining</span><br><span class="line">    <span class="keyword">assert</span> self.size &gt;= size</span><br><span class="line">    <span class="keyword">if</span> self.size == size:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    remaining = _Chunk.__new__(_Chunk)</span><br><span class="line">    remaining._init(self.mem, self.offset + size, self.size - size,</span><br><span class="line">                    self.stream_ptr)</span><br><span class="line">    self.size = size</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> self.next <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        remaining.next = self.next</span><br><span class="line">        remaining.next.prev = remaining</span><br><span class="line">    self.next = remaining</span><br><span class="line">    remaining.prev = self</span><br><span class="line">    <span class="keyword">return</span> remaining</span><br></pre></td></tr></table></figure></p>
+<p>其中的的<code>assert self.size &gt;= size</code>就是直接引起<code>AssertionError</code>的代码了。这个<code>assert</code>保护了下面的代码不会出现溢出之类的异常，但本身并没有为debug提供什么有用信息。再往上一层的<code>_get_chunk</code>就显得更有趣一些：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">cdef object _get_chunk(SingleDeviceMemoryPool pool, size_t size,</span><br><span class="line">                       size_t stream_ptr):</span><br><span class="line">    <span class="comment"># need self._free_lock</span></span><br><span class="line">    cdef set free_list</span><br><span class="line">    cdef size_t i, index, length</span><br><span class="line">    cdef _Chunk chunk</span><br><span class="line">    cdef size_t bin_index = _bin_index_from_size(size)</span><br><span class="line">    cdef list arena = pool._arena(stream_ptr)</span><br><span class="line">    a_index = pool._arena_index(stream_ptr)</span><br><span class="line">    a_flag = pool._arena_flag(stream_ptr)</span><br><span class="line">    index = &lt;size_t&gt;(</span><br><span class="line">        algorithm.lower_bound(a_index.begin(), a_index.end(), bin_index)</span><br><span class="line">        - a_index.begin())</span><br><span class="line">    length = a_index.size()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(index, length):</span><br><span class="line">        <span class="keyword">if</span> a_flag.at(i) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        free_list = arena[i]</span><br><span class="line">        chunk = free_list.pop()</span><br><span class="line">        <span class="keyword">if</span> len(free_list) == <span class="number">0</span>:</span><br><span class="line">            dereference(a_flag)[i] = <span class="number">0</span></span><br><span class="line">            arena[i] = <span class="keyword">None</span></span><br><span class="line">        <span class="keyword">if</span> i - index &gt;= _index_compaction_threshold:</span><br><span class="line">            _compact_index(pool, stream_ptr, <span class="keyword">False</span>)</span><br><span class="line">        remaining = chunk.split(size)</span><br><span class="line">        <span class="keyword">if</span> remaining <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            _append_to_free_list(arena, a_index, a_flag, remaining)</span><br><span class="line">        <span class="keyword">assert</span> chunk.stream_ptr == stream_ptr</span><br><span class="line">        <span class="keyword">return</span> chunk</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure></p>
+<p>这个函数包含了丰富的逻辑，在调用<code>chunk.split(size)</code>时如果该<code>chunk</code>的大小没有达到<code>size</code>的要求，就会引起错误。那什么情况下<code>chunk</code>的大小会小于预期呢？这就必须对<code>cupy</code>的内存调度算法有所了解，搞明白各个变量的不变量是什么才可以。</p>
+<p><strong><code>cupy</code>的GPU内存管理算法叫做<em>best-fit with coalescing</em>，简称BFC，与<code>tensorflow</code>采用了相同的算法</strong>。原理也简单，所有内存被组织为一个双向链表，链表的每个结点即称为<code>chunk</code>。每个chunk的大小规定为某个数值（比如本例中512 Bytes）的整数倍。相邻的结点如果都没有被使用可以合并，大的节点可以随时被<code>split</code>成两个相邻的小结点供使用。为了加快内存分配，额外维护一个向量，起字典的作用，将所需的内存大小直接映射为可用<code>chunk</code>的集合。</p>
+<p><code>cupy</code>的内存分配代码在2015年刚写的时候还是很简洁漂亮的，后来因为要有新的feature以及要做优化变得丑陋了一些，但总的来说不难理解。就拿我们这里的<code>_get_chunk</code>函数的若干个重要变量来说吧:</p>
+<ul>
+<li><code>pool</code>表示当前设备的内存池</li>
+<li><code>size</code>表示所需的<code>chunk</code>的大小</li>
+<li><code>stream_ptr</code>可以认为是GPU流式计算的线程ID。在我的应用中只有一个流即所谓的NULL流，<code>stream_ptr</code>也一直是0，没有什么作用。</li>
+<li>从<code>pool</code>中结合<code>stream_ptr</code>取出了三个重要参数<code>arena</code>，<code>a_index</code>和<code>a_flag</code>。<ul>
+<li><code>arena</code>是一个Python的<code>list</code>，元素为<code>set</code>，每个<code>set</code>中包含了大小为某个值的所有可用<code>chunk</code>。</li>
+<li><code>a_index</code>是一个<code>vector&lt;size_t&gt;</code>的指针，大小和<code>arena</code>相同。它的每个元素指出了<code>arena</code>中相同位置的元素（即<code>set</code>）所包含的<code>chunk</code>的大小。如<code>{0,3}</code>表示<code>arena</code>中第一个<code>set</code>的大小是512 Bytes, 第二个是2048 Bytes。</li>
+<li><code>a_flag</code>是一个<code>vector&lt;int8_t&gt;</code>的指针，大小也和<code>arena</code>相同，元素取值0或1，指出了<code>a_index</code>的有效性。当特定大小的<code>chunk</code>被耗尽时，原则上应该立刻把<code>arena</code>和<code>a_index</code>中相应的条目删除，但这些对于数组类型的数据结构来说是\(\mathcal{O}(N)\)级别的操作，十分昂贵。为了减小这部分开销引入了<code>a_flag</code>，当特定大小的<code>chunk</code>被耗尽时，只需对<code>a_flag</code>中相应的条目置0即可。这比起判断<code>arena</code>中的<code>set</code>是否为空要快上非常多。当<code>a_flag</code>变得十分稀疏，影响效率时，对其进行一次压缩操作（<code>_compact_index</code>），使删除元素的分摊复杂度大约为\(\mathcal{O}(1)\)。</li>
+</ul>
+</li>
+<li>以上三个数组原则上可以是无序的，但是维持它们有序可以更快地进行查找，因此<strong><code>a_index</code>是一个单调上升的数组</strong>，<code>arena</code>中每个<code>set</code>包含的<code>chunk</code>的大小也单调增加。</li>
+</ul>
+<p>理解了这些数据结构，<code>_get_chunk</code>的逻辑也就变得清晰了。<code>_get_chunk</code>函数将首先试图从当前内存池中找到大小（<code>chunk.size</code>）大于等于<code>size</code>要求的<code>chunk</code>。如果成功将这个<code>chunk</code>分成两份一份给调用者使用一份扔回内存池中。如果失败则返回<code>None</code>，由调用者请求GPU再分配内存。“找到大小大于等于<code>size</code>要求的<code>chunk</code>”分为两步：</p>
+<ol>
+<li>调用STL的<code>lower_bound</code>函数从有序数组<code>a_index</code>中进行二分查找找到大小足够的<code>chunk</code>的索引的下界。<code>arena</code>中大于该索引的所有<code>set</code>原则上都可以使用。</li>
+<li>从小到大遍历这些<code>set</code>，跳过被<code>a_flag</code>标为无效的部分，找到一个最小的。</li>
+</ol>
+<p>显然，如果这个算法正常运行，<code>chunk.split(size)</code>一定会成功。单从肉眼看的话<code>_get_chunk</code>的逻辑没有问题，是骡子是马debug一下才能知道。</p>
+<h1 id="稳步推进"><a href="#稳步推进" class="headerlink" title="稳步推进"></a>稳步推进</h1><p>由于我面对的是一个<em>Higgs-Bugson</em>，内存分配在发生bug之前可能被执行数百万次，在<code>_get_chunk</code>中打个断点然后一步一步慢慢看是行不通的，只能基于日志debug：</p>
+<ol>
+<li>首先写打印<code>SingleDeviceMemoryPool</code>和<code>_Chunk</code>的函数</li>
+<li>在<code>_get_chunk</code>中对拿到的<code>chunk</code>进行判断，如果发现大小不满足要求，打印当前的<code>pool</code>和<code>chunk</code></li>
+<li>运行程序并做别的事情</li>
+</ol>
+<p>过程其实颇类似于钓鱼。在“做别的事情”时，我也不是没有想过稳定重现这个bug。如果成功，debug会方便很多，打个比方的话相当于时间开销从线性量级变成常数量级。于是我给<code>cupy</code>的内存调度模块写了一些压力测试，结果都完美pass。“记录所有的内存分配、释放然后重放”也是一个主意，但接下来的进展让我打消了这些想法。</p>
+<p><code>_get_chunk</code>模块很快就证明了自身的清白，在打印出的日志中，<strong><code>a_index</code>不再是单调上升的</strong>，而是会在中间出现一个峰：<br><img src="https://user-images.githubusercontent.com/22628546/54065109-aab32a80-4256-11e9-9570-8abc5e313d0d.png" alt="a_index"></p>
+<p>这意味着基于有序数组的<code>lower_bound</code>函数将不能保证在其返回的迭代器之后只有大于<code>size</code>的元素，找到的<code>chunk</code>自然就有可能小于<code>size</code>的要求，引起<code>AssertionError</code>。</p>
+<p>尽管<code>a_index</code>不再有序，其它要求<code>arena</code>、<code>a_flag</code>与<code>a_index</code>符合的不变量，如长度相等、<code>arena</code>中的<code>chunk</code>的大小与<code>a_index</code>中对应等都得到满足。所以<strong>问题应该出在操作<code>a_index</code>的函数里而不在<code>_get_chunk</code>中</strong>。</p>
+<p>尽管问题变得复杂化了，但取得了确定的进展，总的来说是个好消息。而且在<code>_get_chunk</code>中有一个<code>_compact_index</code>函数调用，很像是bug的源头：</p>
+<ul>
+<li><code>_compact_index</code>显然是一个操作<code>a_index</code>的函数</li>
+<li>该逻辑只有在<code>i - index &gt;= _index_compaction_threshold</code>或者说<code>a_flag</code>变得足够稀疏时才会执行，这就解释了<em>Higgs-Bugson</em>的存在</li>
+</ul>
+<p>我按照这个线索追了一阵，由于最后确实不是<code>_compact_index</code>的原因就不细说了，总之没有什么进展，所以还是按老办法继续debug：</p>
+<ol>
+<li>写检查<code>a_index</code>有序的函数</li>
+<li>在各个对<code>a_index</code>进行操作的函数返回之前检查<code>a_index</code>是否有序，如果不再有序则打印<code>pool</code>及其他感兴趣的局部变量</li>
+<li>运行程序并做别的事情</li>
+</ol>
+<p>经过对日志的分析，确定<code>_append_to_free_list</code>函数最可疑。在这个函数返回时，<code>a_index</code>变得无序的日志第一次出现，而进入这个函数时<code>a_index</code>仍然是有序的。因此可以有把握地说：<strong><code>_append_to_free_list</code>中的某些操作导致了<code>a_index</code>变得无序</strong>。这个函数讲道理也不长，逻辑也不复杂：</p>
+<ul>
+<li>函数的目的是将新创建的<code>chunk</code>放入<code>arena</code>中合理的位置，同时更新<code>a_index</code>和<code>a_flag</code>维持不变量。</li>
+<li>唯一的一个分支，是对<code>arena</code>中是否有大小与新创建的<code>chunk</code>大小相同的<code>chunk</code>集合做判断。如果有，则直接将<code>chunk</code>放入该集合即可。如果没有，则在<code>arene</code>中创建一个集合，并在<code>a_index</code>和<code>a_flag</code>中创建相应的条目。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">cdef _append_to_free_list(list arena, vector.vector[size_t]* a_index,</span><br><span class="line">                          vector.vector[int8_t]* a_flag, _Chunk chunk):</span><br><span class="line">    <span class="comment"># need self._free_lock</span></span><br><span class="line">    cdef size_t index, bin_index</span><br><span class="line">    cdef set free_list</span><br><span class="line">    bin_index = _bin_index_from_size(chunk.size)</span><br><span class="line">    index = &lt;size_t&gt;(</span><br><span class="line">        algorithm.lower_bound(a_index.begin(), a_index.end(), bin_index)</span><br><span class="line">        - a_index.begin())</span><br><span class="line">    <span class="keyword">if</span> index &lt; a_index.size() <span class="keyword">and</span> a_index.at(index) == bin_index:</span><br><span class="line">        free_list = arena[index]</span><br><span class="line">        <span class="keyword">if</span> free_list <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            arena[index] = free_list = set()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        free_list = set()</span><br><span class="line">        a_index.insert(a_index.begin() + index, bin_index)</span><br><span class="line">        a_flag.insert(a_flag.begin() + index, <span class="number">0</span>)</span><br><span class="line">        arena.insert(index, free_list)</span><br><span class="line">    free_list.add(chunk)</span><br><span class="line">    dereference(a_flag)[index] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>既然确定bug就在这几行里，Cython又是静态类型，肉眼看一看应该就能发现错误了吧。然而我对着这段代码盯了半天，死活找不到可能的错误。而且这段代码如果有逻辑错误的话，之前执行了1000000次都没错，为什么第1000001次就错了呢？</p>
+<h1 id="疑云渐起"><a href="#疑云渐起" class="headerlink" title="疑云渐起"></a>疑云渐起</h1><p>没办法，接着做日志debug吧：在函数返回之前（函数最后一行<code>dereference(a_flag)[index] = 1</code>之后），若<code>a_index</code>不再有序，除了打印<code>a_index</code>之外，打印更多的debug信息，如<code>bin_index</code>，<code>index</code>等等。然而结果却让我大惑不解：<br><img src="https://user-images.githubusercontent.com/22628546/54065108-aab32a80-4256-11e9-832f-3c5102a92bf9.png" alt="append1"></p>
+<p>从图中可以看出，<strong><code>chunk</code>被准确地插入到了<code>index</code>所标志的位置，然而问题是<code>index</code>所标志的位置（90）是不正确的</strong>，正确的位置是132。也就是说，下面这段STL函数调用：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index = &lt;size_t&gt;(</span><br><span class="line">    algorithm.lower_bound(<span class="name">a_index</span>.begin(), a_index.end(), bin_index)</span><br><span class="line">    - a_index.begin())</span><br></pre></td></tr></table></figure></p>
+<p>本来应该返回132，实际中却返回了90，导致<code>chunk</code>被插入到了错误的位置，使<code>a_index</code>失去有序性。</p>
+<p>至此，我开始有了走入死胡同的感觉。明明把敌人逼到了墙角，却变得看不见摸不着。STL调用出问题的概率小于我现在直接被雷劈死，检查Cython编译生成的<code>cpp</code>文件也没有问题，在STL调用后插入debug代码记录的<code>index</code>值也与函数返回时的<code>index</code>值相同。我在这里无头苍蝇一样乱撞了很久，获得了许多非常难以解释的日志信息。比如说下面这段插入了<code>debug</code>代码，试图记录分支执行轨迹的<code>_append_to_free_list</code>：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">cdef _append_to_free_list(list arena, vector.vector[size_t]* a_index,</span><br><span class="line">                          vector.vector[int8_t]* a_flag, _Chunk chunk):</span><br><span class="line">    <span class="comment"># need self._free_lock</span></span><br><span class="line">    cdef size_t index, bin_index</span><br><span class="line">    cdef set free_list</span><br><span class="line">    bin_index = _bin_index_from_size(chunk.size)</span><br><span class="line">    index = &lt;size_t&gt;(</span><br><span class="line">        algorithm.lower_bound(a_index.begin(), a_index.end(), bin_index)</span><br><span class="line">        - a_index.begin())</span><br><span class="line">    <span class="comment">#XXXXXX debug XXXXXXX</span></span><br><span class="line">    cdef int path = <span class="number">0</span></span><br><span class="line">    <span class="comment">#XXXXXX debug XXXXXXX</span></span><br><span class="line">    <span class="keyword">if</span> index &lt; a_index.size() <span class="keyword">and</span> a_index.at(index) == bin_index:</span><br><span class="line">        <span class="comment">#XXXXXX debug XXXXXXX</span></span><br><span class="line">        path = <span class="number">1</span></span><br><span class="line">        <span class="comment">#XXXXXX debug XXXXXXX</span></span><br><span class="line">        free_list = arena[index]</span><br><span class="line">        <span class="keyword">if</span> free_list <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="comment">#XXXXXX debug XXXXXXX</span></span><br><span class="line">            path = <span class="number">2</span></span><br><span class="line">            print(index)</span><br><span class="line">            <span class="comment">#XXXXXX debug XXXXXXX</span></span><br><span class="line">            arena[index] = free_list = set()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        free_list = set()</span><br><span class="line">        a_index.insert(a_index.begin() + index, bin_index)</span><br><span class="line">        a_flag.insert(a_flag.begin() + index, <span class="number">0</span>)</span><br><span class="line">        arena.insert(index, free_list)</span><br><span class="line">    free_list.add(chunk)</span><br><span class="line">    dereference(a_flag)[index] = <span class="number">1</span></span><br><span class="line">    <span class="comment">#XXXXXX debug XXXXXXX</span></span><br><span class="line">    print(<span class="string">"---append log---"</span>)</span><br><span class="line">    print(path, index)</span><br><span class="line">    <span class="comment">#XXXXXX debug XXXXXXX</span></span><br></pre></td></tr></table></figure></p>
+<p>每次调用时，正常的输出应该类似于这样（<code>[ ... ]</code>表示省略）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[ ... ]</span><br><span class="line">---append log---</span><br><span class="line">0, 100</span><br><span class="line">---append log---</span><br><span class="line">1, 80</span><br><span class="line">130</span><br><span class="line">---append log---</span><br><span class="line">2, 130</span><br><span class="line">[ ... ]  # 正常日志</span><br></pre></td></tr></table></figure></p>
+<p>而在出错日志之前，可以见到这样的输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ ... ]</span><br><span class="line">---append log---</span><br><span class="line">0, 100</span><br><span class="line">---append log---</span><br><span class="line">1, 80</span><br><span class="line">---append log---</span><br><span class="line">2, 130</span><br><span class="line">[ ... ]  # 出错日志</span><br></pre></td></tr></table></figure></p>
+<p>即尽管<code>path = 2</code>的分支确定无疑被执行了，与<code>path = 2</code>对应的那一条<code>print</code>信息却找不到了！另一个很诡异的现象是出错之前的<code>path</code>除了<code>2</code>以外有时还会是<code>0</code>。在排除了所有不可能的选项后，我不情愿地接受了一个现实：<strong>这些异常行为只能用未经正确同步互斥的并行执行解释</strong>：STL调用返回的<code>index</code>是正确的，但是在插入之前别的线程已经对<code>a_index</code>以及<code>arena</code>等数据结构做了修改，导致最后插入的位置不对。<code>cupy</code>曾经遇到过多线程的问题，后来加了可重入锁解决，现在看来这个锁还有缺陷。这个猜想能够解释目前观察到的所有现象，而且也是Gihub上一个类似<a href="https://github.com/cupy/cupy/issues/317" target="_blank" rel="noopener">issue</a>的原因。我之所以不愿意接受，原因很简单，能debug单线程代码的话谁愿意debug并行代码呢？</p>
+<h1 id="单线程程序的上下文切换？context-switch-in-single-thread"><a href="#单线程程序的上下文切换？context-switch-in-single-thread" class="headerlink" title="单线程程序的上下文切换？context switch in single thread?"></a>单线程程序的上下文切换？context switch in single thread?</h1><p>要验证这个猜想，可以在进入<code>_append_to_free_list</code>时对<code>a_index</code>做一个局部的拷贝，发现异常时打印出来即可。好消息是，结果符合预期：<br><img src="https://user-images.githubusercontent.com/22628546/54065575-c1a94b00-425d-11e9-9e2b-3018c77042ab.png" alt="append2"></p>
+<p>可见进入函数体时，<code>lower_bound</code>找到了正确的<code>index</code>，而<strong>从进入函数体到函数体结束，<code>a_index</code>确实被别的程序修改了</strong>，最后导致插入位置错误。现在的问题是，什么程序修改了<code>a_index</code>？我自己写的数值计算部分没有与并行执行有关的内容，查阅<code>cupy</code>的文档和源代码也没有并行执行的部分。而<code>_append_to_free_list</code>中使用Python的<code>threading.active_count()</code>结果始终为1。</p>
+<p>不得已拿<code>strace</code>和<code>gdb</code>强行看了一下，发现除了主线程之外，有三个新线程生成：<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(gdb) info threads</span><br><span class="line">  Id   Target Id         Frame </span><br><span class="line">* <span class="number">1</span>    Thread <span class="number">0x7f1dc9917700</span> (LWP <span class="number">5688</span>) <span class="string">"python"</span> <span class="number">0x000056269f2ff411</span> <span class="keyword">in</span> PyObject_GetAttr () <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Objects/object.c:<span class="number">918</span></span><br><span class="line">  <span class="number">2</span>    Thread <span class="number">0x7f1d9fa78700</span> (LWP <span class="number">5690</span>) <span class="string">"python"</span> <span class="number">0x00007f1dc92338c8</span> <span class="keyword">in</span> accept4 (fd=<span class="number">9</span>, addr=..., addr_len=<span class="number">0x7f1d9fa77e58</span>, flags=<span class="number">524288</span>) <span class="meta">at</span> ../sysdeps/unix/sysv/linux/accept4.c:<span class="number">40</span></span><br><span class="line">  <span class="number">3</span>    Thread <span class="number">0x7f1d9f277700</span> (LWP <span class="number">5691</span>) <span class="string">"python"</span> <span class="number">0x00007f1dc922674d</span> <span class="keyword">in</span> poll () <span class="meta">at</span> ../sysdeps/unix/<span class="keyword">syscall</span>-template.S:<span class="number">84</span></span><br><span class="line">  <span class="number">4</span>    Thread <span class="number">0x7f1d9ea76700</span> (LWP <span class="number">5692</span>) <span class="string">"python"</span> pthread_cond_timedwait@@GLIBC_2<span class="meta">.3</span><span class="meta">.2</span> () <span class="meta">at</span> ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:<span class="number">225</span></span><br></pre></td></tr></table></figure></p>
+<p>然而仔细一研究发现这三个线程好像都是用来给CUDA服务的，并不涉及用户层（<code>cupy</code>）的代码。无法，还是老老实实打印日志看，抄了一个查看当前<code>tid</code>的工具函数在每个操作<code>a_index</code>的函数中都加了打印当前<code>tid</code>的代码：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cdef extern <span class="keyword">from</span> <span class="string">"&lt;sys/syscall.h&gt;"</span> nogil:</span><br><span class="line">    <span class="keyword">int</span> __NR_gettid</span><br><span class="line">    <span class="keyword">long</span> syscall(<span class="keyword">long</span> number, ...)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> gettid():</span><br><span class="line">    <span class="keyword">return</span> syscall(__NR_gettid)</span><br></pre></td></tr></table></figure></p>
+<p>结果让我大跌眼镜：所有的日志都显示了同样的<code>tid</code>，<strong>所有操作都是同一个线程在执行</strong>，即使是那些出错日志之前的修改<code>a_index</code>的操作！当时我的感觉只有一个那就是见了鬼了。单线程程序有上下文切换吗？我不禁思考起了宇宙和人生。</p>
+<h1 id="Python原罪"><a href="#Python原罪" class="headerlink" title="Python原罪"></a>Python原罪</h1><p>在我决定向别人求助，开始准备材料和措辞时，突然想到：会不会是在执行<code>_append_to_free_list</code>时存在某种递归呢？我想起了在写Python的C/C++扩展时一个原则：<a href="https://docs.python.org/3/c-api/refcounting.html#c.Py_DECREF" target="_blank" rel="noopener">当你减少一个对象的引用计数时，牢记此时任何代码都可能被执行</a>。如果<code>_append_to_free_list</code>中存在减少引用计数的代码，然后引起了<code>chunk</code>的回收并引发一系列其他的维护内存池的代码，就有可能产生递归并导致<code>a_index</code>指针指向的数组被修改。如此就产生了单线程上下文切换的假象，而这种假象是通过程序员没有意识到的函数调用营造的。</p>
+<p>为此我又细细查看了一遍Cython编译的cpp文件，发现并没有对任何有意义的Python对象减少引用计数的代码。要想拿到实锤，还是得看traceback。对于Python的栈帧来说traceback很容易看，但是Cython的traceback就只能用gdb来看了。于是我用一个全局变量来探测递归，并在发现递归时打印提示信息、进入死循环，接着运行程序，在见到提示信息后gdb切进去，<code>bt</code>一看，真相大白！<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(gdb) <span class="keyword">bt</span></span><br><span class="line">#<span class="number">0</span>  <span class="number">0x00007f1b3b1fc957</span> <span class="keyword">in</span> __pyx_f_4cupy_4cuda_6memory__append_to_free_list (__pyx_v_arena=__pyx_v_arena@entry=<span class="number">0x7f1b36ba3a88</span>, __pyx_v_a_index=__pyx_v_a_index@entry=<span class="number">0x559d6f9417d8</span>, </span><br><span class="line">    __pyx_v_a_flag=__pyx_v_a_flag@entry=<span class="number">0x559d6f911238</span>, __pyx_v_chunk=__pyx_v_chunk@entry=<span class="number">0x7f1b15dee528</span>) <span class="meta">at</span> cupy/cuda/memory.cpp:<span class="number">15413</span></span><br><span class="line">#<span class="number">1</span>  <span class="number">0x00007f1b3b1fdc0b</span> <span class="keyword">in</span> __pyx_f_4cupy_4cuda_6memory_22SingleDeviceMemoryPool_free (__pyx_v_self=__pyx_v_self@entry=<span class="number">0x7f1b36c0b2b8</span>, __pyx_v_ptr=__pyx_v_ptr@entry=<span class="number">30141793792</span>, __pyx_v_size=__pyx_v_size@entry=<span class="number">37376</span>, </span><br><span class="line">    __pyx_skip_dispatch=__pyx_skip_dispatch@entry=<span class="number">0</span>) <span class="meta">at</span> cupy/cuda/memory.cpp:<span class="number">19349</span></span><br><span class="line">#<span class="number">2</span>  <span class="number">0x00007f1b3b1ff6f3</span> <span class="keyword">in</span> __pyx_f_4cupy_4cuda_6memory_12PooledMemory_free (__pyx_v_self=__pyx_v_self@entry=<span class="number">0x7f1b13b64880</span>, __pyx_skip_dispatch=__pyx_skip_dispatch@entry=<span class="number">0</span>) <span class="meta">at</span> cupy/cuda/memory.cpp:<span class="number">12025</span></span><br><span class="line">#<span class="number">3</span>  <span class="number">0x00007f1b3b20100a</span> <span class="keyword">in</span> __pyx_pf_4cupy_4cuda_6memory_12PooledMemory_4__dealloc__ (__pyx_v_self=<span class="number">0x7f1b13b64880</span>) <span class="meta">at</span> cupy/cuda/memory.cpp:<span class="number">12482</span></span><br><span class="line">#<span class="number">4</span>  __pyx_pw_4cupy_4cuda_6memory_12PooledMemory_5__dealloc__ (__pyx_v_self=<span class="number">0x7f1b13b64880</span>) <span class="meta">at</span> cupy/cuda/memory.cpp:<span class="number">12435</span></span><br><span class="line">#<span class="number">5</span>  __pyx_tp_dealloc_4cupy_4cuda_6memory_PooledMemory (o=<span class="number">0x7f1b13b64880</span>) <span class="meta">at</span> cupy/cuda/memory.cpp:<span class="number">31215</span></span><br><span class="line">#<span class="number">6</span>  <span class="number">0x00007f1b3b1ccaf7</span> <span class="keyword">in</span> __pyx_tp_dealloc_4cupy_4cuda_6memory_MemoryPointer (o=<span class="number">0x7f1b300bd2d0</span>) <span class="meta">at</span> cupy/cuda/memory.cpp:<span class="number">30252</span></span><br><span class="line">#<span class="number">7</span>  <span class="number">0x00007f1b58d561b7</span> <span class="keyword">in</span> __pyx_tp_dealloc_4cupy_4core_4core_ndarray (o=<span class="number">0x7f1b13baf0d8</span>) <span class="meta">at</span> cupy/core/core.cpp:<span class="number">43849</span></span><br><span class="line">#<span class="number">8</span>  <span class="number">0x0000559d6e2cdcaa</span> <span class="keyword">in</span> dict_dealloc (mp=<span class="number">0x7f1b13d99ca8</span>) <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Objects/dictobject.c:<span class="number">2017</span></span><br><span class="line">#<span class="number">9</span>  subtype_clear (self=&lt;optimized <span class="keyword">out</span>&gt;) <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Objects/typeobject.c:<span class="number">1067</span></span><br><span class="line">#<span class="number">10</span> delete_garbage (old=&lt;optimized <span class="keyword">out</span>&gt;, collectable=&lt;optimized <span class="keyword">out</span>&gt;) <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Modules/gcmodule.c:<span class="number">864</span></span><br><span class="line">#<span class="number">11</span> collect () <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Modules/gcmodule.c:<span class="number">1016</span></span><br><span class="line">#<span class="number">12</span> <span class="number">0x0000559d6e34237d</span> <span class="keyword">in</span> collect_with_callback () <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Modules/gcmodule.c:<span class="number">1128</span></span><br><span class="line">#<span class="number">13</span> <span class="number">0x0000559d6e342430</span> <span class="keyword">in</span> collect_generations () <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Modules/gcmodule.c:<span class="number">1151</span></span><br><span class="line">#<span class="number">14</span> <span class="number">0x0000559d6e29f3a4</span> <span class="keyword">in</span> _PyObject_GC_Alloc (basicsize=basicsize@entry=<span class="number">139754271587664</span>, use_calloc=<span class="number">0</span>) <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Modules/gcmodule.c:<span class="number">1729</span></span><br><span class="line">#<span class="number">15</span> _PyObject_GC_Malloc () <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Modules/gcmodule.c:<span class="number">1739</span></span><br><span class="line">#<span class="number">16</span> <span class="number">0x0000559d6e2f42c5</span> <span class="keyword">in</span> PyType_GenericAlloc.localalias<span class="meta">.299</span> () <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Objects/typeobject.c:<span class="number">936</span></span><br><span class="line">#<span class="number">17</span> <span class="number">0x0000559d6e2bad68</span> <span class="keyword">in</span> make_new_set (iterable=<span class="number">0x0</span>, type=<span class="number">0x559d6e45bfe0</span> &lt;PySet_Type&gt;) <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Objects/setobject.c:<span class="number">1046</span></span><br><span class="line">#<span class="number">18</span> PySet_New () <span class="meta">at</span> /tmp/build/80754af9/python_1546130271559/work/Objects/setobject.c:<span class="number">2280</span></span><br><span class="line">#<span class="number">19</span> <span class="number">0x00007f1b3b1fcc46</span> <span class="keyword">in</span> __pyx_f_4cupy_4cuda_6memory__append_to_free_list (__pyx_v_arena=__pyx_v_arena@entry=<span class="number">0x7f1b36ba3a88</span>, __pyx_v_a_index=__pyx_v_a_index@entry=<span class="number">0x559d6f9417d8</span>, </span><br><span class="line">    __pyx_v_a_flag=__pyx_v_a_flag@entry=<span class="number">0x559d6f911238</span>, __pyx_v_chunk=__pyx_v_chunk@entry=<span class="number">0x7f1b3011a948</span>) <span class="meta">at</span> cupy/cuda/memory.cpp:<span class="number">15697</span></span><br><span class="line">[ ... ]</span><br></pre></td></tr></table></figure></p>
+<p>在<code>_append_to_free_list</code>中有两处创建了新的<code>set</code>，而在Python中，<strong>某些对象的创建会调用<code>_PyObject_GC_Malloc</code>函数，可能引起垃圾回收</strong>：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> PyObject *</span><br><span class="line">_PyObject_GC_Alloc(<span class="keyword">int</span> use_calloc, <span class="keyword">size_t</span> basicsize)</span><br><span class="line">&#123;           </span><br><span class="line">    PyObject *op;</span><br><span class="line">    PyGC_Head *g;</span><br><span class="line">    <span class="keyword">size_t</span> size;</span><br><span class="line">    <span class="keyword">if</span> (basicsize &gt; PY_SSIZE_T_MAX - <span class="keyword">sizeof</span>(PyGC_Head))</span><br><span class="line">        <span class="keyword">return</span> PyErr_NoMemory();</span><br><span class="line">    size = <span class="keyword">sizeof</span>(PyGC_Head) + basicsize;</span><br><span class="line">    <span class="keyword">if</span> (use_calloc)</span><br><span class="line">        g = (PyGC_Head *)PyObject_Calloc(<span class="number">1</span>, size);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        g = (PyGC_Head *)PyObject_Malloc(size);</span><br><span class="line">    <span class="keyword">if</span> (g == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> PyErr_NoMemory();</span><br><span class="line">    assert(((<span class="keyword">uintptr_t</span>)g &amp; <span class="number">3</span>) == <span class="number">0</span>);  <span class="comment">// g must be aligned 4bytes boundary</span></span><br><span class="line">    g-&gt;_gc_next = <span class="number">0</span>;</span><br><span class="line">    g-&gt;_gc_prev = <span class="number">0</span>;</span><br><span class="line">    _PyRuntime.gc.generations[<span class="number">0</span>].count++; <span class="comment">/* number of allocated GC objects */</span></span><br><span class="line">    <span class="keyword">if</span> (_PyRuntime.gc.generations[<span class="number">0</span>].count &gt; _PyRuntime.gc.generations[<span class="number">0</span>].threshold &amp;&amp;</span><br><span class="line">        _PyRuntime.gc.enabled &amp;&amp;</span><br><span class="line">        _PyRuntime.gc.generations[<span class="number">0</span>].threshold &amp;&amp;</span><br><span class="line">        !_PyRuntime.gc.collecting &amp;&amp;</span><br><span class="line">        !PyErr_Occurred()) &#123;</span><br><span class="line">        _PyRuntime.gc.collecting = <span class="number">1</span>;</span><br><span class="line">        collect_generations();</span><br><span class="line">        _PyRuntime.gc.collecting = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    op = FROM_GC(g);</span><br><span class="line">    <span class="keyword">return</span> op;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该函数中，首先分配了对象所需的内存，紧接着就视情况进行垃圾回收。这一回收不得了，调用了<code>Memory</code>类的析构函数:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__dealloc__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.ptr:</span><br><span class="line">        runtime.free(self.ptr)</span><br></pre></td></tr></table></figure></p>
+<p>这个<strong>析构函数会修改当前的内存池，自然导致了<code>a_index</code>的变化</strong>。等到垃圾回收完毕，<code>set</code>被创建，洞中才一日，世上已千年，<code>a_index</code>早就不是那个当年那个<code>a_index</code>了。</p>
+<p>我被这个bug困住一个星期之久，根本原因就在于我不清楚在Python在创建对象时可能进行GC，想不到一个简单的<code>set()</code>可能意味着执行这么多代码。这个道理说穿了也简单，大家一看就懂，但其实折射出Python一个很严重的问题：学习曲线太长太长了。Python漂亮地隐藏了很多细节，使人可以快速上手构建大型项目，但随着时间推进这些细节会一个一个蹦出来困扰用户，达到精通非常困难。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>只需要两行代码：一行在开始进行内存调度时禁用GC，另一行在结束时开启即可。</p>
+<h1 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h1><p>最重要的一些感想：</p>
+<ul>
+<li>最大的lesson：<strong>使用垃圾收集的语言一定要小心析构函数的随时执行</strong></li>
+<li><strong>traceback对于debug很重要</strong>。Python程序异常处理过程自然地带有traceback，debug时也很容易查看。C/C++虽然没有原生traceback，但是gdb等一系列工具太方便太强大了，因此不成问题。而Cython以及其它一些先编译为C/C++再编译为二进制的语言存在没有traceback而gdb又不好用的问题，有点坑爹。</li>
+<li><strong>专家的价值不可估量</strong>。我相信对于一个专家来说，看一看<code>_append_to_free_list</code>的代码然后发现问题所在是可能的，工作效率保守估计比我高50倍。很可惜看来这样的专家比较少，至少<code>cupy</code>的几个核心贡献者没有这样的水平。</li>
+</ul>
+<p>其它一些不很重要的感想：</p>
+<ul>
+<li>debug一个<em>Higgs-Bugson</em>太困难了，没有趁手的工具，盲人摸象，很容易跑偏。</li>
+<li>Python呀好是好，坑起人来也是真狠。我日常被Python坑的实在太多，近一阵在酝酿一个《Python的N宗罪》的文章，N未定。等再积累积累素材再写也未可知。</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/03/fast_python/" rel="next" title="Pure Python Might be Faster than You Think">
+                <i class="fa fa-chevron-left"></i> Pure Python Might be Faster than You Think
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Weitang Li</p>
+              <p class="site-description motion-element" itemprop="description">Weitang Li's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liwt31" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:liwt31@163.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#楔子"><span class="nav-number">1.</span> <span class="nav-text">楔子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cupy的GPU内存调度算法"><span class="nav-number">2.</span> <span class="nav-text">cupy的GPU内存调度算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#稳步推进"><span class="nav-number">3.</span> <span class="nav-text">稳步推进</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#疑云渐起"><span class="nav-number">4.</span> <span class="nav-text">疑云渐起</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单线程程序的上下文切换？context-switch-in-single-thread"><span class="nav-number">5.</span> <span class="nav-text">单线程程序的上下文切换？context switch in single thread?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python原罪"><span class="nav-number">6.</span> <span class="nav-text">Python原罪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">7.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">8.</span> <span class="nav-text">感想</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weitang Li</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

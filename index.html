@@ -309,6 +309,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/03/08/the_debug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/08/the_debug/" itemprop="url">
+                  记一次刻骨铭心的debug
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-08 20:23:21" itemprop="dateCreated datePublished" datetime="2019-03-08T20:23:21+08:00">2019-03-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-09 16:38:49" itemprop="dateModified" datetime="2019-03-09T16:38:49+08:00">2019-03-09</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>“你印象最深的一次debug经历是什么？”——这是一道经典的面试问题。为了准备面试，我平时为这个问题积累了不少素材，其中有倒推发现原paper推导错误的，有因为debug需求而专门写了工具的，可总觉得好像不够火候。</p>
+<p>我人生中所缺少的这终极bug，上个星期终于来了。我花了一个星期的时间，到昨天已经绝望，谁知柳暗花明醍醐灌顶，今天终于将其攻克，感觉有50%概率这会是我这辈子中印象最深的一次debug。</p>
+<p>这次的bug有以下几个特点：</p>
+<ul>
+<li>是第三方库的bug。所以必须要去看第三方库的源代码，搞清楚人家的代码是干什么的，然后自己hack，自己编译。</li>
+<li>是一个<em>Higgs-Bugson</em>。只存在于日志中，通过生产环境复现。这一个特性有两个结果：<ul>
+<li>枪毙了基于断点的debug方法，因为事先不知道bug会在什么时候发生。</li>
+<li>第三方库的开发人员不可能有效参与debug过程。</li>
+</ul>
+</li>
+<li>最最重要的是：<strong>情节曲折离奇；结局出人意料，又在情理之中</strong>。</li>
+<li>debug过程使我掌握了一个内存调度算法，收获了一些debug技巧，加深了对程序语言的特性的认识。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/08/the_debug/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/03/03/fast_python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,12 +523,24 @@
                 
               
 
-              <time title="Created: 2019-03-03 13:51:34 / Modified: 17:34:15" itemprop="dateCreated datePublished" datetime="2019-03-03T13:51:34+08:00">2019-03-03</time>
+              <time title="Created: 2019-03-03 13:51:34" itemprop="dateCreated datePublished" datetime="2019-03-03T13:51:34+08:00">2019-03-03</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-08 20:06:20" itemprop="dateModified" datetime="2019-03-08T20:06:20+08:00">2019-03-08</time>
               
             
           </span>
@@ -394,7 +574,7 @@
 
       
         
-          <p>Recently I was trying to improve the performance of some of my Python code by writing C/C++ extensions. Before I started I thought “well, I should be able to get 10x to 100x performance boost without much effort”. But eventually I could only speed my program up for 2 to 3 times, with much effort. The gain in performance is too little to compensate the pain in development. To be honest, if it’s someone else’s code I’d probably say “hey, let’s just revert to the Python version Okay?”. At first I thought the poor performance is due to some mistakes in my C/C++ extension, but then I realized that it is due to my code is closely related to calling lib functions. What is that supposed to mean? Compare the following C++ and Python code that do set intersection, which is the simplified version of some of my code that I wished to gain much better performance with C/C++ extension.</p>
+          <p>Recently I was trying to improve the performance of some of my Python code by writing C/C++ extensions. Before I started I thought “well, I should be able to get 10x to 100x performance boost without much effort”. But eventually I could only speed my program up for 2 to 3 times, with much effort. The gain in performance is too little to compensate the pain in development. At first I thought the poor performance is due to some mistakes in my C/C++ extension, but then I realized that it is due to my code is closely related to calling lib functions. What is that supposed to mean? Compare the following C++ and Python code that do set intersection, which is the simplified version of some of my code that I wished to gain much better performance with C/C++ extension.</p>
 <ul>
 <li><p>C++</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> s1 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line"><span class="keyword">auto</span> s2 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line"><span class="keyword">auto</span> s3 = <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line"><span class="comment">// s1 and s2 initlized...</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> j: s1)&#123;</span><br><span class="line">    <span class="keyword">if</span>(s2.find(j) != s2.end())&#123;</span><br><span class="line">        s3.insert(j);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -845,7 +1025,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-01-14 14:17:05" itemprop="dateModified" datetime="2019-01-14T14:17:05+08:00">2019-01-14</time>
+                <time title="Modified: 2019-03-05 20:34:52" itemprop="dateModified" datetime="2019-03-05T20:34:52+08:00">2019-03-05</time>
               
             
           </span>
@@ -1703,162 +1883,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/10/12/mul-complexity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Weitang Li">
-      <meta itemprop="description" content="Weitang Li's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Weitang Li's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/12/mul-complexity/" itemprop="url">
-                  矩阵、张量乘法（numpy.tensordot）的时间复杂度分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-10-12 15:48:25" itemprop="dateCreated datePublished" datetime="2018-10-12T15:48:25+08:00">2018-10-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-13 22:38:15" itemprop="dateModified" datetime="2018-12-13T22:38:15+08:00">2018-12-13</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>两个大小都是\(N \times N\)的矩阵相乘，如果使用naive的算法，时间复杂度应该是\(\mathcal{O}(N^3)\)，如果使用一些<a href="https://en.wikipedia.org/wiki/Strassen_algorithm" target="_blank" rel="noopener">高级的算法</a>，可以使幂指数降到3以下。对于一般情况的矩阵乘法，特别是张量乘法（<code>numpy</code>中的<code>tensordot</code>函数），时间复杂度又如何呢？</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/12/mul-complexity/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1906,7 +1930,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

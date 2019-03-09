@@ -115,7 +115,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://user-images.githubusercontent.com/22628546/48837876-858ecf00-edc1-11e8-8142-d2dd9c03d8f0.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/22628546/48828767-96344a80-edab-11e8-9904-674efa3ccec4.png">
-<meta property="og:updated_time" content="2019-01-14T06:17:05.372Z">
+<meta property="og:updated_time" content="2019-03-05T12:34:52.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mergesort is faster than Quicksort">
 <meta name="twitter:description" content="IntroQuicksort is quick, and it’s well known that it can be defeated under certain circumstances, from the simplest already sorted data, to the killer adversary. But if someone claims he has found ano">
@@ -371,7 +371,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-01-14 14:17:05" itemprop="dateModified" datetime="2019-01-14T14:17:05+08:00">2019-01-14</time>
+                <time title="Modified: 2019-03-05 20:34:52" itemprop="dateModified" datetime="2019-03-05T20:34:52+08:00">2019-03-05</time>
               
             
           </span>
@@ -518,9 +518,9 @@
 <li>The smaller of <code>%rdx</code> (<code>*pm</code>) and <code>%rax</code> (<code>*pw</code>) is stored to <code>%rax</code> (<code>&lt;int64_merge_sort_rec+295&gt;</code>) and then moved to <code>*pl</code> (<code>&lt;int64_merge_sort_rec+302&gt;</code>). </li>
 <li><code>%rbx</code> (<code>pm</code>) is at last compared with <code>%r13</code> (<code>pr</code>) as another condition to decide whether break the loop or start from the beginning. </li>
 </ol>
-<p>Note that there is <strong>only one branch</strong> and only two <strong>highly predictable</strong> jump instructions in the control flow. This pattern can make CPU pipeline work at 100% power. The price is multiple comparison between <code>*pw</code> and <code>*pm</code>, which isn’t really a big deal for int64. What a bargain! </p>
+<p>Note that there is <strong>only one branch</strong> and only two <strong>highly predictable</strong> jump instructions in the control flow. This pattern can make CPU pipeline work at maximum power. The price is multiple comparison between <code>*pw</code> and <code>*pm</code>, which isn’t really a big deal for int64. What a bargain!</p>
 <blockquote>
-<p>Interested reader can compare length, number of branches as well as predictability of jump instructions between GCC compiled Mergesort and Quicksort, then it may become much reasonable why Mergesort can be faster than Quicksort.</p>
+<p>Interested reader can compare length, number of branches as well as predictability of jump instructions between GCC compiled Mergesort and Quicksort, then it may become much reasonable why Mergesort can be faster than Quicksort. In fact, <code>perf stats</code> indicates that Quicksort has 15% branch-miss while Mergesort has only 3%.</p>
 </blockquote>
 <p>Now that it becomes clear why GCC compiled binary is much faster than Clang compiled binary, how about the relation between the speed of float number sorting and CPU release date? Why does newer CPU do better in Mergesort for float number? Well, I’m not an expert on CPU architecture and performance, but I guess the reason is that comparing float number used to be expensive but it keeps getting cheaper and cheaper over days. Hence old CPU suffer from multiple float number comparison, whereas for new CPU comparison of float is as cheap as comparison of integer.</p>
 <h1 id="How-to-make-Mergesort-faster-than-Quicksort"><a href="#How-to-make-Mergesort-faster-than-Quicksort" class="headerlink" title="How to make Mergesort faster than Quicksort"></a>How to make Mergesort faster than Quicksort</h1><p>If you’ve tested my benchmark code in your environment and Quicksort is still invincible, basically you need to check two things:</p>
@@ -641,7 +641,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
