@@ -106,24 +106,24 @@
 
 
 
-  <meta name="description" content="因为课程项目的原因，需要配置若干个LightSail实例环境。一种比较方便的方式是在启动实例时执行一段脚本。操作系统为Ubuntu。环境需求有以下几个：建立ubuntu之外的账户；除了公钥之外，可以使用密码SSH登录；可以进行免密码sudo。三个Linux经典操作。">
+  <meta name="description" content="原则上git的force push是不能push到公共repo的，但实际难免会出现由force push引起的冲突。昨天我在A机器上push到了develop分支之后，在B机器上做了些小修改然后force-push，之后又回到A机器上工作，commit之后push发现冲突。123      C---D (local `develop`, HEAD)     /A---B---C&amp;apos; (re">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo)">
-<meta property="og:url" content="https://liwt31.github.io/2018/01/09/lightsail/index.html">
+<meta property="og:title" content="被`git push -f`后的应对方式">
+<meta property="og:url" content="https://liwt31.github.io/2019/04/17/gitforcepush/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
-<meta property="og:description" content="因为课程项目的原因，需要配置若干个LightSail实例环境。一种比较方便的方式是在启动实例时执行一段脚本。操作系统为Ubuntu。环境需求有以下几个：建立ubuntu之外的账户；除了公钥之外，可以使用密码SSH登录；可以进行免密码sudo。三个Linux经典操作。">
+<meta property="og:description" content="原则上git的force push是不能push到公共repo的，但实际难免会出现由force push引起的冲突。昨天我在A机器上push到了develop分支之后，在B机器上做了些小修改然后force-push，之后又回到A机器上工作，commit之后push发现冲突。123      C---D (local `develop`, HEAD)     /A---B---C&amp;apos; (re">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-10-31T02:07:47.909Z">
+<meta property="og:updated_time" content="2019-04-17T02:58:36.947Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo)">
-<meta name="twitter:description" content="因为课程项目的原因，需要配置若干个LightSail实例环境。一种比较方便的方式是在启动实例时执行一段脚本。操作系统为Ubuntu。环境需求有以下几个：建立ubuntu之外的账户；除了公钥之外，可以使用密码SSH登录；可以进行免密码sudo。三个Linux经典操作。">
+<meta name="twitter:title" content="被`git push -f`后的应对方式">
+<meta name="twitter:description" content="原则上git的force push是不能push到公共repo的，但实际难免会出现由force push引起的冲突。昨天我在A机器上push到了develop分支之后，在B机器上做了些小修改然后force-push，之后又回到A机器上工作，commit之后push发现冲突。123      C---D (local `develop`, HEAD)     /A---B---C&amp;apos; (re">
 
 
 
 
 
 
-  <link rel="canonical" href="https://liwt31.github.io/2018/01/09/lightsail/"/>
+  <link rel="canonical" href="https://liwt31.github.io/2019/04/17/gitforcepush/"/>
 
 
 
@@ -133,7 +133,7 @@
   };
 </script>
 
-  <title>AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo) | Weitang Li's blog</title>
+  <title>被`git push -f`后的应对方式 | Weitang Li's blog</title>
   
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/01/09/lightsail/">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/04/17/gitforcepush/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Weitang Li">
@@ -326,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo)
+          <h1 class="post-title" itemprop="name headline">被`git push -f`后的应对方式
               
             
           </h1>
@@ -351,24 +351,12 @@
                 
               
 
-              <time title="Created: 2018-01-09 11:45:36" itemprop="dateCreated datePublished" datetime="2018-01-09T11:45:36+08:00">2018-01-09</time>
+              <time title="Created: 2019-04-17 09:25:38 / Modified: 10:58:36" itemprop="dateCreated datePublished" datetime="2019-04-17T09:25:38+08:00">2019-04-17</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-10-31 10:07:47" itemprop="dateModified" datetime="2018-10-31T10:07:47+08:00">2018-10-31</time>
               
             
           </span>
@@ -401,15 +389,18 @@
       
 
       
-        <p>因为课程项目的原因，需要配置若干个LightSail实例环境。一种比较方便的方式是在启动实例时执行一段脚本。操作系统为Ubuntu。<br>环境需求有以下几个：建立ubuntu之外的账户；除了公钥之外，可以使用密码SSH登录；可以进行免密码sudo。三个Linux经典操作。</p>
-<a id="more"></a> 
-<h3 id="建立新账户"><a href="#建立新账户" class="headerlink" title="建立新账户"></a>建立新账户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Add user. -m create home. -s set shell</span></span><br><span class="line">sudo useradd newuser -m -s /bin/bash</span><br></pre></td></tr></table></figure>
-<p>其中newuser为用户名，<code>-m</code>选项创建<code>/home</code>下的<code>newuser</code>文件夹，<code>-s</code>指定登录Shell。<br>下面为新账户设定密码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set password</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'newuser:123456'</span> | sudo chpasswd</span><br></pre></td></tr></table></figure></p>
-<p>一般设置密码的方式是<code>passwd</code>命令，然而这种方式必须是交互式的，不适用于脚本中。使用<code>chpasswd</code>可以将账户密码以标准输入的形式输入，格式为“账户:密码”。其缺点是需要在命令里显式写下密码，如果想要保密可以将密码先存在文件里，然后<code>cat</code>到<code>chpasswd</code>的标准输入中。在实例启动阶段，就<code>echo</code>好了。</p>
-<h3 id="允许SSH密码登录"><a href="#允许SSH密码登录" class="headerlink" title="允许SSH密码登录"></a>允许SSH密码登录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable password authentication for ssh</span></span><br><span class="line">sudo sed -i <span class="string">'52c PasswordAuthentication yes'</span> /etc/ssh/sshd_config</span><br><span class="line">sudo service sshd restart</span><br></pre></td></tr></table></figure>
-<p>本质是编辑<code>/etc/ssh/sshd_config</code>文件，这里简便起见用<code>sed</code>命令写死。<code>-i</code>指in place，否则sed会把结果print出来，<code>52</code>是行号，<code>c</code>表示替换。随后重启SSHD服务。</p>
-<h3 id="允许新账户免密sudo"><a href="#允许新账户免密sudo" class="headerlink" title="允许新账户免密sudo"></a>允许新账户免密sudo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># password-free sudo for newuser</span></span><br><span class="line">sudo sed -i <span class="string">'20a newuser    ALL=(ALL:ALL) NOPASSWD:ALL'</span> /etc/sudoers</span><br></pre></td></tr></table></figure>
-<p>sudo权限设置文件位于<code>/etc/sudoers</code>，这里也是用<code>sed</code>写死，<code>a</code>表示添加。</p>
+        <p>原则上git的force push是不能push到公共repo的，但实际难免会出现由force push引起的冲突。昨天我在A机器上push到了<code>develop</code>分支之后，在B机器上做了些小修改然后force-push，之后又回到A机器上工作，commit之后push发现冲突。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      C---D (local `develop`, HEAD)</span><br><span class="line">     /</span><br><span class="line">A---B---C&apos; (remote `develop`)</span><br></pre></td></tr></table></figure></p>
+<p>现在怎样能修复这一冲突，使最新的commit(<code>D</code>)能接在force push后的<code>C&#39;</code>后呢？</p>
+<a id="more"></a>
+<p>首先重新命名本地的<code>develop</code>分支，解决分支命名上和remote的冲突：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -m develop backup</span><br></pre></td></tr></table></figure></p>
+<p>当前状态为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      C---D (local `backup`, HEAD)</span><br><span class="line">     /</span><br><span class="line">A---B---C&apos; (remote `develop`)</span><br></pre></td></tr></table></figure></p>
+<p>然后就可以把remote的<code>develop</code>分支拉到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch --all</span><br><span class="line">git checkout develop</span><br></pre></td></tr></table></figure></p>
+<p>现在的状态是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      C---D (local `backup`)</span><br><span class="line">     /</span><br><span class="line">A---B---C&apos; (local `develop`, HEAD)</span><br></pre></td></tr></table></figure></p>
+<p>然后回到<code>backup</code>分支，进行rebase：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout backup</span><br><span class="line">git rebase develop</span><br></pre></td></tr></table></figure></p>
+<p>rebase时可能要处理冲突。rebase成功后，<code>D</code>就被接到了<code>C&#39;</code>上。如果<code>C&#39;</code>仅仅是在<code>C</code>的基础上加了一些东西的话，我们就达到了目标的状态。但是一般情况下<code>C&#39;</code>中间和隔着一个git自动生成的commit，代表了<code>C</code>和<code>C&#39;</code>之间的差：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A---B---C&apos;---(C-C&apos;)---D (local `backup`, HEAD)</span><br><span class="line">        ^</span><br><span class="line">        |</span><br><span class="line"> (local `develop`)</span><br></pre></td></tr></table></figure></p>
+<p>这时利用rebase将这个commit丢弃掉即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~2</span><br></pre></td></tr></table></figure></p>
+<p>这样就达到了目标的状态：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A---B---C&apos;---D (local `backup`, HEAD)</span><br><span class="line">        ^</span><br><span class="line">        |</span><br><span class="line"> (local `develop`)</span><br></pre></td></tr></table></figure></p>
+<p>之后就是常规操作了，push到remote时可以fast-forward。</p>
 
       
     </div>
@@ -437,8 +428,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/05/ec2_ipv6_ss/" rel="next" title="AWS-EC2配置IPv6地址+ss实现校园网免流量费上网">
-                <i class="fa fa-chevron-left"></i> AWS-EC2配置IPv6地址+ss实现校园网免流量费上网
+              <a href="/2019/03/08/the_debug/" rel="next" title="记一次刻骨铭心的debug">
+                <i class="fa fa-chevron-left"></i> 记一次刻骨铭心的debug
               </a>
             
           </div>
@@ -446,10 +437,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/17/svm/" rel="prev" title="我一点都不懂SVM">
-                我一点都不懂SVM <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -494,17 +481,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -563,22 +541,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立新账户"><span class="nav-number">1.</span> <span class="nav-text">建立新账户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#允许SSH密码登录"><span class="nav-number">2.</span> <span class="nav-text">允许SSH密码登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#允许新账户免密sudo"><span class="nav-number">3.</span> <span class="nav-text">允许新账户免密sudo</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

@@ -309,6 +309,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/10/14/cmake_compiler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/14/cmake_compiler/" itemprop="url">
+                  为CMake指定编译器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-14 17:10:14" itemprop="dateCreated datePublished" datetime="2018-10-14T17:10:14+08:00">2018-10-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-03 17:36:22" itemprop="dateModified" datetime="2019-03-03T17:36:22+08:00">2019-03-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>为某某程序指定某某环境，让人一下就想到了<code>PATH</code>。然而，CMake并不支持把<code>gcc</code>或者<code>g++</code>放到<code>PATH</code>里来指定编译器。对于简单的特别是自用的项目，可以通过设置CMakeList文件里的变量指定CMake使用的编译器，如：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_C_COMPILER <span class="string">"/usr/bin/mygcc"</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_COMPILER <span class="string">"/usr/bin/myg++"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>对于复杂的项目，执行CMake时可能还用到了<code>include(GNUInstallDirs)</code>、<code>include(CheckCXXCompilerFlag)</code>等指令，在文件里设定变量的方式就有些勉强了。这时有两种方案：</p>
+<ol>
+<li><p>设定环境变量</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">CC</span>=`which mygcc`</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">CXX</span>=`which myg++`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用CMake参数</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_C_COMPILE=`which mygcc` CMAKE_CXX_COMPILER=`which myg++` ..</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>注意这两种情况下的“形参”并不相同。见<a href="https://gitlab.kitware.com/cmake/community/wikis/FAQ#how-do-i-use-a-different-compiler" target="_blank" rel="noopener">cmake wiki</a>。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/10/12/mul-complexity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1689,315 +1851,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/03/23/normal-mode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Weitang Li">
-      <meta itemprop="description" content="Weitang Li's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Weitang Li's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/23/normal-mode/" itemprop="url">
-                  Normal Mode (Huang-Rhys Factor) Calculator
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-03-23 20:03:37" itemprop="dateCreated datePublished" datetime="2018-03-23T20:03:37+08:00">2018-03-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-06-13 09:14:28" itemprop="dateModified" datetime="2018-06-13T09:14:28+08:00">2018-06-13</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <table id="calculator">
-    <tr>
-        <td>
-            Frequency:
-        </td>
-        <td>
-            <input type="text" id="freq" unit="cm-1">
-            <select id="freq_unit">
-                <option value="au">a.u.</option>
-                <option value="ev">eV</option>
-                <option value="mev">meV</option>
-                <option value="cm-1" selected="selected">cm-1</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Lambda:
-        </td>
-        <td>
-            <input type="text" id="lambda" unit="mev">
-            <select id="lambda_unit">
-                <option value="au">a.u.</option>
-                <option value="ev">eV</option>
-                <option value="mev" selected="selected">meV</option>
-                <option value="cm-1">cm-1</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Displacement
-        </td>
-        <td>
-            <input type="text" id="displacement" unit="au">
-            <select id="displacement_unit">
-                <option value="au" selected="selected">a.u.</option>
-                <option value="ang">Angstroms</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Huang-Rhys Factor:
-        </td>
-        <td>
-            <input type="text" id="hr" unit="au">
-        </td>
-    </tr>
-</table>
-<input type="button" id="clear" value="clear values">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-<script>
-    var unit2au = {"au": 1, "a.u.":1, "ev": 3.6749e-2,  "mev": 3.6749e-5, "cm-1": 4.5563e-6, "ang": 1 / 0.529177};
-    function unit_conversion(value, old_unit, new_unit){
-        var value_in_au = parseFloat(value) * unit2au[old_unit];
-        return  value_in_au / unit2au[new_unit];
-    }
-    function set_input_value(input, au_value){
-        input.setAttribute("au_value", au_value);
-        input.value = unit_conversion(au_value, "au", input.getAttribute("unit"));
-        input.setAttribute("disabled", "disabled");
-    }
-    function update_dis_from_freq_lam(displacement_input, au_freq, au_lambda){
-        var au_displacement = Math.sqrt(2 * au_lambda / Math.pow(au_freq, 2));
-        set_input_value(displacement_input, au_displacement);
-        return au_displacement;
-    }
-    function update_hr_from_freq_lam(hr_input, au_freq, au_lambda){
-        var hr = au_lambda / au_freq;
-        set_input_value(hr_input, hr);
-        return hr;
-    }
-    function update_lam_from_freq_dis(lambda_input, au_freq, au_displacement){
-        var au_lambda = 1 / 2 * Math.pow(au_freq, 2) * Math.pow(au_displacement, 2);
-        set_input_value(lambda_input, au_lambda);
-        return au_lambda;
-    }
-    function update_lam_from_freq_hr(lambda_input, au_freq, hr){
-        var au_lambda = au_freq * hr;
-        set_input_value(lambda_input, au_lambda);
-        return au_lambda;
-    }
-    function update_freq_from_lam_dis(freq_input, au_lambda, au_displacement){
-        var au_freq = Math.sqrt(2 * au_lambda / Math.pow(au_displacement, 2));
-        set_input_value(freq_input, au_freq);
-        return au_freq;
-    }
-    function update_freq_from_lam_hr(freq_input, au_lambda, hr){
-        var au_freq = au_lambda / hr;
-        set_input_value(freq_input, au_freq);
-        return au_freq;
-    }
-    function update_freq_from_dis_hr(freq_input, au_displacement, hr){
-        var au_freq = 2 * hr / Math.pow(au_displacement, 2);
-        set_input_value(freq_input, au_freq);
-        return au_freq;
-    }
-    function update_value(){
-        var ctx = $("#calculator");
-        var freq_input = $("#freq", ctx)[0];
-        var lambda_input = $("#lambda", ctx)[0];
-        var displacement_input = $("#displacement", ctx)[0];
-        var hr_input = $("#hr", ctx)[0];
-        var au_freq = freq_input.getAttribute("au_value");
-        var au_lambda = lambda_input.getAttribute("au_value");
-        var au_displacement = displacement_input.getAttribute("au_value");
-        var hr = hr_input.value;
-        if (au_freq && !freq_input.disabled && au_lambda && !lambda_input.disabled){
-            au_displacement = update_dis_from_freq_lam(displacement_input, au_freq, au_lambda);
-            hr = update_hr_from_freq_lam(hr_input, au_freq, au_lambda);
-        } else if (au_freq && !freq_input.disabled && au_displacement && !displacement_input.disabled){
-            au_lambda = update_lam_from_freq_dis(lambda_input, au_freq, au_displacement);
-            hr = update_hr_from_freq_lam(hr_input, au_freq, au_lambda);
-        } else if (au_freq && !freq_input.disabled && hr && !hr_input.disabled){
-            au_lambda = update_lam_from_freq_hr(lambda_input, au_freq, hr);
-            au_displacement = update_dis_from_freq_lam(displacement_input, au_freq, au_lambda);
-        } else if (au_lambda && !lambda_input.disabled && au_displacement && !displacement_input.disabled){
-            au_freq = update_freq_from_lam_dis(freq_input, au_lambda, au_displacement);
-            hr = update_hr_from_freq_lam(hr_input, au_freq, au_lambda);
-        } else if (au_lambda && !lambda_input.disabled && hr && !hr_input.disabled){
-            au_freq = update_freq_from_lam_hr(freq_input, au_lambda, hr);
-            au_displacement = update_dis_from_freq_lam(displacement_input, au_freq, au_lambda);
-        } else if (au_displacement && !displacement_input.disabled && hr && !hr_input.disabled) {
-            au_freq = update_freq_from_dis_hr(freq_input, au_displacement, hr);
-            au_lambda = update_lam_from_freq_hr(lambda_input, au_freq, hr);
-        }
-    }
-    $("#clear").click(function(){
-       $(":text").each(function(){
-           this.removeAttribute("disabled");
-           this.value = "";
-           this.removeAttribute("au_value")
-       })
-    });
-    $("input").on("input", function(){
-        if (this.value){
-            var unit = this.getAttribute("unit");
-            this.setAttribute("au_value", unit_conversion(this.value, unit, "au"));
-            update_value()
-        }
-    });
-    $("select").change(function(){
-        var input = this.previousElementSibling;
-        var new_unit = this.value;
-        if (input.value) {
-            var old_unit = input.getAttribute("unit");
-            input.value = unit_conversion(input.value, old_unit, new_unit);
-        }
-        input.setAttribute("unit", new_unit);
-    })
-</script>
-
-<p>Type in any of 2 variables in frequency, lambda, displacement or HR-factor, and the remaining 2 variables will be calculated automatically.<br>Click “clear values” to unlock auto-locked variables.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/23/normal-mode/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2045,7 +1898,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
