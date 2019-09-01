@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
 <meta property="og:description" content="NumPy的视图(View)机制可以大大加快对数组进行切片和reshape的速度，同时节省内存。但View机制存在一个极难发现的陷阱，会在许多常见的应用场景下引起内存泄漏。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-03T09:09:02.536Z">
+<meta property="og:updated_time" content="2019-09-01T06:46:27.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="警惕NumPy切片视图(Slice View)中的“内存泄漏”陷阱">
 <meta name="twitter:description" content="NumPy的视图(View)机制可以大大加快对数组进行切片和reshape的速度，同时节省内存。但View机制存在一个极难发现的陷阱，会在许多常见的应用场景下引起内存泄漏。">
@@ -368,7 +368,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-03 17:09:02" itemprop="dateModified" datetime="2019-03-03T17:09:02+08:00">2019-03-03</time>
+                <time title="Modified: 2019-09-01 14:46:27" itemprop="dateModified" datetime="2019-09-01T14:46:27+08:00">2019-09-01</time>
               
             
           </span>
@@ -415,6 +415,7 @@
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>对于用户来说，最简单（但并不容易！）的解决方案是在数组切片时视情况进行<code>copy</code>，使之数据成为自有的，切断和<code>base</code>的联系：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></span><br><span class="line">    a = np.random.rand(int(<span class="number">2e8</span>))</span><br><span class="line">    b = a[:<span class="number">100</span>].copy()</span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line">b = foo()</span><br></pre></td></tr></table></figure></p>
 <p>对于NumPy来说，在一个如此常见的使用场景下存在内存泄漏的隐患不是合理的设计。一个最直接的“改进”是在NumPy的<code>ndarray</code>数据结构中加入该数组被多少其它数组作为<code>base</code>的字段，当这一数值和引用计数相等时令视图数组进行拷贝。这一“改进”会带来包括性能下降在内的一系列问题，甚至在存在多个视图的情况下可能同时导致CPU和内存效率下降。我目前很难想到在不影响效率的情况下解决这一问题的方案。</p>
 <h2 id="后记杂谈"><a href="#后记杂谈" class="headerlink" title="后记杂谈"></a>后记杂谈</h2><p>我是在一个排查一个大型应用的异常内存占用时发现这一“内存泄漏”问题的。在尝试了许多memory profiler无果之后我自己开发了一个工具<a href="https://github.com/liwt31/remember-me" target="_blank" rel="noopener">RememberMe</a>来检查Python中对象的内存占用。RememberMe简单来说就是<code>sys.getsizeof</code>\(\times\)<code>gc.get_referents</code>，对Python对象内存占用的估计还是比较准确的。我利用这一工具不断缩小排查范围，最终得以确定是一组NumPy数组的内存占用远超预期，并追溯到引起这一异常行为的切片操作。Python最好的性能profiler应该是<a href="https://github.com/benfred/py-spy" target="_blank" rel="noopener">py-spy</a>，内存profiler上实在没什么特别好的工具。<br>RememberMe翻译成中文可作“勿忘我”。不少人可能因为CoCo这部电影而对Remember Me有所印象，但我起这个名字是因为一部<a href="https://en.wikipedia.org/wiki/Remember_Me_(video_game" target="_blank" rel="noopener">赛博朋克电子游戏</a>。</p>
+<p>又及：经<a href="https://github.com/numpy/numpy/pull/13099" target="_blank" rel="noopener">本人PR</a>，在NumPy文档中已经添加了一些提醒。</p>
 
       
     </div>
@@ -524,7 +525,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

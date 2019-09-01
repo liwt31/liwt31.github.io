@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="对于熟悉Git的人，在大型项目中直接push到master上就和天方夜谭一样。但是当需要给新人介绍为什么不能直接push到master上时，一个Git老手也不一定能简明扼要地解释清楚。想要让新人放弃直截了当地git push origin master，采取建立分支-commit-push-PR-merge的弯弯绕方式，需要有让人信服的理由，特别是在新人对Pull Request（PR）还没有任何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么不能直接push到master分支？">
+<meta property="og:url" content="https://liwt31.github.io/2019/09/01/nopush/index.html">
+<meta property="og:site_name" content="Weitang Li&#39;s blog">
+<meta property="og:description" content="对于熟悉Git的人，在大型项目中直接push到master上就和天方夜谭一样。但是当需要给新人介绍为什么不能直接push到master上时，一个Git老手也不一定能简明扼要地解释清楚。想要让新人放弃直截了当地git push origin master，采取建立分支-commit-push-PR-merge的弯弯绕方式，需要有让人信服的理由，特别是在新人对Pull Request（PR）还没有任何">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-09-01T06:51:42.453Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么不能直接push到master分支？">
+<meta name="twitter:description" content="对于熟悉Git的人，在大型项目中直接push到master上就和天方夜谭一样。但是当需要给新人介绍为什么不能直接push到master上时，一个Git老手也不一定能简明扼要地解释清楚。想要让新人放弃直截了当地git push origin master，采取建立分支-commit-push-PR-merge的弯弯绕方式，需要有让人信服的理由，特别是在新人对Pull Request（PR）还没有任何">
+
+
+
+
+
+
+  <link rel="canonical" href="https://liwt31.github.io/2019/09/01/nopush/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>为什么不能直接push到master分支？ | Weitang Li's blog</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112074287-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112074287-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Weitang Li's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">We've havered enough. Let's get tae work!</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/09/01/nopush/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">为什么不能直接push到master分支？
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-01 13:11:40 / Modified: 14:51:42" itemprop="dateCreated datePublished" datetime="2019-09-01T13:11:40+08:00">2019-09-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对于熟悉Git的人，在大型项目中直接push到master上就和天方夜谭一样。但是当需要给新人介绍为什么不能直接push到master上时，<a href="https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/" target="_blank" rel="noopener">一个Git老手也不一定能简明扼要地解释清楚</a>。想要让新人放弃直截了当地<code>git push origin master</code>，采取建立分支-commit-push-PR-merge的弯弯绕方式，需要有让人信服的理由，特别是在新人对Pull Request（PR）还没有任何概念的时候。</p>
+<a id="more"></a>
+<p>不能push到master上的直接原因是：</p>
+<h1 id="master应该是一个稳定的分支"><a href="#master应该是一个稳定的分支" class="headerlink" title="master应该是一个稳定的分支"></a>master应该是一个稳定的分支</h1><p>所谓“稳定”，是指这个分支没有大的问题，可以编译或者可以实现它设计时的目的。这个大前提有时不成立，比如这个仓库里放的是一个短期的个人的项目，我只给我自己近期用，我闲着没事就push一下存个档，那这时也就无所谓不能直接push到master上了。当项目从短期变成长期，未来的你要用的时候，你会希望master是稳定的，否则你未来的自己肯定会吐血三升。当项目不再是个人的，其它人来到你的仓库希望使用你的代码时，肯定不希望发现这个代码根本就跑不了。其实，对于纯粹的短期、个人项目，Git其实并不是合适的工具，这不是它的设计初衷。所以绝大多数情况下，master应该是一个稳定的分支。</p>
+<h1 id="大型多人项目中保持master稳定比在小型单人项目中困难得多"><a href="#大型多人项目中保持master稳定比在小型单人项目中困难得多" class="headerlink" title="大型多人项目中保持master稳定比在小型单人项目中困难得多"></a>大型多人项目中保持master稳定比在小型单人项目中困难得多</h1><p>对于<strong>小型的</strong>、<strong>只有一个贡献者的</strong>项目，直接push到master上是（有很大概率）可以保证master的稳定性的，这时直接push到master上也无可厚非。当<strong>小型</strong>和<strong>单人</strong>之一不被满足时，直接push到master上就非常危险了。</p>
+<h2 id="当项目不再是小型的"><a href="#当项目不再是小型的" class="headerlink" title="当项目不再是小型的"></a>当项目不再是小型的</h2><p>比如说只有你一个贡献者的项目A。你在A上贡献了很多代码，它不再是一个小型的项目，你已经不能清晰地记得每块代码的逻辑是怎样的了。这时你的每次commit可能都会使项目A中你未考虑到的一部分代码产生bug。当然，你可以在push之前编译，运行测试，但这一方面很繁琐，另一方面你很难根除本地环境对项目的影响，举例来说：</p>
+<ul>
+<li>你有一个关键的文件没有add、没有commit，淹没在你另一堆确实不需要add、不需要commit的文件海中，这时你在本地一切正常，但push到master之后master就不能运行了。</li>
+<li>你的代码需要设置一些环境变量才能按照想要的方式运行，在本地因为你已经设置过所以测试通过，但是push到master上之后别人无法重复你的结果。</li>
+</ul>
+<p>看起来，最好是有一个合作者能在你每次commit之后拉取你的分支，然后在他的机器上跑一遍测试。</p>
+<h2 id="当项目不再是单人的"><a href="#当项目不再是单人的" class="headerlink" title="当项目不再是单人的"></a>当项目不再是单人的</h2><p>如果有多人同时直接向master上push，那可以肯定即使是小型的项目master也会变得一团糟。为什么？假如贡献者甲和贡献者乙同时clone了master分支开始开发，贡献者甲修改了某个库函数并commit到了master上，而贡献者乙并不知道这个库函数被修改了，继续按照他分支中的库函数的用法来调用。当贡献者乙完成了他的代码后，他在本地跑了详尽的测试并通过，但是当他的代码commit到master上以后，因为master上的库函数被修改了，他的代码完全不能work。<br>假如贡献者乙是一个脾气很好的细心的开发者，在push到master分支之前，他每次都会rebase到最新的master（对于不了解rebase的同学，可以把这句话理解为将最新的master合并到贡献者乙的分支上）并运行测试，但他也不能保证在他rebase后跑测试时master没有新的更新。master分支的稳定性成为了俄罗斯轮盘赌的赌注。</p>
+<h2 id="使用Pull-Request（PR）"><a href="#使用Pull-Request（PR）" class="headerlink" title="使用Pull Request（PR）"></a>使用Pull Request（PR）</h2><p>显然，对于大型的、多人的项目，上述问题交织在一起，使直接push到master成为了快速的自杀手段。如果使用PR，那么这些问题就可以在很大程度上避免，这一原理其实在CS中非常常见：</p>
+<blockquote>
+<p>All problems in computer science can be solved by another level of indirection</p>
+</blockquote>
+<p>PR具体是什么怎么用这里不再讲述。当你发起一个PR时，你可以找一个合作者（哪怕是一台机器<a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis</a>）帮助你从头验证代码的正确性。确认将PR合并可以由一个人统一管理，这个人同时负责验证你的commit合并到master上之后是否是正确，如果不正确则不能合并。<br>当然，使用PR时也会有代码冲突的问题，但是PR时的代码冲突是可以有效处理和管理的。</p>
+<h1 id="Pull-Request（PR）的其它好处"><a href="#Pull-Request（PR）的其它好处" class="headerlink" title="Pull Request（PR）的其它好处"></a>Pull Request（PR）的其它好处</h1><p>为了保证master的稳定性，我们选择了建立自己的分支进行开发最后发起PR来更新master，这一流程除了可以保证master稳定性以外还有其它好处。这些可能需要你掌握了Git的一些高级用法或者用了一段时间的PR才能体会到。</p>
+<h2 id="在你的分支中可以修改历史"><a href="#在你的分支中可以修改历史" class="headerlink" title="在你的分支中可以修改历史"></a>在你的分支中可以修改历史</h2><p>Git允许你修改它所记录的文件历史。这个功能有很多高级的用法，但最常见的使用场景可能是以下这个：你在commit后发现有个很简单的bug（或者合作者不满意，等等），你立刻察觉了bug的来源改了一行代码并没有跑测试就commit了，结果你的判断有误，仍然有个很简单的bug，如此循环。结果你的真正贡献只有一个commit，倒是花了5个commit来修一个无聊的bug。要知道，每个commit都是要写信息的。这时你很希望能把这些commit合并成一个或者两个。在你自己的分支上，你的愿望可以用一两行命令简单地实现，整个过程没有任何痛苦，甚至还有点愉悦。但假如你是直接commit到master上的，那么擅自修改历史将会使其它所有人的工作出现严重的冲突问题，他们可能会顺着网线来揍你。</p>
+<h2 id="在PR中commit拥有丰富的上下文"><a href="#在PR中commit拥有丰富的上下文" class="headerlink" title="在PR中commit拥有丰富的上下文"></a>在PR中commit拥有丰富的上下文</h2><p>和写代码同样重要（如果不是更重要）的是理解当初代码为什么写成这个样子。在一个大型的PR中，开发人员会开展热烈的讨论，不同观点激烈交锋，相关的issue和PR会被交叉引用。在GitHub上，任意一段代码都可以很方便地追溯到与它相关的PR。阅读这个PR的历史会对理解这段代码很有帮助：是谁提了怎样的需求导致了这一段代码的产生？这一解决方案是如何在其它方案中脱颖而出的？在实现的过程中有哪些需要注意的细节？在一个维护良好的GitHub仓库中，这些非常有意义的问题会得到清晰的回答。通过issue和PR，GitHub的历史在commit信息之外又多出了一个丰富的维度，整个项目也因此显得更有生命力。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本文列出了四条为什么分支-PR比直接push到master好的理由：</p>
+<ul>
+<li>通过PR可以保证代码质量</li>
+<li>通过PR可以缓解多人合作的冲突问题</li>
+<li>在自己的分支中可以修改历史</li>
+<li>通过PR代码的更新含有更丰富的上下文</li>
+</ul>
+<p>其实，分支-PR的好处还有很多，只要入了这个坑，就好比从简单代数进入到方程，回不去了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/17/gitforcepush/" rel="next" title="被`git push -f`后的应对方式">
+                <i class="fa fa-chevron-left"></i> 被`git push -f`后的应对方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Weitang Li</p>
+              <p class="site-description motion-element" itemprop="description">Weitang Li's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liwt31" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:liwt31@163.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#master应该是一个稳定的分支"><span class="nav-number">1.</span> <span class="nav-text">master应该是一个稳定的分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大型多人项目中保持master稳定比在小型单人项目中困难得多"><span class="nav-number">2.</span> <span class="nav-text">大型多人项目中保持master稳定比在小型单人项目中困难得多</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#当项目不再是小型的"><span class="nav-number">2.1.</span> <span class="nav-text">当项目不再是小型的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当项目不再是单人的"><span class="nav-number">2.2.</span> <span class="nav-text">当项目不再是单人的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Pull-Request（PR）"><span class="nav-number">2.3.</span> <span class="nav-text">使用Pull Request（PR）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pull-Request（PR）的其它好处"><span class="nav-number">3.</span> <span class="nav-text">Pull Request（PR）的其它好处</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在你的分支中可以修改历史"><span class="nav-number">3.1.</span> <span class="nav-text">在你的分支中可以修改历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在PR中commit拥有丰富的上下文"><span class="nav-number">3.2.</span> <span class="nav-text">在PR中commit拥有丰富的上下文</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weitang Li</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
