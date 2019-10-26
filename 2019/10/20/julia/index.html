@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="很久之前就在关注Julia的发展，待到1.0版本决定入坑，现在终于有时间刷一刷文档。对于编程语言来说，后发者总是试图对老一辈的设计有全面深刻的突破，但这些突破有时不得要领，且老一辈依靠沉淀下来的代码也不会被轻易击倒。 读Julia的文档确实让人有很多惊喜。即使不用Julia，通过读文档了解现在正在用的编程语言（其实主要是Python）的不足也可以加深对编程语言的理解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读Julia文档小记">
+<meta property="og:url" content="https://liwt31.github.io/2019/10/20/julia/index.html">
+<meta property="og:site_name" content="Weitang Li&#39;s blog">
+<meta property="og:description" content="很久之前就在关注Julia的发展，待到1.0版本决定入坑，现在终于有时间刷一刷文档。对于编程语言来说，后发者总是试图对老一辈的设计有全面深刻的突破，但这些突破有时不得要领，且老一辈依靠沉淀下来的代码也不会被轻易击倒。 读Julia的文档确实让人有很多惊喜。即使不用Julia，通过读文档了解现在正在用的编程语言（其实主要是Python）的不足也可以加深对编程语言的理解。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-26T06:54:06.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="读Julia文档小记">
+<meta name="twitter:description" content="很久之前就在关注Julia的发展，待到1.0版本决定入坑，现在终于有时间刷一刷文档。对于编程语言来说，后发者总是试图对老一辈的设计有全面深刻的突破，但这些突破有时不得要领，且老一辈依靠沉淀下来的代码也不会被轻易击倒。 读Julia的文档确实让人有很多惊喜。即使不用Julia，通过读文档了解现在正在用的编程语言（其实主要是Python）的不足也可以加深对编程语言的理解。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://liwt31.github.io/2019/10/20/julia/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>读Julia文档小记 | Weitang Li's blog</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112074287-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112074287-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Weitang Li's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">We've havered enough. Let's get tae work!</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/10/20/julia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">读Julia文档小记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-10-20 10:50:43" itemprop="dateCreated datePublished" datetime="2019-10-20T10:50:43+08:00">2019-10-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-10-26 14:54:06" itemprop="dateModified" datetime="2019-10-26T14:54:06+08:00">2019-10-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>很久之前就在关注Julia的发展，待到1.0版本决定入坑，现在终于有时间刷一刷<a href="https://docs.julialang.org/en/latest/" target="_blank" rel="noopener">文档</a>。<br>对于编程语言来说，后发者总是试图对老一辈的设计有全面深刻的突破，但这些突破有时不得要领，且老一辈依靠沉淀下来的代码也不会被轻易击倒。</p>
+<p>读Julia的文档确实让人有很多惊喜。即使不用Julia，通过读文档了解现在正在用的编程语言（其实主要是Python）的不足也可以加深对编程语言的理解。</p>
+<a id="more"></a>
+<h1 id="文档阅读"><a href="#文档阅读" class="headerlink" title="文档阅读"></a>文档阅读</h1><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
+<li>有限制的内置函数Monkey patch。这个到底有没有用说不好，但确实避免了使用一些特别灵活的动态语言可能犯的低级错误。</li>
+</ul>
+<h2 id="整数和浮点数"><a href="#整数和浮点数" class="headerlink" title="整数和浮点数"></a>整数和浮点数</h2><ul>
+<li>整数和浮点数的数据类型仍然显示了底层的数据类型，当然BigInt也通过包装GMP得到头等（First Class）支持。初看这导致了一些不很一致的行为。如<code>0xFFFF_FFFF_FFFF_FFFF * 2</code>得到的是无符号64位整数的结果<code>0xfffffffffffffffe</code>，而<code>0xFFFF_FFFF_FFFF_FFFF_FFFF * 2</code>得到的是BigInt的结果<code>0x000000000001fffffffffffffffffffe</code>。但实际上类似的情况对于从Int32到Int64也是一样的，所以无伤大雅。</li>
+<li>因为暴露了底层数据类型，浮点数的Machine epsilon得到了头等支持，只需<code>eps(1.0)</code>即可得到相应精度。这对于数值计算来说是非常贴心的。你甚至可以用<code>nextfloat</code>这样的函数，有点6。</li>
+<li>头等的任意精度浮点数支持。以前我都不知道这是可能的。这是通过允许用户设置一个允许的浮点数误差实现的。这个feature有点酷。</li>
+<li>杰出的数学表达式支持。同样是抛弃编程语言的惯例，<code>2x</code>和<code>2^x</code>这样的表达式可以用来直接表达其数学含义了。甚至<code>3(4+5)</code>也可以直接得到<code>27</code>了！当然，如此设计带来了一些语法上的冲突，如括号的使用不允许与函数调用混淆，但总的来说是不错的尝试。</li>
+</ul>
+<h2 id="数学运算和基本函数"><a href="#数学运算和基本函数" class="headerlink" title="数学运算和基本函数"></a>数学运算和基本函数</h2><ul>
+<li>头等的向量化运算支持。只需在算符前加上<code>.</code>即可使操作向量化。</li>
+</ul>
+<h2 id="复数和有理数"><a href="#复数和有理数" class="headerlink" title="复数和有理数"></a>复数和有理数</h2><ul>
+<li>头等的有理数支持。这个不算一个新特性，但是<code>3/9</code>返回0.3333而<code>3//9</code>返回<code>1//3</code>对于数值计算来说是一个一致性非常好的设计，体现出了对整数相除得整数的彻底反叛。看得出来Julia的设计者试图比Python和Matlab更进一步，将RELP做的更像一个通用计算器。</li>
+</ul>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ul>
+<li>对函数式编程更友好的语法支持。当使用函数作为参数时可以使用<code>Do</code>语句块更清晰地编写匿名函数。粗看起来可能可以达到比Python的列表推导式更好的效果，同时还有替代上下文管理器的野心。</li>
+<li>对于基于位置的参数和基于关键字的参数进行了更严格的划分和定义。基于位置的参数可以有默认值，但不能通过关键字的方法传参。这一点有些反直觉</li>
+<li>函数组合与管道。一方面在多重函数嵌套时更清晰，不会被几个连在一起的右括号搞混，另一方面可能减少堆栈操作进行一些极限优化。不过适用场景可能比较有限，像<code>map(first ∘ reverse ∘ uppercase, split(&quot;you can compose functions like this&quot;))</code>这样的例子实在太少，平时调用函数哪个不会带两三个参数呢？</li>
+<li>疯狂的向量化。Julia对向量化的支持可以说是丧心病狂，体现出了数值计算对向量化深深的执念。</li>
+</ul>
+<h2 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h2><ul>
+<li><p>C/C++中的三元运算符死灰复燃，更可恨的是Julia竟然把这样的例子放进了官方教程：</p>
+ <figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function <span class="built_in">fact</span>(<span class="symbol">n:</span><span class="symbol">:In</span><span class="built_in">t</span>)</span><br><span class="line">    <span class="built_in">n</span> &gt;= <span class="number">0</span> || error(<span class="string">"n must be non-negative"</span>)</span><br><span class="line">    <span class="built_in">n</span> == <span class="number">0</span> &amp;&amp; return <span class="number">1</span></span><br><span class="line">    <span class="built_in">n</span> * <span class="built_in">fact</span>(<span class="built_in">n</span>-<span class="number">1</span>)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p> 竟然还恬不知耻地声称:</p>
+<blockquote>
+<p>This behavior is frequently used in Julia to form an alternative to very short <code>if</code> statements</p>
+</blockquote>
+<p> 真是醉了。什么语言没有短路求值？又有哪种语言提倡这种写法了？究其原因，可能是因为Julia中条件判断需要一个<code>if</code>一个<code>end</code>至少三行，读起来也是非常难读，对于Julia新手可能是用<code>||</code>和<code>&amp;&amp;</code>难看一些，但是对于熟悉<code>||</code>和<code>&amp;&amp;</code>的老手还是三行的条件判断比较烦人。根本原因上来说这是Julia语法设计的失误，想要降低从Matlab来的同学的门槛，但实际上将门槛大大加高了。</p>
+</li>
+</ul>
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><ul>
+<li>变量作用域比较类似Python，虽然做了些改进，比如循环变量是local的了，但总体上还是比较混乱，需要<code>global</code>之类的关键字。</li>
+</ul>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><ul>
+<li>类（<code>struct</code>）默认是不可变的，当需要可变的数据结构时需要声明<code>mutable struct</code>。对编译器友好/可读性强与灵活性永远是一对矛盾。不可变类是一个大胆的偏向前者的尝试。</li>
+<li>弱化的类系统。类的方法包括构造函数由通过定义函数进行定义。尽管有接口（interface），但只能从抽象类中继承。</li>
+<li>从C++中搞来了完整的模板系统，并有所增强。</li>
+</ul>
+<h2 id="元编程"><a href="#元编程" class="headerlink" title="元编程"></a>元编程</h2><ul>
+<li>Lisp和Nim中强大的元编程也被引入了Julia。元编程是（过分）强大的功能，常常被视为双刃剑。Julia在这一点上比较激进，在模板系统之外又有着非常完全的元编程系统，并可以想象借此造出了许多语法糖。我不是特别欣赏元编程，不知道这是不是当今语言的发展大势。</li>
+</ul>
+<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><ul>
+<li>头等支持的多维数组可以存放任意对象。从这一点上来说是C/C++的风格。数组的操作语法主要是受Matlab影响，和NumPy区别较大。这很可能是由Julia的类型系统决定的。如多维数组没有<code>shape</code>字段，但是可以通过<code>size</code>函数获取。</li>
+</ul>
+<h2 id="缺失值"><a href="#缺失值" class="headerlink" title="缺失值"></a>缺失值</h2><ul>
+<li>头等的缺失值支持，显然是受了当今统计火热的影响。暂时没看出和nan有什么本质区别。不知道有没有什么特殊实现，用在内置的array中可以比较高效解决整数型的缺失值问题。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>本来我期望这是一门语法简单的语言，结果大跌眼镜。Julia有着各种各样奇怪的关键字和语法糖，复杂的类型系统和变量作用域。学完Julia其实相当于Lisp、C++和Python都学了。Julia其实是设计给有相当编程基础的用户的，就这一点来说可以说是一个非常失败的设计。可以预见在未来Julia的推广仍然会遇到相当高的门槛。</li>
+</ul>
+<h1 id="试用体会"><a href="#试用体会" class="headerlink" title="试用体会"></a>试用体会</h1><ul>
+<li>简单试了一下，发现Julia是真的慢，特别是安装包以及运行文件。运行文件主要是必须要编译才能运行，这和非常强调interactive的数值计算不符合。Julia貌似希望能够在一个交互式环境里完成编码过程，省去一部分编译（如在Notebook和Juno中）。不得不说这种想法太偏科研和数值计算路数了，对于大型项目来说几乎是不现实的。</li>
+<li>任意一门新语言想战胜老语言，必须要克服老语言的两大法宝，一是沉淀代码，二也是不太容易想到的是强大的IDE和debug环境。做好一个IDE说起来容易但是工程上其实是非常复杂的。Julia现在在这一点上非常弱，在有转机之前不认为Julia可以用于大型项目。</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/01/nopush/" rel="next" title="为什么不能直接push到master分支？">
+                <i class="fa fa-chevron-left"></i> 为什么不能直接push到master分支？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Weitang Li</p>
+              <p class="site-description motion-element" itemprop="description">Weitang Li's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liwt31" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:liwt31@163.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文档阅读"><span class="nav-number">1.</span> <span class="nav-text">文档阅读</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">1.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数和浮点数"><span class="nav-number">1.2.</span> <span class="nav-text">整数和浮点数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学运算和基本函数"><span class="nav-number">1.3.</span> <span class="nav-text">数学运算和基本函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复数和有理数"><span class="nav-number">1.4.</span> <span class="nav-text">复数和有理数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数"><span class="nav-number">1.5.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流"><span class="nav-number">1.6.</span> <span class="nav-text">控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量作用域"><span class="nav-number">1.7.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型"><span class="nav-number">1.8.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元编程"><span class="nav-number">1.9.</span> <span class="nav-text">元编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多维数组"><span class="nav-number">1.10.</span> <span class="nav-text">多维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺失值"><span class="nav-number">1.11.</span> <span class="nav-text">缺失值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.12.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#试用体会"><span class="nav-number">2.</span> <span class="nav-text">试用体会</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weitang Li</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
