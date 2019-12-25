@@ -309,6 +309,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/10/27/timsort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/27/timsort/" itemprop="url">
+                  CPython源码阅读——Timsort
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-27 20:56:19" itemprop="dateCreated datePublished" datetime="2018-10-27T20:56:19+08:00">2018-10-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-21 22:20:58" itemprop="dateModified" datetime="2019-02-21T22:20:58+08:00">2019-02-21</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>对Timsort的简介请见<a href="https://en.wikipedia.org/wiki/Timsort" target="_blank" rel="noopener">Wiki</a>或者<a href="https://svn.python.org/projects/python/trunk/Objects/listsort.txt" target="_blank" rel="noopener">Tim本人的小文章</a>，本文主要分析CPython（版本3.7）的实现部分，不对原理做具体介绍。<br>Timsort的代码位于<a href="https://github.com/python/cpython/blob/3.7/Objects/listobject.c" target="_blank" rel="noopener">Objects/listobject.c</a>中，大概从1000行到2000行，占据整个list实现的三分之一。本文把所有的Timsort源码基本上都粘贴过来了，所以也不会短。<br>这段代码看起来其实很有意思，因为注释得比较详尽，画风稳中带皮，不失为消遣娱乐之佳品。有人说CPython这部分代码很难懂，我实在不能苟同。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/27/timsort/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/10/25/mergesort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1710,167 +1866,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/06/13/montyhall/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Weitang Li">
-      <meta itemprop="description" content="Weitang Li's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Weitang Li's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/13/montyhall/" itemprop="url">
-                  一个思考Monty Hall问题的直观角度
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-06-13 08:45:46" itemprop="dateCreated datePublished" datetime="2018-06-13T08:45:46+08:00">2018-06-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-06-20 17:53:48" itemprop="dateModified" datetime="2018-06-20T17:53:48+08:00">2018-06-20</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><a href="https://en.wikipedia.org/wiki/Monty_Hall_problem" target="_blank" rel="noopener">Monty Hall</a>是概率论与数理统计中很经典的例子，非常容易迷惑没有学过条件概率/对该问题警戒心不强的人。如果对条件概率有一定了解，也的确理解了Monty Hall，那么这个问题就不过是课后作业水平了，其实没什么好讨论的。</p>
-<p>不过据说爱因斯坦说过一句话：</p>
-<blockquote>
-<p>If you can’t explain it to a six year old, you don’t understand it yourself.<br>（如果你不能把一个道理向六岁小孩解释清楚，你就没有真正理解它）</p>
-</blockquote>
-<p>我相信概率论的内容（特别是和量子力学比较）应该是符合人的直觉的，所以我这几天睡觉之前总是思考Monty Hall，想给出一个直观的、没有学过概率论的人也能接受的解释。昨天我终于有所得，想到了一个和Monty Hall类似的问题，而大多数人面对这个问题应该会做出正确的选择——</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/13/montyhall/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1918,7 +1913,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

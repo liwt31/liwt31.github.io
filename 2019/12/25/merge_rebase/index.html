@@ -106,29 +106,24 @@
 
 
 
-  <meta name="description" content="原文：Debugging Python Like a Boss。 作者：Brian Cooksey。  12345def make_pie(self, ingredients):    print &apos;******WHAT IS GOING ON HERE******&apos;    print ingredients    self.oven.preheat()    print self.oven.te">
+  <meta name="description" content="在Git中，原则上使用merge或者rebase都可以解决分支冲突的问题，比如：123      D (dev)     /A---B---C (master) 当master和dev存在冲突时，在dev上进行git merge master或者git rebase master都可以解决冲突。这两种方式的作用机制不同，结果也不一样。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【转载】【翻译】Debugging Python Like a Boss， Python debugging终极指南">
-<meta property="og:url" content="https://liwt31.github.io/2018/10/18/pythondebug/index.html">
+<meta property="og:title" content="Git解决分支冲突的两种方案：merge和rebase">
+<meta property="og:url" content="https://liwt31.github.io/2019/12/25/merge_rebase/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
-<meta property="og:description" content="原文：Debugging Python Like a Boss。 作者：Brian Cooksey。  12345def make_pie(self, ingredients):    print &apos;******WHAT IS GOING ON HERE******&apos;    print ingredients    self.oven.preheat()    print self.oven.te">
+<meta property="og:description" content="在Git中，原则上使用merge或者rebase都可以解决分支冲突的问题，比如：123      D (dev)     /A---B---C (master) 当master和dev存在冲突时，在dev上进行git merge master或者git rebase master都可以解决冲突。这两种方式的作用机制不同，结果也不一样。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://user-images.githubusercontent.com/22628546/47143769-8206b480-d2f8-11e8-8448-0aeefe9a962d.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/22628546/47143772-8501a500-d2f8-11e8-857f-2978a9ccfdf9.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/22628546/47143777-8763ff00-d2f8-11e8-8179-9595595c3a1f.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/22628546/47143783-8a5eef80-d2f8-11e8-9bcf-ad790ab2df4b.png">
-<meta property="og:updated_time" content="2018-12-13T14:44:15.851Z">
+<meta property="og:updated_time" content="2019-12-25T05:08:39.855Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【转载】【翻译】Debugging Python Like a Boss， Python debugging终极指南">
-<meta name="twitter:description" content="原文：Debugging Python Like a Boss。 作者：Brian Cooksey。  12345def make_pie(self, ingredients):    print &apos;******WHAT IS GOING ON HERE******&apos;    print ingredients    self.oven.preheat()    print self.oven.te">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/22628546/47143769-8206b480-d2f8-11e8-8448-0aeefe9a962d.png">
+<meta name="twitter:title" content="Git解决分支冲突的两种方案：merge和rebase">
+<meta name="twitter:description" content="在Git中，原则上使用merge或者rebase都可以解决分支冲突的问题，比如：123      D (dev)     /A---B---C (master) 当master和dev存在冲突时，在dev上进行git merge master或者git rebase master都可以解决冲突。这两种方式的作用机制不同，结果也不一样。">
 
 
 
 
 
 
-  <link rel="canonical" href="https://liwt31.github.io/2018/10/18/pythondebug/"/>
+  <link rel="canonical" href="https://liwt31.github.io/2019/12/25/merge_rebase/"/>
 
 
 
@@ -138,7 +133,7 @@
   };
 </script>
 
-  <title>【转载】【翻译】Debugging Python Like a Boss， Python debugging终极指南 | Weitang Li's blog</title>
+  <title>Git解决分支冲突的两种方案：merge和rebase | Weitang Li's blog</title>
   
 
 
@@ -314,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/10/18/pythondebug/">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/12/25/merge_rebase/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Weitang Li">
@@ -331,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【转载】【翻译】Debugging Python Like a Boss， Python debugging终极指南
+          <h1 class="post-title" itemprop="name headline">Git解决分支冲突的两种方案：merge和rebase
               
             
           </h1>
@@ -356,24 +351,12 @@
                 
               
 
-              <time title="Created: 2018-10-18 11:47:30" itemprop="dateCreated datePublished" datetime="2018-10-18T11:47:30+08:00">2018-10-18</time>
+              <time title="Created: 2019-12-25 09:31:50 / Modified: 13:08:39" itemprop="dateCreated datePublished" datetime="2019-12-25T09:31:50+08:00">2019-12-25</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-13 22:44:15" itemprop="dateModified" datetime="2018-12-13T22:44:15+08:00">2018-12-13</time>
               
             
           </span>
@@ -406,29 +389,23 @@
       
 
       
-        <p>原文：<a href="https://zapier.com/engineering/debugging-python-boss/" target="_blank" rel="noopener">Debugging Python Like a Boss</a>。 作者：<a href="https://github.com/bcooksey" target="_blank" rel="noopener">Brian Cooksey</a>。</p>
-<hr>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_pie</span><span class="params">(self, ingredients)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'******WHAT IS GOING ON HERE******'</span></span><br><span class="line">    <span class="keyword">print</span> ingredients</span><br><span class="line">    self.oven.preheat()</span><br><span class="line">    <span class="keyword">print</span> self.oven.temperature</span><br></pre></td></tr></table></figure>
-<p>上面这段代码是不是和你屡试不爽的debug方法颇为神似？没错，我原来也经常这么干。实事求是讲，这个方法还不赖，你只需要在代码里加一些print，然后把它跑起来，就能知道发生了什么。当然啦，你常常需要在其它输出到STDOUT里的一团乱麻里滚来滚去，但你想要的就在那里——如果你知道你想要的是什么的话。问题是你经常不知道。如果你知道要检查什么东西，你很可能一开始就不需要这些print了。相反，你会在你感觉有问题的地方附近随便扔几个print，然后迭代这些print的位置使之接近有bug的代码。二分查找万岁！</p>
-<p>谢天谢地，我们还有更好的方法。自从C的第一个segfault，一系列被称作debugger的工具就随着每种语言一同出现，Python也不例外。除了自带的debugger，Python社区也开发了很多炫酷的工具，我们将在这个post剩下的内容里对最受欢迎的几个工具做出介绍。</p>
-<a id="more"></a> 
-<h2 id="pdb"><a href="#pdb" class="headerlink" title="pdb"></a>pdb</h2><p><img src="https://user-images.githubusercontent.com/22628546/47143769-8206b480-d2f8-11e8-8448-0aeefe9a962d.png" alt=""></p>
-<p>首先登场的是Python的内置debugger，pdb。pdb支持基本的命令行界面和其他debug工具必备的功能。帮助系统可以指引你使用命令，包括在代码里步进穿行、操纵调用栈或者设置断点。</p>
-<p>pdb缺少一些功能：局部变量的tab补全、各种颜色高亮以及更好的代码、堆栈布局等。</p>
-<p>不论你最终决定使用哪种debugger，你都需要了解pdb，原因有二：1）pdb在Python里总是可用的；2）许多其它的debugger是pdb的超集。所以很可能你已经了解pdb了！</p>
-<p><strong>一句话总结</strong>：坚实的默认选项， 但是如果可能还是用一些更好的吧。</p>
-<h2 id="pydbgr"><a href="#pydbgr" class="headerlink" title="pydbgr"></a>pydbgr</h2><p><img src="https://user-images.githubusercontent.com/22628546/47143772-8501a500-d2f8-11e8-857f-2978a9ccfdf9.png" alt=""></p>
-<p>下一个登场的是pydbgr。<em>译者注：经过译者检查pydbgr已经过时，本节从略</em>。</p>
-<p><strong>一句话总结</strong>：我在日常的web开发中并没觉得pydbgr为pdb增加的功能多么有用。</p>
-<h2 id="pudb"><a href="#pudb" class="headerlink" title="pudb"></a>pudb</h2><p><img src="https://user-images.githubusercontent.com/22628546/47143777-8763ff00-d2f8-11e8-8179-9595595c3a1f.png" alt=""><br>这个debugger很值得注意的一点是它在命令行内集成了一个小的gui。没错，这不是一个分离的窗口，这就是在命令行里。即使抛开pudb中大量的默认颜色（可用户定制或者从一系列默认主题中选择）不谈，这也是对debugger用户体验的重大突破。</p>
-<p>左侧面板显示了当前文件的代码（会随着你在堆栈中上上下下而变化）。导航系统非常出色，可以使用方向键（或者“hjkl”）、查找，还可以通过模糊搜索打开其它模块。将这个导航系统和一个执行代码至当前光标的快捷键相结合，你将会得到一个非常符合直觉的在程序中步进的友好方式。当然，pudb也提供了大量常规的断点和步进命令，使你能按自己的意愿控制程序执行。</p>
-<p>右侧面板包括了局部变量、堆栈和现有的断点。在传统的命令行debugger里，你需要输入<code>locals()</code>，<code>where</code>，或者使用tab补全来检查当前栈帧。与此相比这些面板是一个可喜的变化。</p>
-<p>pudb还有另一个小加分项是对“验尸”的支持。当你的程序因为未捕获的异常而终止时，pudb将会提示你查看这个异常并可以直接将你定位到发生异常的地方，而堆栈保持完整。</p>
-<p><strong>一句话总结</strong>：最佳的用户体验；特别适合跟踪堆栈。</p>
-<h2 id="ipdb"><a href="#ipdb" class="headerlink" title="ipdb"></a>ipdb</h2><p><img src="https://user-images.githubusercontent.com/22628546/47143783-8a5eef80-d2f8-11e8-9bcf-ad790ab2df4b.png" alt=""></p>
-<p>最后压轴的是IPython的ipdb。和它的*pdb兄弟们一样，ipdb的交互界面是一个简单的命令行，它的帮助系统也是入门的最好手段。ipdb比较特殊的一点是它使用了一个IPython的Shell，所以像tab补全或者对象检查（object introspection）这些IPython的特性功能可以开箱即用（<em>译者注：pudb也有一个Python的Shell，可以简单evaluate一些值，IPython高级特性支持有限</em>），帮助你理清代码究竟在干什么。加上上佳的语法高亮和一个输出格式优秀的where命令，ipdb是你手刃bug的完美武器。</p>
-<p><strong>一句话总结</strong>：最好用，个人最爱</p>
-<p>最后提一句，依据情况的不同，我有时会换用pudb。pudb对于在多个文件中穿梭搞清楚程序在做什么（比如当你不得不研究一个行为异常的第三方库时）是最好的工具。而我偏好ipdb的原因是因为多数情况下我在研究我非常熟悉的代码，我自己已对大图景了然于胸，更关心一个特定函数现在状态如何。他们就好像倚天剑和屠龙刀，需要结合起来才能发挥最大威力！</p>
+        <p>在Git中，原则上使用merge或者rebase都可以解决分支冲突的问题，比如：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D (<span class="name">dev</span>)</span><br><span class="line">     /</span><br><span class="line">A---B---C (<span class="name">master</span>)</span><br></pre></td></tr></table></figure></p>
+<p>当master和dev存在冲突时，在dev上进行<code>git merge master</code>或者<code>git rebase master</code>都可以解决冲突。这两种方式的作用机制不同，结果也不一样。</p>
+<a id="more"></a>
+<h1 id="使用merge"><a href="#使用merge" class="headerlink" title="使用merge"></a>使用merge</h1><p>当使用merge时，<code>git merge master</code>会首先把master上的commit都搬进dev里，然后创建一个新的commit（<code>M</code>）以记录如何化解冲突：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D---M (<span class="name">dev</span>)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C (<span class="name">master</span>)</span><br></pre></td></tr></table></figure></p>
+<p><code>M</code>的特点是具有两个parent。注意这时的dev分支就包括了master上的所有信息，包括commit message。这可能并不是一件好事，比如如果有人在commit message里@了某人或者某issue，那当你把处理了冲突的分支push上去的时候就又@了一遍。</p>
+<p>当解决了dev和master的冲突以后，把dev合并进master就可以fast-forward了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D---M (dev, master)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C</span><br></pre></td></tr></table></figure></p>
+<h1 id="使用rebase"><a href="#使用rebase" class="headerlink" title="使用rebase"></a>使用rebase</h1><p>使用<code>rebase</code>时，<code>D</code>会直接被接到<code>C</code>上变成<code>D&#39;</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D   D&apos; (dev)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C (master)</span><br></pre></td></tr></table></figure></p>
+<p>这时从master去合并dev分支也可以fast-forward，最后的结果看起来会更漂亮一些，因为通过修改历史的方式曾经的冲突都被隐藏了起来，不存在有两个parent的commit：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D   D&apos; (dev, master)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C</span><br></pre></td></tr></table></figure></p>
+<p>如果考虑到最后Git会把<code>D</code>这个commit垃圾回收，最终的状态是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A---B---C---D&apos;(dev, master)</span><br></pre></td></tr></table></figure></p>
+<p>可以说是非常理想了。因此在比较简单的冲突的情形下，使用rebase是更好的方案，这种方案下master的历史非常清晰，易于管理。</p>
+<h1 id="复杂情况最好用merge"><a href="#复杂情况最好用merge" class="headerlink" title="复杂情况最好用merge"></a>复杂情况最好用merge</h1><p>但是当分支冲突情况比较复杂时，rebase并不能妥善地解决冲突问题，而应该使用merge，比如下面这种情况，dev1和master有冲突，dev2基于dev1开发，与master也有冲突：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        F (dev2)</span><br><span class="line">       /</span><br><span class="line">      D (dev1)</span><br><span class="line">     /</span><br><span class="line">A---B---C (master)</span><br></pre></td></tr></table></figure></p>
+<p>在这种情形下，假如将dev1分支rebase到master上，得到的状态是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        F (dev2)</span><br><span class="line">       /</span><br><span class="line">      D</span><br><span class="line">     /   </span><br><span class="line">A---B---C (master)</span><br><span class="line">         \</span><br><span class="line">          D&apos; (dev1)</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>D&#39;</code>是rebase之后的<code>D</code>。这时如果我们只关心dev1和master之间的冲突，那么问题已经解决了。然而比较让人头疼的是dev2和master之间的冲突问题并没有解决，如果要将dev2和master合并，就需要把dev1和master之间的冲突再重新处理一遍，这显然是低效的。</p>
+<p>如果使用merge方案，dev1分支和master分支合并后的状态是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        F (dev2)</span><br><span class="line">       /</span><br><span class="line">      D---M (dev1)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C (master)</span><br></pre></td></tr></table></figure></p>
+<p>这时直接将dev2和master合并起来还是会有冲突，但是dev2可以直接rebase到dev1上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        F   F&apos; (dev2)</span><br><span class="line">       /   /</span><br><span class="line">      D---M (dev1)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C (master)</span><br></pre></td></tr></table></figure></p>
+<p>通过这种方式，dev2可以重用dev1处理与master冲突的commit。这时再将dev2合并进master就可以fast-forward:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        F   F&apos; (dev2, master)</span><br><span class="line">       /   /</span><br><span class="line">      D---M (dev1)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Git中的rebase和merge命令都可以用于解决冲突。对于简单的情形，比如冲突分支只由一人开发是线性分支，出于简化master历史的考虑应该优先使用rebase。而当冲突比较复杂时，则应该回避修改历史，使用merge化解冲突。</p>
 
       
     </div>
@@ -456,8 +433,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/14/cmake_compiler/" rel="next" title="为CMake指定编译器">
-                <i class="fa fa-chevron-left"></i> 为CMake指定编译器
+              <a href="/2019/10/20/julia/" rel="next" title="读Julia文档小记">
+                <i class="fa fa-chevron-left"></i> 读Julia文档小记
               </a>
             
           </div>
@@ -465,10 +442,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/25/mergesort/" rel="prev" title="NumPy源码阅读——归并排序">
-                NumPy源码阅读——归并排序 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -592,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pdb"><span class="nav-number">1.</span> <span class="nav-text">pdb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pydbgr"><span class="nav-number">2.</span> <span class="nav-text">pydbgr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pudb"><span class="nav-number">3.</span> <span class="nav-text">pudb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ipdb"><span class="nav-number">4.</span> <span class="nav-text">ipdb</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用merge"><span class="nav-number">1.</span> <span class="nav-text">使用merge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用rebase"><span class="nav-number">2.</span> <span class="nav-text">使用rebase</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂情况最好用merge"><span class="nav-number">3.</span> <span class="nav-text">复杂情况最好用merge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
