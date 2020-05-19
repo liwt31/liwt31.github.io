@@ -106,24 +106,24 @@
 
 
 
-  <meta name="description" content="今天人工智能课考试，果不其然跪在了支持向量机上。题也不难，但我真的是啥都不会。究其原因，其一我是从神经网络开始听说机器学习的，所以就戴上了鄙视SVM的有色眼镜，一直不情愿去学；其二学起来确实也感觉有点费劲，不像线性回归、随机森林这些模型简单直观；其三课上讲支持向量机一节我因为一些个人原因大部没听；其四因为后来还算自己补了一些支持向量机的知识，自我感觉很良好没有认真复习，只是考前随便看了看，结果随便">
+  <meta name="description" content="女朋友要毕业了，写毕业论文要引很多文献，有些格式调起来很繁琐。她写论文+管理文献用的是Word+EndNote，比起纯手工已经方便了很多，但仍然有些让人头疼的问题，需要耗费大量人力。如果能批量修改EndNote文献库中的内容，则可以使工作量大大降低。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我一点都不懂SVM">
-<meta property="og:url" content="https://liwt31.github.io/2018/01/17/svm/index.html">
+<meta property="og:title" content="使用Python和MySQL批量修改EndNote文献库">
+<meta property="og:url" content="https://liwt31.github.io/2020/05/19/post/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
-<meta property="og:description" content="今天人工智能课考试，果不其然跪在了支持向量机上。题也不难，但我真的是啥都不会。究其原因，其一我是从神经网络开始听说机器学习的，所以就戴上了鄙视SVM的有色眼镜，一直不情愿去学；其二学起来确实也感觉有点费劲，不像线性回归、随机森林这些模型简单直观；其三课上讲支持向量机一节我因为一些个人原因大部没听；其四因为后来还算自己补了一些支持向量机的知识，自我感觉很良好没有认真复习，只是考前随便看了看，结果随便">
+<meta property="og:description" content="女朋友要毕业了，写毕业论文要引很多文献，有些格式调起来很繁琐。她写论文+管理文献用的是Word+EndNote，比起纯手工已经方便了很多，但仍然有些让人头疼的问题，需要耗费大量人力。如果能批量修改EndNote文献库中的内容，则可以使工作量大大降低。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-01-24T03:47:32.000Z">
+<meta property="og:updated_time" content="2020-05-19T12:06:35.357Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我一点都不懂SVM">
-<meta name="twitter:description" content="今天人工智能课考试，果不其然跪在了支持向量机上。题也不难，但我真的是啥都不会。究其原因，其一我是从神经网络开始听说机器学习的，所以就戴上了鄙视SVM的有色眼镜，一直不情愿去学；其二学起来确实也感觉有点费劲，不像线性回归、随机森林这些模型简单直观；其三课上讲支持向量机一节我因为一些个人原因大部没听；其四因为后来还算自己补了一些支持向量机的知识，自我感觉很良好没有认真复习，只是考前随便看了看，结果随便">
+<meta name="twitter:title" content="使用Python和MySQL批量修改EndNote文献库">
+<meta name="twitter:description" content="女朋友要毕业了，写毕业论文要引很多文献，有些格式调起来很繁琐。她写论文+管理文献用的是Word+EndNote，比起纯手工已经方便了很多，但仍然有些让人头疼的问题，需要耗费大量人力。如果能批量修改EndNote文献库中的内容，则可以使工作量大大降低。">
 
 
 
 
 
 
-  <link rel="canonical" href="https://liwt31.github.io/2018/01/17/svm/"/>
+  <link rel="canonical" href="https://liwt31.github.io/2020/05/19/post/"/>
 
 
 
@@ -133,7 +133,7 @@
   };
 </script>
 
-  <title>我一点都不懂SVM | Weitang Li's blog</title>
+  <title>使用Python和MySQL批量修改EndNote文献库 | Weitang Li's blog</title>
   
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/01/17/svm/">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2020/05/19/post/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Weitang Li">
@@ -326,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">我一点都不懂SVM
+          <h1 class="post-title" itemprop="name headline">使用Python和MySQL批量修改EndNote文献库
               
             
           </h1>
@@ -351,24 +351,12 @@
                 
               
 
-              <time title="Created: 2018-01-17 21:30:27" itemprop="dateCreated datePublished" datetime="2018-01-17T21:30:27+08:00">2018-01-17</time>
+              <time title="Created: 2020-05-19 10:58:01 / Modified: 20:06:35" itemprop="dateCreated datePublished" datetime="2020-05-19T10:58:01+08:00">2020-05-19</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-01-24 11:47:32" itemprop="dateModified" datetime="2018-01-24T11:47:32+08:00">2018-01-24</time>
               
             
           </span>
@@ -401,19 +389,48 @@
       
 
       
-        <p>今天人工智能课考试，果不其然跪在了支持向量机上。<br>题也不难，但我真的是啥都不会。<br>究其原因，其一我是从神经网络开始听说机器学习的，所以就戴上了鄙视SVM的有色眼镜，一直不情愿去学；其二学起来确实也感觉有点费劲，不像线性回归、随机森林这些模型简单直观；其三课上讲支持向量机一节我因为一些个人原因大部没听；其四因为后来还算自己补了一些支持向量机的知识，自我感觉很良好没有认真复习，只是考前随便看了看，结果随便一看看得心里拔凉，但也没时间继续复习了。<br>找了这么多理由，没有怒跪一波管用。花点时间亡羊补牢吧。</p>
-<a id="more"></a> 
-<p>先看题:</p>
-<blockquote>
-<p>有三个点，(0,0)是正样例，(-1,-1),(1,1)是两个负样例，核函数\(K=(1+\vec x\cdot \vec y)^2\)，求支持向量机参数，以及(0,1)的分类。</p>
+        <p>女朋友要毕业了，写毕业论文要引很多文献，有些格式调起来很繁琐。她写论文+管理文献用的是Word+EndNote，比起纯手工已经方便了很多，但仍然有些让人头疼的问题，需要耗费大量人力。如果能批量修改EndNote文献库中的内容，则可以使工作量大大降低。</p>
+<a id="more"></a>
+<h2 id="探索过程"><a href="#探索过程" class="headerlink" title="探索过程"></a>探索过程</h2><p>EndNote本身并不支持使用脚本等方式对文献库进行定制化的批量修改，为了实现这一目标需要小小的hack一下。搞明白前因后果以后，其实也不复杂：</p>
+<ol>
+<li>第一步是找到EndNote文献库的数据存在哪里。对EndNote稍作了解即可发现，与每个EndNote库<code>*.enl</code>文件处于同一目录下的<code>Data</code>文件夹具有储存数据的重大嫌疑：<ul>
+<li>在EndNote文献库中有很多文献时，该文件夹体积巨大。</li>
+<li>当<code>*.enl</code>文件不与<code>Data</code>同文件夹时，打开<code>*.enl</code>将会失去EndNote的大部分功能。</li>
+</ul>
+</li>
+<li>在<code>Data</code>文件夹下有若干子文件夹。如果在EndNote中保存了pdf则有<code>pdf</code>文件夹，除此之外还有<code>rdb</code>和<code>tdb</code>两个文件夹。<code>rdb</code>和<code>tdb</code>中的文件后缀名均为<code>*.frm</code>、<code>*.MYI</code>和<code>*.MYD</code>。而这些文件后缀正是MySQL的数据文件。因此不难推断<strong>EndNote将所有后台数据保存为MySQL数据库格式，对这些数据库进行增删改查即可突破EndNote本身的接口限制访问EndNote文献库。</strong><blockquote>
+<p>选择直接对EndNote的源文件进行操作而不选择导出为其它格式再操作的原因是只有这种方式才能保持文献库的结构如“组”不变。</p>
 </blockquote>
-<p>核心考点是一个对偶问题的公式：<br>$$\min_\alpha \frac{1}{2}\Sigma_{i=1}^{N}\Sigma_{j=1}^{N}\alpha_i\alpha_j y_i y_j K(\vec x_i, \vec x_j) - \Sigma_{i=1}^{N}\alpha_i<br>$$同时满足：<br>$$<br>\begin{align}<br>&amp; \Sigma_{i=1}^{N}\alpha_i y_i = 0<br>&amp; \alpha_i \geq 0, i = 1,2,\cdots, N<br>\end{align}<br>$$求出三个\(\alpha\)很简单，把三个点带进去，然后求\(\alpha\)的极值方程就行了，但我掌握不牢的第一个体现是忘了公式里后面到底是\(\Sigma_{i=1}^{N}\alpha_i\)还是\(\Sigma_{i=1}^{N}\alpha_i^2\)（可能是被正则化影响…）。当时隐约记得应该是前者，但有点分不清，这个问题其实不算大。<br>但接着往下看，还要判断(0,1)的分类，这就一下击穿了我纸糊的SVM知识。用主问题的\(\vec w\)和\(b\)来判断还好，变成核空间了咋整？我毫无头绪。我第一反应是利用\(\alpha\)把\(\vec w\)和\(b\)求出来，但因为我一点都不懂SVM，并不知道怎么用\(\alpha\)求出\(\vec w\)和\(b\)，所以这就等于是要我推对偶问题公式。考虑到我本来就不太确定这个公式的形式，我就在考场上推了起来。由主问题：<br>$$\min_{w,b} | \vec w |^2<br>$$同时满足：<br>$$<br>y_i(\vec w \cdot \vec x_i+b) \geq 1, i = 1,2,\cdots, N<br>$$使用拉格朗日乘子法，为每个约束条件添加拉格朗日乘子\(\alpha\)，得拉格朗日函数：<br>$$<br>L(\vec w,b,\alpha) = \frac{1}{2} | \vec w |^2 + \Sigma_{i=1}^N\alpha_i\left (1-y_i(\vec w \cdot \vec x_i+b)\right )<br>$$关于拉格朗日乘子法，这里多说两句，因为考场上开始怀疑拉格朗日函数极值问题和主问题极值问题的等价性了（微积分都还给了老师，惭愧惭愧！）。拉格朗日函数对\(\alpha\)的偏导为0可以得到约束条件，这一部分的等价性不难发现。而拉格朗日函数对\(\vec w\)和\(b\)的偏导为0，则意味着主函数和约束条件对某个变量的偏导数方向共线。如果不共线，总能通过调整某个变量使主函数变得更大（针对max优化）或者更小（针对min优化）。<br>这里按照传统的条件极值的解法，应该分别对\(\vec w\)、\(b\)和\(\alpha\)求偏导为0然后解联立方程组。但这样的话数学上就没什么大事了，剩下的就是暴力解方程组，可能很困难。SVM使用了SMO的trick，这里只对\(\vec w\)和\(b\)求偏导为0，\(\alpha\)用SMO迭代解决。这还是我在考场上琢磨出来的。但我还是出了错，只求了\(\vec w\)的偏导，忘了还有\(b\)这样一个参数，于是半天没有推出来，卒。<br>对\(w\)求偏导得：<br>$$<br>\vec w=\Sigma_{i=1}^N\alpha_i y_i \vec x_i<br>$$对\(b\)求偏导得：<br>$$<br>0=\Sigma_{i=1}^N\alpha_i y_i<br>$$这两个式子代入到拉格朗日函数中消去\(\vec w\)和\(b\)。\(w\)直接代入消去即可，\(b\)则用到了\(0=\Sigma_{i=1}^N\alpha_i y_i\)。这就得到了最开始给出的对偶问题公式。<br>这么一推，虽然得到了优化出\(\alpha\)后，\(\vec w\)应该怎么求的线索，但其实没什么卵用，因为通过核函数已经隐式地把\(\vec x\)映射到特征空间得到\(\phi(\vec x)\)了，而\(\phi(\vec x)\)形式未知。这个公式其实也不难，但在考场上进一步推出来超出了我的能力……<br>通过特征空间映射，决策函数的形式从\(f(\vec x)=\vec w \cdot \vec x+b\)变成了：<br>$$<br>f(\vec x)=\vec w \cdot \phi(\vec x)+b<br>$$将\(\vec w=\Sigma_{i=1}^N\alpha_i y_i \phi(\vec x_i)\)代入：<br>$$<br>f(\vec x)=\Sigma_{i=1}^N\alpha_i y_i \phi(\vec x_i)\cdot \phi(\vec x)+b<br>$$按照核函数的定义：<br>$$<br>f(\vec x)=\Sigma_{i=1}^N\alpha_i y_i K(\vec x_i, \vec x)+b<br>$$这样决策函数中就不显含特征映射函数\(\phi(\vec x)\)了，(0,1)的分类可以由\(\alpha\)和\(b\)给出。在这个只有三个样本的例子中，可以利用二次函数极值求出\(\alpha\)，但偏移量\(b\)我肯定是不知道怎么求的。<br>首先，由KKT条件知，若\(\alpha_i \geq 0 \)，则必有\(y_i f(\vec x_i) - 1 = 0\)，即\(x_i\)为支持向量。依据这个判据可以找到所有的支持向量，然后根据这些支持向量\(\vec x_s \)都满足：<br>$$<br>[\Sigma_{i=1}^N\alpha_i y_i K(\vec x_i, \vec x_s)+b]y_i=1<br>$$把不等式变成等式，求出这些支持向量的\(b\)。最后对这些\(b\)取平均作为最终的\(b\)。</p>
-<p><strong>这并不是什么技术博文，而是对自己的吐槽。即便“亡羊补牢”了一把，我依然一点都不懂SVM。</strong></p>
-<hr>
-<h3 id="BTW"><a href="#BTW" class="headerlink" title="BTW"></a>BTW</h3><p>为了写这篇blog，还折腾了一下hexo的\(\LaTeX\)写法。Google了一下发现了一个Github项目<a href="https://github.com/hexojs/hexo-math" target="_blank" rel="noopener">hexo-math</a>，看起来好像挺对口，用起来真是难用，比如默认设置的<code>MathJax</code>的js链接已经失效，要自己custom一个，这么简单的事，issue提了半年没人管，感觉是年久失修。索性自己直接编辑了Hacker模板在header中引入了<code>MathJax</code>的js然后渲染。效果还可以，需要注意的两个坑是：</p>
-<ul>
-<li>直接用<code>$E=mc^2$</code>并不能获得行内公式环境，要用奇怪的括号括起来，如<code>\\(E=mc^2\\)</code>，在数学环境外需要用两个反斜杠，环境内一个即可。</li>
-<li>下划线貌似会和Markdown的语法冲突，所以也要用反斜杠转义</li>
+</li>
+<li><code>rdb</code>和<code>tdb</code>两个文件夹分别代表什么含义没有找到明确的文档，但是在我的case里<code>tdb</code>里文件体积都较小而<code>rdb</code>中文件体积都较大。据一些简单测试貌似<code>rdb</code>中是主要数据而<code>tdb</code>中是回收站数据。因此下面只关注<code>rdb</code>文件夹中的文件。<code>tdb</code>文件夹中的文件格式其实与<code>rdb</code>文件夹中相仿，因此以下方法也不难推广。</li>
+<li><p><code>rdb</code>（代表了一个MySQL数据库）中含有若干个MySQL数据表，其中与参考文献基本信息相关的是<code>refs.*</code>文件。<a href="https://stackoverflow.com/questions/879176/how-to-recover-mysql-database-from-myd-myi-frm-files" target="_blank" rel="noopener">利用恢复数据库的方法，将这些文件恢复成MySQL数据库</a>：</p>
+<ol>
+<li><p>以Ubuntu为例，在MySQL数据目录（<code>/var/lib/mysql</code>）中建立新数据库文件夹如<code>endnote</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/lib/mysql/endnote</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将数据库文件（<code>refs.frm</code>、<code>refs.MYI</code>和<code>refs.MYD</code>）直接拷贝到该目录中，可能需要root权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp refs.* /var/lib/mysql/endnote</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>改变文件所有者，使其所有者为mysql，这样MySQL进程才能够正常访问这些文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R mysql:mysql /var/lib/mysql/endnote</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在MySQL Shell中，给予用户修改该数据库的权限：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; GRANT ALL PRIVILEGES ON endnote.refs TO 'root'@'localhost';</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>下面就可以像操作数据库一样操作所有EndNote文献库中的文献了，可用的方法非常多。对于这种日常使用的情形，接上Python以后就可以直接上天。因此使用Python+<a href="https://github.com/PyMySQL/PyMySQL" target="_blank" rel="noopener">PyMySQL</a>进行高效的文献批量修改。</p>
+</li>
+<li>最后再将修改后的refs文件拷贝回原位置即可。</li>
+</ol>
+<h2 id="步骤总结"><a href="#步骤总结" class="headerlink" title="步骤总结"></a>步骤总结</h2><ol>
+<li>利用恢复数据库的方式，将与EndNote关联的<code>Data/rdb</code>文件夹中的<code>refs.*</code>文件转为MySQL数据库</li>
+<li>对该数据库进行批量修改</li>
+<li>将MySQL数据库中的数据拷贝回<code>Data/rdb</code>文件夹</li>
+</ol>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><ul>
+<li>写论文，能用\(\LaTeX\)还是尽量用\(\LaTeX\)，特别是用overleaf。参考文献用<a href="https://bibtexparser.readthedocs.io/en/master/" target="_blank" rel="noopener">bibtexparser</a>批处理非常方便。</li>
+<li>日常使用计算机，本质就是把人做事的复杂度从\(\mathcal{O}(N)\)或者更高变成\(\mathcal{O}(1)\)。</li>
 </ul>
 
       
@@ -442,8 +459,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/09/lightsail/" rel="next" title="AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo)">
-                <i class="fa fa-chevron-left"></i> AWS-LightSail Ubuntu启动脚本（建立新账户，密码登录，免密sudo)
+              <a href="/2019/12/25/merge_rebase/" rel="next" title="Git解决分支冲突的两种方案：merge和rebase">
+                <i class="fa fa-chevron-left"></i> Git解决分支冲突的两种方案：merge和rebase
               </a>
             
           </div>
@@ -451,10 +468,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/22/graphical_matrix/" rel="prev" title="矩阵（张量）点积的图形化表达">
-                矩阵（张量）点积的图形化表达 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -578,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#BTW"><span class="nav-number">1.</span> <span class="nav-text">BTW</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#探索过程"><span class="nav-number">1.</span> <span class="nav-text">探索过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤总结"><span class="nav-number">2.</span> <span class="nav-text">步骤总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
             
 
           </div>
