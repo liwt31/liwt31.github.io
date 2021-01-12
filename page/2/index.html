@@ -309,6 +309,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/11/20/fast_merge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/20/fast_merge/" itemprop="url">
+                  Mergesort is faster than Quicksort
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-20 20:29:43" itemprop="dateCreated datePublished" datetime="2018-11-20T20:29:43+08:00">2018-11-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-05 20:34:54" itemprop="dateModified" datetime="2019-03-05T20:34:54+08:00">2019-03-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>Quicksort is quick, and it’s well known that it can be defeated under certain circumstances, from the simplest already sorted data, to the <a href="https://www.cs.dartmouth.edu/~doug/mdmspe.pdf" target="_blank" rel="noopener">killer adversary</a>. But if someone claims he has found another algorithm that can outperform Quicksort in random array without strong constraint on the data to be sorted, you’d probably disdain for it and think he must get something wrong. At least, that’s what I would do before my recent discovery - <strong>Mergesort is faster than Quicksort, if you use GCC and your CPU is somewhat “new”</strong>.</p>
+<p>Ridiculous, right? If you don’t believe me, have a look at <a href="https://colab.research.google.com/drive/1jzTEXauoPq8lFedGZgUpH3DaJht2ctrK" target="_blank" rel="noopener">this Google Colab notebook</a>:<br><img src="https://user-images.githubusercontent.com/22628546/48837876-858ecf00-edc1-11e8-8142-d2dd9c03d8f0.png" alt="notebook"><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/20/fast_merge/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/10/31/travis-debug/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1693,168 +1850,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/06/25/matrix2latex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Weitang Li">
-      <meta itemprop="description" content="Weitang Li's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Weitang Li's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/25/matrix2latex/" itemprop="url">
-                  将sympy Matrix转化为LaTeX代码——快速绘制大型LaTeX矩阵
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-06-25 22:37:34" itemprop="dateCreated datePublished" datetime="2018-06-25T22:37:34+08:00">2018-06-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-06-26 21:04:54" itemprop="dateModified" datetime="2018-06-26T21:04:54+08:00">2018-06-26</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>\(\LaTeX\)中绘制矩阵的基本语法是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">\left[</span><br><span class="line">    \begin&#123;array&#125;&#123;ccc&#125;</span><br><span class="line">        0        &amp;   y    &amp; \alpha \\</span><br><span class="line">        \omega g &amp;   x^2  &amp; 5      \\</span><br><span class="line">        e^&#123;i\pi&#125; &amp;   ab   &amp; \omega \\</span><br><span class="line">    \end&#123;array&#125;</span><br><span class="line">\right]</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://user-images.githubusercontent.com/22628546/41883724-9a86a07c-7922-11e8-8cf4-034a2b00f30e.png" alt="image"><br>此外使用<code>bmatrix</code>等环境也ok。这种语法对于小型矩阵比如例子中的\(3\times 3\)矩阵来说，是很方便的。然而对于比较大型的矩阵，比如\(12\times 12\)的矩阵，直接用\(\LaTeX\)来写就显得有点蛋疼了，光是实现有效编写大型\(\LaTeX\)矩阵的前提——<code>&amp;</code>对齐，就足以使人痛不欲生。如果能指定矩阵的逻辑，然后自动生成\(\LaTeX\)代码就好了！<code>Python</code>的<code>sympy</code>库就可以很好地完成这个任务。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/25/matrix2latex/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1897,7 +1897,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1955,7 +1955,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

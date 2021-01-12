@@ -106,24 +106,24 @@
 
 
 
-  <meta name="description" content="在Git中，原则上使用merge或者rebase都可以解决分支冲突的问题，比如：123      D (dev)     /A---B---C (master) 当master和dev存在冲突时，在dev上进行git merge master或者git rebase master都可以解决冲突。这两种方式的作用机制不同，结果也不一样。">
+  <meta name="description" content="百度文库中以垃圾居多，然而有时却特别适合完成一些垃圾任务。许多百度文库文档是所谓“VIP”文档，看是可以看，复制是不允许的。不过通过浏览器控制台查看HTML代码可以发现，百度文库没有使用任何特殊的控件来渲染文档，每一行字都写在HTML里，这就意味着通过控制台可以快速将文档中的文字复制出来。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git解决分支冲突的两种方案：merge和rebase">
-<meta property="og:url" content="https://liwt31.github.io/2019/12/25/merge_rebase/index.html">
+<meta property="og:title" content="使用浏览器控制台快速复制百度文库文档">
+<meta property="og:url" content="https://liwt31.github.io/2021/01/08/baidudoc/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
-<meta property="og:description" content="在Git中，原则上使用merge或者rebase都可以解决分支冲突的问题，比如：123      D (dev)     /A---B---C (master) 当master和dev存在冲突时，在dev上进行git merge master或者git rebase master都可以解决冲突。这两种方式的作用机制不同，结果也不一样。">
+<meta property="og:description" content="百度文库中以垃圾居多，然而有时却特别适合完成一些垃圾任务。许多百度文库文档是所谓“VIP”文档，看是可以看，复制是不允许的。不过通过浏览器控制台查看HTML代码可以发现，百度文库没有使用任何特殊的控件来渲染文档，每一行字都写在HTML里，这就意味着通过控制台可以快速将文档中的文字复制出来。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-25T05:08:40.000Z">
+<meta property="og:updated_time" content="2021-01-08T06:00:04.109Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git解决分支冲突的两种方案：merge和rebase">
-<meta name="twitter:description" content="在Git中，原则上使用merge或者rebase都可以解决分支冲突的问题，比如：123      D (dev)     /A---B---C (master) 当master和dev存在冲突时，在dev上进行git merge master或者git rebase master都可以解决冲突。这两种方式的作用机制不同，结果也不一样。">
+<meta name="twitter:title" content="使用浏览器控制台快速复制百度文库文档">
+<meta name="twitter:description" content="百度文库中以垃圾居多，然而有时却特别适合完成一些垃圾任务。许多百度文库文档是所谓“VIP”文档，看是可以看，复制是不允许的。不过通过浏览器控制台查看HTML代码可以发现，百度文库没有使用任何特殊的控件来渲染文档，每一行字都写在HTML里，这就意味着通过控制台可以快速将文档中的文字复制出来。">
 
 
 
 
 
 
-  <link rel="canonical" href="https://liwt31.github.io/2019/12/25/merge_rebase/"/>
+  <link rel="canonical" href="https://liwt31.github.io/2021/01/08/baidudoc/"/>
 
 
 
@@ -133,7 +133,7 @@
   };
 </script>
 
-  <title>Git解决分支冲突的两种方案：merge和rebase | Weitang Li's blog</title>
+  <title>使用浏览器控制台快速复制百度文库文档 | Weitang Li's blog</title>
   
 
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/12/25/merge_rebase/">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2021/01/08/baidudoc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Weitang Li">
@@ -326,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Git解决分支冲突的两种方案：merge和rebase
+          <h1 class="post-title" itemprop="name headline">使用浏览器控制台快速复制百度文库文档
               
             
           </h1>
@@ -351,7 +351,7 @@
                 
               
 
-              <time title="Created: 2019-12-25 09:31:50 / Modified: 13:08:40" itemprop="dateCreated datePublished" datetime="2019-12-25T09:31:50+08:00">2019-12-25</time>
+              <time title="Created: 2021-01-08 13:46:02 / Modified: 14:00:04" itemprop="dateCreated datePublished" datetime="2021-01-08T13:46:02+08:00">2021-01-08</time>
             
 
             
@@ -389,23 +389,10 @@
       
 
       
-        <p>在Git中，原则上使用merge或者rebase都可以解决分支冲突的问题，比如：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D (<span class="name">dev</span>)</span><br><span class="line">     /</span><br><span class="line">A---B---C (<span class="name">master</span>)</span><br></pre></td></tr></table></figure></p>
-<p>当master和dev存在冲突时，在dev上进行<code>git merge master</code>或者<code>git rebase master</code>都可以解决冲突。这两种方式的作用机制不同，结果也不一样。</p>
+        <p>百度文库中以垃圾居多，然而有时却特别适合完成一些垃圾任务。许多百度文库文档是所谓“VIP”文档，看是可以看，复制是不允许的。<br>不过通过浏览器控制台查看HTML代码可以发现，百度文库没有使用任何特殊的控件来渲染文档，每一行字都写在HTML里，这就意味着通过控制台可以快速将文档中的文字复制出来。</p>
 <a id="more"></a>
-<h1 id="使用merge"><a href="#使用merge" class="headerlink" title="使用merge"></a>使用merge</h1><p>当使用merge时，<code>git merge master</code>会首先把master上的commit都搬进dev里，然后创建一个新的commit（<code>M</code>）以记录如何化解冲突：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D---M (<span class="name">dev</span>)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C (<span class="name">master</span>)</span><br></pre></td></tr></table></figure></p>
-<p><code>M</code>的特点是具有两个parent。注意这时的dev分支就包括了master上的所有信息，包括commit message。这可能并不是一件好事，比如如果有人在commit message里@了某人或者某issue，那当你把处理了冲突的分支push上去的时候就又@了一遍。</p>
-<p>当解决了dev和master的冲突以后，把dev合并进master就可以fast-forward了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D---M (dev, master)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C</span><br></pre></td></tr></table></figure></p>
-<h1 id="使用rebase"><a href="#使用rebase" class="headerlink" title="使用rebase"></a>使用rebase</h1><p>使用<code>rebase</code>时，<code>D</code>会直接被接到<code>C</code>上变成<code>D&#39;</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D   D&apos; (dev)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C (master)</span><br></pre></td></tr></table></figure></p>
-<p>这时从master去合并dev分支也可以fast-forward，最后的结果看起来会更漂亮一些，因为通过修改历史的方式曾经的冲突都被隐藏了起来，不存在有两个parent的commit：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">      D   D&apos; (dev, master)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C</span><br></pre></td></tr></table></figure></p>
-<p>如果考虑到最后Git会把<code>D</code>这个commit垃圾回收，最终的状态是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A---B---C---D&apos;(dev, master)</span><br></pre></td></tr></table></figure></p>
-<p>可以说是非常理想了。因此在比较简单的冲突的情形下，使用rebase是更好的方案，这种方案下master的历史非常清晰，易于管理。</p>
-<h1 id="复杂情况最好用merge"><a href="#复杂情况最好用merge" class="headerlink" title="复杂情况最好用merge"></a>复杂情况最好用merge</h1><p>但是当分支冲突情况比较复杂时，rebase并不能妥善地解决冲突问题，而应该使用merge，比如下面这种情况，dev1和master有冲突，dev2基于dev1开发，与master也有冲突：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        F (dev2)</span><br><span class="line">       /</span><br><span class="line">      D (dev1)</span><br><span class="line">     /</span><br><span class="line">A---B---C (master)</span><br></pre></td></tr></table></figure></p>
-<p>在这种情形下，假如将dev1分支rebase到master上，得到的状态是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        F (dev2)</span><br><span class="line">       /</span><br><span class="line">      D</span><br><span class="line">     /   </span><br><span class="line">A---B---C (master)</span><br><span class="line">         \</span><br><span class="line">          D&apos; (dev1)</span><br></pre></td></tr></table></figure></p>
-<p>其中<code>D&#39;</code>是rebase之后的<code>D</code>。这时如果我们只关心dev1和master之间的冲突，那么问题已经解决了。然而比较让人头疼的是dev2和master之间的冲突问题并没有解决，如果要将dev2和master合并，就需要把dev1和master之间的冲突再重新处理一遍，这显然是低效的。</p>
-<p>如果使用merge方案，dev1分支和master分支合并后的状态是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        F (dev2)</span><br><span class="line">       /</span><br><span class="line">      D---M (dev1)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C (master)</span><br></pre></td></tr></table></figure></p>
-<p>这时直接将dev2和master合并起来还是会有冲突，但是dev2可以直接rebase到dev1上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        F   F&apos; (dev2)</span><br><span class="line">       /   /</span><br><span class="line">      D---M (dev1)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C (master)</span><br></pre></td></tr></table></figure></p>
-<p>通过这种方式，dev2可以重用dev1处理与master冲突的commit。这时再将dev2合并进master就可以fast-forward:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        F   F&apos; (dev2, master)</span><br><span class="line">       /   /</span><br><span class="line">      D---M (dev1)</span><br><span class="line">     /   /</span><br><span class="line">A---B---C</span><br></pre></td></tr></table></figure></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Git中的rebase和merge命令都可以用于解决冲突。对于简单的情形，比如冲突分支只由一人开发是线性分支，出于简化master历史的考虑应该优先使用rebase。而当冲突比较复杂时，则应该回避修改历史，使用merge化解冲突。</p>
+<p>抽取特定元素中的文字最方便的方法是jQuery，首先在控制台中尝试输入<code>$</code>，结果竟然发现是<code>undefined</code>。看来百度针对初级程序员做了一些“优化”。为此需要首先<a href="https://stackoverflow.com/questions/1140402/how-to-add-jquery-in-js-file" target="_blank" rel="noopener">加载jQuery</a>:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line">script.src = <span class="string">'https://code.jquery.com/jquery-3.4.1.min.js'</span>;</span><br><span class="line">script.type = <span class="string">'text/javascript'</span>;</span><br><span class="line"><span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>].appendChild(script);</span><br></pre></td></tr></table></figure></p>
+<p>然后就可以使用<code>$</code>了，通过选取<code>p</code>标签的各个元素即可在控制台内获得文档内容：<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"p"</span>).<span class="keyword">text</span>()</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -433,8 +420,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/20/julia/" rel="next" title="读Julia文档小记">
-                <i class="fa fa-chevron-left"></i> 读Julia文档小记
+              <a href="/2020/05/19/endnote/" rel="next" title="使用MySQL和Python批量修改EndNote文献库">
+                <i class="fa fa-chevron-left"></i> 使用MySQL和Python批量修改EndNote文献库
               </a>
             
           </div>
@@ -442,10 +429,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/19/endnote/" rel="prev" title="使用MySQL和Python批量修改EndNote文献库">
-                使用MySQL和Python批量修改EndNote文献库 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -490,17 +473,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -559,22 +533,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用merge"><span class="nav-number">1.</span> <span class="nav-text">使用merge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用rebase"><span class="nav-number">2.</span> <span class="nav-text">使用rebase</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复杂情况最好用merge"><span class="nav-number">3.</span> <span class="nav-text">复杂情况最好用merge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

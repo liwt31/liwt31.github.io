@@ -106,24 +106,23 @@
 
 
 
-  <meta name="description" content="Frequency:                                                             a.u.                 eV                 meV                 cm-1">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Normal Mode (Huang-Rhys Factor) Calculator">
-<meta property="og:url" content="https://liwt31.github.io/2018/03/23/normal-mode/index.html">
+  <meta name="description" content="Weitang Li&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Weitang Li&#39;s blog">
+<meta property="og:url" content="https://liwt31.github.io/page/4/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
-<meta property="og:description" content="Frequency:                                                             a.u.                 eV                 meV                 cm-1">
+<meta property="og:description" content="Weitang Li&apos;s blog">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-06-13T01:14:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Normal Mode (Huang-Rhys Factor) Calculator">
-<meta name="twitter:description" content="Frequency:                                                             a.u.                 eV                 meV                 cm-1">
+<meta name="twitter:title" content="Weitang Li&#39;s blog">
+<meta name="twitter:description" content="Weitang Li&apos;s blog">
 
 
 
 
 
 
-  <link rel="canonical" href="https://liwt31.github.io/2018/03/23/normal-mode/"/>
+  <link rel="canonical" href="https://liwt31.github.io/page/4/"/>
 
 
 
@@ -133,7 +132,7 @@
   };
 </script>
 
-  <title>Normal Mode (Huang-Rhys Factor) Calculator | Weitang Li's blog</title>
+  <title>Weitang Li's blog</title>
   
 
 
@@ -199,7 +198,8 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -292,9 +292,9 @@
           
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/03/23/normal-mode/">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/01/05/ec2_ipv6_ss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Weitang Li">
@@ -326,7 +326,11 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Normal Mode (Huang-Rhys Factor) Calculator
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/05/ec2_ipv6_ss/" itemprop="url">
+                  AWS-EC2配置IPv6地址+ss实现校园网免流量费上网
+                </a>
               
             
           </h1>
@@ -351,7 +355,7 @@
                 
               
 
-              <time title="Created: 2018-03-23 20:03:37" itemprop="dateCreated datePublished" datetime="2018-03-23T20:03:37+08:00">2018-03-23</time>
+              <time title="Created: 2018-01-05 22:02:58" itemprop="dateCreated datePublished" datetime="2018-01-05T22:02:58+08:00">2018-01-05</time>
             
 
             
@@ -368,7 +372,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-06-13 09:14:30" itemprop="dateModified" datetime="2018-06-13T09:14:30+08:00">2018-06-13</time>
+                <time title="Modified: 2018-05-04 16:52:48" itemprop="dateModified" datetime="2018-05-04T16:52:48+08:00">2018-05-04</time>
               
             
           </span>
@@ -402,165 +406,15 @@
 
       
         
-<table id="calculator">
-    <tr>
-        <td>
-            Frequency:
-        </td>
-        <td>
-            <input type="text" id="freq" unit="cm-1">
-            <select id="freq_unit">
-                <option value="au">a.u.</option>
-                <option value="ev">eV</option>
-                <option value="mev">meV</option>
-                <option value="cm-1" selected="selected">cm-1</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Lambda:
-        </td>
-        <td>
-            <input type="text" id="lambda" unit="mev">
-            <select id="lambda_unit">
-                <option value="au">a.u.</option>
-                <option value="ev">eV</option>
-                <option value="mev" selected="selected">meV</option>
-                <option value="cm-1">cm-1</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Displacement
-        </td>
-        <td>
-            <input type="text" id="displacement" unit="au">
-            <select id="displacement_unit">
-                <option value="au" selected="selected">a.u.</option>
-                <option value="ang">Angstroms</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Huang-Rhys Factor:
-        </td>
-        <td>
-            <input type="text" id="hr" unit="au">
-        </td>
-    </tr>
-</table>
-<input type="button" id="clear" value="clear values">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-<script>
-    var unit2au = {"au": 1, "a.u.":1, "ev": 3.6749e-2,  "mev": 3.6749e-5, "cm-1": 4.5563e-6, "ang": 1 / 0.529177};
-    function unit_conversion(value, old_unit, new_unit){
-        var value_in_au = parseFloat(value) * unit2au[old_unit];
-        return  value_in_au / unit2au[new_unit];
-    }
-    function set_input_value(input, au_value){
-        input.setAttribute("au_value", au_value);
-        input.value = unit_conversion(au_value, "au", input.getAttribute("unit"));
-        input.setAttribute("disabled", "disabled");
-    }
-    function update_dis_from_freq_lam(displacement_input, au_freq, au_lambda){
-        var au_displacement = Math.sqrt(2 * au_lambda / Math.pow(au_freq, 2));
-        set_input_value(displacement_input, au_displacement);
-        return au_displacement;
-    }
-    function update_hr_from_freq_lam(hr_input, au_freq, au_lambda){
-        var hr = au_lambda / au_freq;
-        set_input_value(hr_input, hr);
-        return hr;
-    }
-    function update_lam_from_freq_dis(lambda_input, au_freq, au_displacement){
-        var au_lambda = 1 / 2 * Math.pow(au_freq, 2) * Math.pow(au_displacement, 2);
-        set_input_value(lambda_input, au_lambda);
-        return au_lambda;
-    }
-    function update_lam_from_freq_hr(lambda_input, au_freq, hr){
-        var au_lambda = au_freq * hr;
-        set_input_value(lambda_input, au_lambda);
-        return au_lambda;
-    }
-    function update_freq_from_lam_dis(freq_input, au_lambda, au_displacement){
-        var au_freq = Math.sqrt(2 * au_lambda / Math.pow(au_displacement, 2));
-        set_input_value(freq_input, au_freq);
-        return au_freq;
-    }
-    function update_freq_from_lam_hr(freq_input, au_lambda, hr){
-        var au_freq = au_lambda / hr;
-        set_input_value(freq_input, au_freq);
-        return au_freq;
-    }
-    function update_freq_from_dis_hr(freq_input, au_displacement, hr){
-        var au_freq = 2 * hr / Math.pow(au_displacement, 2);
-        set_input_value(freq_input, au_freq);
-        return au_freq;
-    }
-    function update_value(){
-        var ctx = $("#calculator");
-        var freq_input = $("#freq", ctx)[0];
-        var lambda_input = $("#lambda", ctx)[0];
-        var displacement_input = $("#displacement", ctx)[0];
-        var hr_input = $("#hr", ctx)[0];
-        var au_freq = freq_input.getAttribute("au_value");
-        var au_lambda = lambda_input.getAttribute("au_value");
-        var au_displacement = displacement_input.getAttribute("au_value");
-        var hr = hr_input.value;
-        if (au_freq && !freq_input.disabled && au_lambda && !lambda_input.disabled){
-            au_displacement = update_dis_from_freq_lam(displacement_input, au_freq, au_lambda);
-            hr = update_hr_from_freq_lam(hr_input, au_freq, au_lambda);
-        } else if (au_freq && !freq_input.disabled && au_displacement && !displacement_input.disabled){
-            au_lambda = update_lam_from_freq_dis(lambda_input, au_freq, au_displacement);
-            hr = update_hr_from_freq_lam(hr_input, au_freq, au_lambda);
-        } else if (au_freq && !freq_input.disabled && hr && !hr_input.disabled){
-            au_lambda = update_lam_from_freq_hr(lambda_input, au_freq, hr);
-            au_displacement = update_dis_from_freq_lam(displacement_input, au_freq, au_lambda);
-        } else if (au_lambda && !lambda_input.disabled && au_displacement && !displacement_input.disabled){
-            au_freq = update_freq_from_lam_dis(freq_input, au_lambda, au_displacement);
-            hr = update_hr_from_freq_lam(hr_input, au_freq, au_lambda);
-        } else if (au_lambda && !lambda_input.disabled && hr && !hr_input.disabled){
-            au_freq = update_freq_from_lam_hr(freq_input, au_lambda, hr);
-            au_displacement = update_dis_from_freq_lam(displacement_input, au_freq, au_lambda);
-        } else if (au_displacement && !displacement_input.disabled && hr && !hr_input.disabled) {
-            au_freq = update_freq_from_dis_hr(freq_input, au_displacement, hr);
-            au_lambda = update_lam_from_freq_hr(lambda_input, au_freq, hr);
-        }
-    }
-    $("#clear").click(function(){
-       $(":text").each(function(){
-           this.removeAttribute("disabled");
-           this.value = "";
-           this.removeAttribute("au_value")
-       })
-    });
-    $("input").on("input", function(){
-        if (this.value){
-            var unit = this.getAttribute("unit");
-            this.setAttribute("au_value", unit_conversion(this.value, unit, "au"));
-            update_value()
-        }
-    });
-    $("select").change(function(){
-        var input = this.previousElementSibling;
-        var new_unit = this.value;
-        if (input.value) {
-            var old_unit = input.getAttribute("unit");
-            input.value = unit_conversion(input.value, old_unit, new_unit);
-        }
-        input.setAttribute("unit", new_unit);
-    })
-</script>
-
-<p>Type in any of 2 variables in frequency, lambda, displacement or HR-factor, and the remaining 2 variables will be calculated automatically.<br>Click “clear values” to unlock auto-locked variables.</p>
-<a id="more"></a> 
-<hr>
-<p>输入任意两个变量，另外两个变量会自动计算。<br>为了防止用户更改自动计算的变量，带来语义不确定性，自动计算的变量会被设置为只读。如果需要修改，需要点击清除。<br>平日苦于计算正则模式时的单位换算和相互计算的繁琐，索性自己写一个小计算器挂在网上。</p>
-<p>欢迎转载，注明出处即可。</p>
-
+          <p>我日常使用的校园网每月除去免费流量外流量计费为2元/GB。当然这个规定只针对IPv4，“教学科研”用的IPv6是不受限制的。今天折腾AWS的时候突然想到可以用IPv6服务器做代理实现免流量上网，如果使用得当每月可以省下二三十元的流量费，基本刚好把租服务器的钱赚了回来，等于白用一个V#P:N。配置的过程中踩了一些坑，记录如下。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/05/ec2_ipv6_ss/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -580,32 +434,12 @@
       
 
       
-      
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/03/10/energylevelplot/" rel="next" title="用matplotlib做能级图">
-                <i class="fa fa-chevron-left"></i> 用matplotlib做能级图
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/09/linux_env/" rel="prev" title="自用Linux环境的常用配置">
-                自用Linux环境的常用配置 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -615,15 +449,18 @@
   </article>
 
 
-  </div>
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
+
 
 
           </div>
           
-
-  
-
-
 
         </div>
         
@@ -834,10 +671,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
-
-
 
   
 
@@ -877,6 +710,10 @@
   
 
   
+  
+    
+      
+    
   
 
   
