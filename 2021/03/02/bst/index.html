@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近因为约稿要投一个很偏的期刊，参考文献格式奇葩，现成的\(\LaTeX\)参考文献格式不能满足要求，需要自己手动配置。一些博客中已经介绍了使用makebst工具交互式生成相应bst文件的做法。好处是相对学习成本比较小，坏处就是被人牵着走还不一定能完成需求。 本文介绍的，是掌握BibTeX语法后，直接修改bst文件来设置\(\LaTeX\)参考文献格式的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过修改bst文件手动设置LaTeX参考文献格式">
+<meta property="og:url" content="https://liwt31.github.io/2021/03/02/bst/index.html">
+<meta property="og:site_name" content="Weitang Li&#39;s blog">
+<meta property="og:description" content="最近因为约稿要投一个很偏的期刊，参考文献格式奇葩，现成的\(\LaTeX\)参考文献格式不能满足要求，需要自己手动配置。一些博客中已经介绍了使用makebst工具交互式生成相应bst文件的做法。好处是相对学习成本比较小，坏处就是被人牵着走还不一定能完成需求。 本文介绍的，是掌握BibTeX语法后，直接修改bst文件来设置\(\LaTeX\)参考文献格式的方法。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-03-02T09:07:30.107Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通过修改bst文件手动设置LaTeX参考文献格式">
+<meta name="twitter:description" content="最近因为约稿要投一个很偏的期刊，参考文献格式奇葩，现成的\(\LaTeX\)参考文献格式不能满足要求，需要自己手动配置。一些博客中已经介绍了使用makebst工具交互式生成相应bst文件的做法。好处是相对学习成本比较小，坏处就是被人牵着走还不一定能完成需求。 本文介绍的，是掌握BibTeX语法后，直接修改bst文件来设置\(\LaTeX\)参考文献格式的方法。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://liwt31.github.io/2021/03/02/bst/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>通过修改bst文件手动设置LaTeX参考文献格式 | Weitang Li's blog</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112074287-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112074287-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bf4c5f63e0485106a91950fc4aa87838";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Weitang Li's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">We've havered enough. Let's get tae work!</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2021/03/02/bst/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">通过修改bst文件手动设置LaTeX参考文献格式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2021-03-02 14:39:47 / Modified: 17:07:30" itemprop="dateCreated datePublished" datetime="2021-03-02T14:39:47+08:00">2021-03-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近因为约稿要投一个很偏的期刊，参考文献格式奇葩，现成的\(\LaTeX\)参考文献格式不能满足要求，需要自己手动配置。一些博客中已经介绍了<a href="http://gabrielelanaro.github.io/blog/2014/12/01/latex-bibliography-in-5-minutes.html" target="_blank" rel="noopener">使用<code>makebst</code>工具交互式生成相应bst文件的做法</a>。好处是相对学习成本比较小，坏处就是被人牵着走还不一定能完成需求。</p>
+<p>本文介绍的，是掌握BibTeX语法后，直接修改bst文件来设置\(\LaTeX\)参考文献格式的方法。</p>
+<a id="more"></a> 
+<h2 id="BibTeX语言一窥"><a href="#BibTeX语言一窥" class="headerlink" title="BibTeX语言一窥"></a>BibTeX语言一窥</h2><p>学习BibTeX语法后从头手搓一个bst当然是一种方案，不过稍微取巧一些的是从一些现成的bst出发进行修改，最后满足需求即可。从宏观来看，bst文件只是某种格式或者配置文件，语法应该是比较直截了当的。然而即使是\(\LaTeX\)内置的简单格式如unsrt，其bst文件<code>unsrt.bst</code>也有18 kB，约一千行代码。<a href="https://www.ctan.org/tex-archive/biblio/bibtex/base" target="_blank" rel="noopener">所有内置参考文献的bst文件都可以从CTAN下载</a>。</p>
+<p><code>unsrt.bst</code>文件中的代码没有太多注释，粗看起来并不好懂。比如以下代码，大体上应该可以判断出来这段代码定义了渲染引用article时参考文献格式的函数，但具体运行逻辑不明朗。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">FUNCTION &#123;article&#125;</span><br><span class="line">&#123; output.bibitem</span><br><span class="line">  format.authors &quot;author&quot; output.check</span><br><span class="line">  new.block</span><br><span class="line">  format.title &quot;title&quot; output.check</span><br><span class="line">  new.block</span><br><span class="line">  crossref missing$</span><br><span class="line">    &#123; journal emphasize &quot;journal&quot; output.check</span><br><span class="line">      format.vol.num.pages output</span><br><span class="line">      format.date &quot;year&quot; output.check</span><br><span class="line">    &#125;</span><br><span class="line">    &#123; format.article.crossref output.nonnull</span><br><span class="line">      format.pages output</span><br><span class="line">    &#125;</span><br><span class="line">  if$</span><br><span class="line">  new.block</span><br><span class="line">  note output</span><br><span class="line">  fin.entry</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一个有一定编程基础的人看到这段代码自由会有如下几个问题：</p>
+<ul>
+<li>函数(<code>FUNCTION</code>)的形参和实参是什么？返回值如何定义？</li>
+<li>频繁出现在两个单词之间的<code>.</code>代表什么？</li>
+<li>出现在单词之后的<code>$</code>有什么含义？</li>
+<li><code>{}</code>括起来的是代码块吗？何时需要何时不需要？</li>
+<li><code>&quot;</code>引号括起来的部分，是否表示字符串？如果是，为什么最终渲染出来的引文中并没有<code>&quot;author&quot;</code>、<code>&quot;title&quot;</code>等字符串？</li>
+</ul>
+<p>只要将这些问题一一解决，BibTeX的语法也就基本清楚了，这时修改bst文件手动设置latex参考文献格式也就有如探囊取物。</p>
+<h2 id="BibTeX语言基本模型：逆波兰表示法"><a href="#BibTeX语言基本模型：逆波兰表示法" class="headerlink" title="BibTeX语言基本模型：逆波兰表示法"></a>BibTeX语言基本模型：逆波兰表示法</h2><p><a href="https://zh.wikipedia.org/wiki/%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E7%A4%BA%E6%B3%95" target="_blank" rel="noopener">逆波兰表示法</a>在计算机科学界可说是鼎鼎大名了，其优点是很容易解析(parse)成堆栈操作并实现为计算机代码。例如表达式<code>5 1 3 + 2 \ *</code>：</p>
+<ol>
+<li>首先5，1，3依次入栈</li>
+<li>对栈顶的1和3做加法操作，结果4入栈</li>
+<li>加号后的2入栈</li>
+<li>对栈顶的4和2做除法操作，结果2入栈</li>
+<li>再对栈顶的5和2做乘法操作，结果10入栈</li>
+<li>运算结束</li>
+</ol>
+<p>BibTeX是一种脚本语言，基本模型就是通过逆波兰表示法维护一个堆栈，不同的指令对应于不同的堆栈操作，其目标是将参考文献的\(\LaTeX\)代码打印出来。函数与指令没有本质区别。在定义函数时，不需要指定形参和返回值，只需要在函数中对堆栈进行操作就行了。换句话说，假如函数有参数，在调用函数前需要手动将参数压栈。<strong>这就回答了上面提到的函数如何定义的问题。</strong>从这种函数定义方式上讲，可以说BibTeX是一种比较落后的语言。</p>
+<h2 id="BibTeX语言的基本数据类型和内置函数"><a href="#BibTeX语言的基本数据类型和内置函数" class="headerlink" title="BibTeX语言的基本数据类型和内置函数"></a>BibTeX语言的基本数据类型和内置函数</h2><p>BibTeX语言中，基本数据类型只有两类：整数和字符串，对应的变量使用前需要在bst文件头部<code>INTEGER</code>和<code>STRING</code>部分声明。BibTeX语言还有一类数据类型是bib文件中的条目（可以理解为某种对象），需要在头部<code>ENTRY</code>部分声明。定义整数时，在数字前加井号，如<code>#1</code>。<strong>定义字符串时，用双括号括起来，如<code>&quot;hello&quot;</code></strong>。上文示例代码中的<code>&quot;author&quot;</code>等字符串最后并没出现在参考文献的渲染结果的原因是此时<code>&quot;author&quot;</code>等字符串只是入栈，而并没有加入到输出中。实际上，后续的函数<code>output.check</code>就会将其出栈。之所以这么做的原因是如果出错<code>output.check</code>在打印错误原因时需要<code>&quot;author&quot;</code>这一字符串（类似于“Error when processing author”）。换句话说<code>&quot;author&quot;</code>只是<code>output.check</code>的一个参数。</p>
+<p>BibTeX的内置函数包括<code>+</code>、<code>&lt;</code>等常见操作。另外<code>=</code>代表比较而<code>:=</code>代表赋值。当包含字母时，<strong>内置函数由<code>$</code>结尾</strong>，如<code>pop$</code>。上文示例BibTeX代码中的<code>missing$</code>就是这样一种内置函数，其作用是判断当前栈顶的“条目”是否为空，返回整数作为布尔值。<code>if$</code>这样的条件分支语句也被当做是函数，它会出栈当前栈顶的三个元素。第一个（三个元素中靠近栈底的）如果严格大于0即布尔真，那么就会执行第二个元素中的代码块，否则会执行第三个元素中的代码块。<br>至此，我们可以理解上文实例代码中的控制流了：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">crossref missing$</span><br><span class="line">&#123; journal emphasize <span class="string">"journal"</span> output.check</span><br><span class="line">  format<span class="selector-class">.vol</span><span class="selector-class">.num</span><span class="selector-class">.pages</span> output</span><br><span class="line">  format<span class="selector-class">.date</span> <span class="string">"year"</span> output.check</span><br><span class="line">&#125;</span><br><span class="line">&#123; format<span class="selector-class">.article</span><span class="selector-class">.crossref</span> output.nonnull</span><br><span class="line">  format<span class="selector-class">.pages</span> output</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>$</span><br></pre></td></tr></table></figure></p>
+<p>如果当前处理的参考文献没有<code>crossref</code>条目，那么在渲染该参考文献时就采用第一个<code>{}</code>中括起来的代码，反之则用第二个。<strong>可见<code>{}</code>的作用是暂缓解释器对括起来的代码的执行，而将其作为一个整体入栈，主要目的是和<code>if$</code>配合。</strong>当代码块较简单如只有一个单词时，可以在该单词前加上<code>&#39;</code>达到相同的目的，效果与用<code>{}</code>括起来相同。</p>
+<p>其它的内置BibTeX函数还有很多，可参考<a href="http://mirrors.ctan.org/biblio/bibtex/contrib/doc/btxhak.pdf" target="_blank" rel="noopener">官方文档</a>或<a href="http://mirrors.ctan.org/info/bibtex/tamethebeast/ttb_en.pdf" target="_blank" rel="noopener">半官方文档</a>。这些函数中有一个非常特别的<code>format.name$</code>函数，顾名思义专门对人名进行格式化，其特别之处在于针对不同的人名格式又定义了一个自己的DSL（禁止套娃。这个函数名中的<code>.</code>并没有特殊含义，<strong>在BibTeX中<code>.</code>可以像正常字符一样出现在函数名当中</strong>。</p>
+<h2 id="BibTeX简单示例"><a href="#BibTeX简单示例" class="headerlink" title="BibTeX简单示例"></a>BibTeX简单示例</h2><p>至此，本文第一节提出的若干个问题已经全部得到了解决（见加粗部分），BibTeX的语法也逐渐清晰了起来。下面介绍一个实例：如果针对unsrt格式，想设置发表年份斜体，应该怎么做？从上面的示例代码不难发现目标即是<code>format.date</code>函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">FUNCTION &#123;format.date&#125;</span><br><span class="line">&#123; year empty$</span><br><span class="line">    &#123; month empty$</span><br><span class="line">        &#123; &quot;&quot; &#125;</span><br><span class="line">        &#123; &quot;there&apos;s a month but no year in &quot; cite$ * warning$</span><br><span class="line">          month</span><br><span class="line">        &#125;</span><br><span class="line">      if$</span><br><span class="line">    &#125;</span><br><span class="line">    &#123; month empty$</span><br><span class="line">        &apos;year</span><br><span class="line">        &#123; month &quot; &quot; * year * &#125;</span><br><span class="line">      if$</span><br><span class="line">    &#125;</span><br><span class="line">  if$</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看出该函数的控制流分为四种情况，首先<code>year empty$</code>是否定义了年份，其次<code>month empty$</code>是否定义了月份。那由于我们的目的是改年份格式，没有定义年份的就不用管了，只看第二个代码块即第10到14行。当月份为空时，执行第一个代码块<code>&#39;year</code>也就是简简单单把年份入栈（注意输出是后面函数的工作），其中<code>&#39;</code>的作用前面已经提到，就是将简单的语句<code>year</code>变成代码块，与<code>{year}</code>相同。当月份不为空时，代码<code>month &quot; &quot; * year *</code>中出现了运算符<code>*</code>。这个运算符的作用不是乘法而是字符串相连（实际上BibTeX内生不支持乘法），所以这行代码的意思实际上是把三个字符串相连，换成Python的话说就是<code>f&quot;{month} {year}&quot;</code>。</p>
+<p>如此分析后，怎样设置年份斜体就呼之欲出了，以没有定义月份时为例，只需将<code>&#39;year</code>替换为<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"\textit&#123;"</span> <span class="built_in">year</span> * <span class="string">"&#125;"</span> *&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这行代码初看有点难懂，因为它是为了生成代码的代码。外侧的一对<code>{}</code>作用是让BibTeX解释器把这一段当成代码块不要立刻执行。内侧的一对<code>{}</code>是处于括号中的，目的是让渲染出的结果中有<code>\textit{}</code>。</p>
+<p>按照这种方式，任意的参考文献格式都可以轻松定义。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/08/baidudoc/" rel="next" title="使用浏览器控制台快速复制百度文库文档">
+                <i class="fa fa-chevron-left"></i> 使用浏览器控制台快速复制百度文库文档
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Weitang Li</p>
+              <p class="site-description motion-element" itemprop="description">Weitang Li's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liwt31" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:liwt31@163.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BibTeX语言一窥"><span class="nav-number">1.</span> <span class="nav-text">BibTeX语言一窥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BibTeX语言基本模型：逆波兰表示法"><span class="nav-number">2.</span> <span class="nav-text">BibTeX语言基本模型：逆波兰表示法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BibTeX语言的基本数据类型和内置函数"><span class="nav-number">3.</span> <span class="nav-text">BibTeX语言的基本数据类型和内置函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BibTeX简单示例"><span class="nav-number">4.</span> <span class="nav-text">BibTeX简单示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Weitang Li</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.4.4</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
