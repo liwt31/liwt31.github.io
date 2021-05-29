@@ -309,6 +309,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2021/05/29/pool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/29/pool/" itemprop="url">
+                  Python中的进程池（Pool）与全局变量
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2021-05-29 09:53:14 / Modified: 11:20:41" itemprop="dateCreated datePublished" datetime="2021-05-29T09:53:14+08:00">2021-05-29</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Python有两大类并行方式：多线程与多进程。由于GIL的存在，这两种方式有着截然不同的特点：</p>
+<ul>
+<li>多线程可以直接共享数据，但至多只能用一个CPU核</li>
+<li>多进程可以用多个CPU核，但各进程的数据相互独立（可<a href="https://docs.python.org/3/library/multiprocessing.shared_memory.html" target="_blank" rel="noopener">shared_memory</a>等机制共享数据）</li>
+</ul>
+<p><code>multiprocessing</code>包中的<code>Pool</code>类是实现多进程的常用工具。从直觉上看，以下代码中，由于每个进程都具有独立的内存，对<code>i</code>进行修改不会有任何效果，所有打印出来的<code>i</code>应该都是<code>1</code>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pp</span><span class="params">(job_id)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> i</span><br><span class="line">    i = i + <span class="number">1</span></span><br><span class="line">    print(<span class="string">f"[<span class="subst">&#123;job_id:<span class="number">02</span>&#125;</span>]: <span class="subst">&#123;i&#125;</span>, from <span class="subst">&#123;os.getpid()&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">with</span> Pool(<span class="number">4</span>) <span class="keyword">as</span> p:</span><br><span class="line">        p.map(pp, range(<span class="number">9</span>))</span><br></pre></td></tr></table></figure></p>
+<p>然而，实际运行这段代码，<code>i</code>可以一直打印到<code>10</code>！这是什么原因呢？</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/05/29/pool/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2021/03/02/bst/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,12 +505,24 @@
                 
               
 
-              <time title="Created: 2021-03-02 14:39:47 / Modified: 17:07:30" itemprop="dateCreated datePublished" datetime="2021-03-02T14:39:47+08:00">2021-03-02</time>
+              <time title="Created: 2021-03-02 14:39:47" itemprop="dateCreated datePublished" datetime="2021-03-02T14:39:47+08:00">2021-03-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2021-03-09 11:22:19" itemprop="dateModified" datetime="2021-03-09T11:22:19+08:00">2021-03-09</time>
               
             
           </span>
@@ -1107,7 +1269,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-09-09 21:10:12" itemprop="dateModified" datetime="2019-09-09T21:10:12+08:00">2019-09-09</time>
+                <time title="Modified: 2021-03-04 11:46:24" itemprop="dateModified" datetime="2021-03-04T11:46:24+08:00">2021-03-04</time>
               
             
           </span>
@@ -1141,7 +1303,7 @@
 
       
         
-          <p>对于熟悉Git的人，在大型项目中直接push到master上就和天方夜谭一样。但是当需要给新人介绍为什么不能直接push到master上时，<a href="https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/" target="_blank" rel="noopener">一个Git老手也不一定能简明扼要地解释清楚</a>。想要让新人放弃直截了当地<code>git push origin master</code>，采取建立分支-commit-push-PR-merge的弯弯绕方式，需要有让人信服的理由，特别是在新人对Pull Request（PR）还没有任何概念的时候。</p>
+          <p>许多大型Git项目中不允许直接push到master上。但是当需要给新人介绍为什么不能直接push到master上时，<a href="https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/" target="_blank" rel="noopener">一个Git老手也不一定能简明扼要地解释清楚</a>。想要让新人放弃直截了当地<code>git push origin master</code>，采取建立分支-commit-push-PR-merge的弯弯绕方式，需要有让人信服的理由，特别是在新人对Pull Request（PR）还没有任何概念的时候。本文试图以比较好理解的方式，帮助初学Git的人了解不能直接push到master分支的原因。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/09/01/nopush/#more" rel="contents">
@@ -1666,162 +1828,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/02/28/numpy_view/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Weitang Li">
-      <meta itemprop="description" content="Weitang Li's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Weitang Li's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/28/numpy_view/" itemprop="url">
-                  警惕NumPy切片视图(Slice View)中的“内存泄漏”陷阱
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-28 22:20:50" itemprop="dateCreated datePublished" datetime="2019-02-28T22:20:50+08:00">2019-02-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-09-01 14:46:28" itemprop="dateModified" datetime="2019-09-01T14:46:28+08:00">2019-09-01</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>NumPy的视图(View)机制可以大大加快对数组进行切片和<code>reshape</code>的速度，同时节省内存。但View机制存在一个极难发现的陷阱，会在许多常见的应用场景下引起内存泄漏。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/28/numpy_view/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1869,7 +1875,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

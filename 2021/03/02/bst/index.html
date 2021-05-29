@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
 <meta property="og:description" content="最近因为约稿要投一个很偏的期刊，参考文献格式奇葩，现成的\(\LaTeX\)参考文献格式不能满足要求，需要自己手动配置。一些博客中已经介绍了使用makebst工具交互式生成相应bst文件的做法。好处是相对学习成本比较小，坏处就是被人牵着走还不一定能完成需求。 本文介绍的，是掌握BibTeX语法后，直接修改bst文件来设置\(\LaTeX\)参考文献格式的方法。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-03-02T09:07:30.107Z">
+<meta property="og:updated_time" content="2021-03-09T03:22:19.654Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过修改bst文件手动设置LaTeX参考文献格式">
 <meta name="twitter:description" content="最近因为约稿要投一个很偏的期刊，参考文献格式奇葩，现成的\(\LaTeX\)参考文献格式不能满足要求，需要自己手动配置。一些博客中已经介绍了使用makebst工具交互式生成相应bst文件的做法。好处是相对学习成本比较小，坏处就是被人牵着走还不一定能完成需求。 本文介绍的，是掌握BibTeX语法后，直接修改bst文件来设置\(\LaTeX\)参考文献格式的方法。">
@@ -351,12 +351,24 @@
                 
               
 
-              <time title="Created: 2021-03-02 14:39:47 / Modified: 17:07:30" itemprop="dateCreated datePublished" datetime="2021-03-02T14:39:47+08:00">2021-03-02</time>
+              <time title="Created: 2021-03-02 14:39:47" itemprop="dateCreated datePublished" datetime="2021-03-02T14:39:47+08:00">2021-03-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2021-03-09 11:22:19" itemprop="dateModified" datetime="2021-03-09T11:22:19+08:00">2021-03-09</time>
               
             
           </span>
@@ -394,7 +406,7 @@
 <a id="more"></a> 
 <h2 id="BibTeX语言一窥"><a href="#BibTeX语言一窥" class="headerlink" title="BibTeX语言一窥"></a>BibTeX语言一窥</h2><p>学习BibTeX语法后从头手搓一个bst当然是一种方案，不过稍微取巧一些的是从一些现成的bst出发进行修改，最后满足需求即可。从宏观来看，bst文件只是某种格式或者配置文件，语法应该是比较直截了当的。然而即使是\(\LaTeX\)内置的简单格式如unsrt，其bst文件<code>unsrt.bst</code>也有18 kB，约一千行代码。<a href="https://www.ctan.org/tex-archive/biblio/bibtex/base" target="_blank" rel="noopener">所有内置参考文献的bst文件都可以从CTAN下载</a>。</p>
 <p><code>unsrt.bst</code>文件中的代码没有太多注释，粗看起来并不好懂。比如以下代码，大体上应该可以判断出来这段代码定义了渲染引用article时参考文献格式的函数，但具体运行逻辑不明朗。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">FUNCTION &#123;article&#125;</span><br><span class="line">&#123; output.bibitem</span><br><span class="line">  format.authors &quot;author&quot; output.check</span><br><span class="line">  new.block</span><br><span class="line">  format.title &quot;title&quot; output.check</span><br><span class="line">  new.block</span><br><span class="line">  crossref missing$</span><br><span class="line">    &#123; journal emphasize &quot;journal&quot; output.check</span><br><span class="line">      format.vol.num.pages output</span><br><span class="line">      format.date &quot;year&quot; output.check</span><br><span class="line">    &#125;</span><br><span class="line">    &#123; format.article.crossref output.nonnull</span><br><span class="line">      format.pages output</span><br><span class="line">    &#125;</span><br><span class="line">  if$</span><br><span class="line">  new.block</span><br><span class="line">  note output</span><br><span class="line">  fin.entry</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>一个有一定编程基础的人看到这段代码自由会有如下几个问题：</p>
+<p>一个有一定编程基础的人，看完这段代码自然会有如下几个问题：</p>
 <ul>
 <li>函数(<code>FUNCTION</code>)的形参和实参是什么？返回值如何定义？</li>
 <li>频繁出现在两个单词之间的<code>.</code>代表什么？</li>
@@ -402,7 +414,7 @@
 <li><code>{}</code>括起来的是代码块吗？何时需要何时不需要？</li>
 <li><code>&quot;</code>引号括起来的部分，是否表示字符串？如果是，为什么最终渲染出来的引文中并没有<code>&quot;author&quot;</code>、<code>&quot;title&quot;</code>等字符串？</li>
 </ul>
-<p>只要将这些问题一一解决，BibTeX的语法也就基本清楚了，这时修改bst文件手动设置latex参考文献格式也就有如探囊取物。</p>
+<p>只要将这些问题一一解决，BibTeX的语法也就基本清楚了，这时修改bst文件手动设置\(\LaTeX\)参考文献格式也就有如探囊取物。</p>
 <h2 id="BibTeX语言基本模型：逆波兰表示法"><a href="#BibTeX语言基本模型：逆波兰表示法" class="headerlink" title="BibTeX语言基本模型：逆波兰表示法"></a>BibTeX语言基本模型：逆波兰表示法</h2><p><a href="https://zh.wikipedia.org/wiki/%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E7%A4%BA%E6%B3%95" target="_blank" rel="noopener">逆波兰表示法</a>在计算机科学界可说是鼎鼎大名了，其优点是很容易解析(parse)成堆栈操作并实现为计算机代码。例如表达式<code>5 1 3 + 2 \ *</code>：</p>
 <ol>
 <li>首先5，1，3依次入栈</li>
@@ -418,10 +430,10 @@
 <p>如果当前处理的参考文献没有<code>crossref</code>条目，那么在渲染该参考文献时就采用第一个<code>{}</code>中括起来的代码，反之则用第二个。<strong>可见<code>{}</code>的作用是暂缓解释器对括起来的代码的执行，而将其作为一个整体入栈，主要目的是和<code>if$</code>配合。</strong>当代码块较简单如只有一个单词时，可以在该单词前加上<code>&#39;</code>达到相同的目的，效果与用<code>{}</code>括起来相同。</p>
 <p>其它的内置BibTeX函数还有很多，可参考<a href="http://mirrors.ctan.org/biblio/bibtex/contrib/doc/btxhak.pdf" target="_blank" rel="noopener">官方文档</a>或<a href="http://mirrors.ctan.org/info/bibtex/tamethebeast/ttb_en.pdf" target="_blank" rel="noopener">半官方文档</a>。这些函数中有一个非常特别的<code>format.name$</code>函数，顾名思义专门对人名进行格式化，其特别之处在于针对不同的人名格式又定义了一个自己的DSL（禁止套娃。这个函数名中的<code>.</code>并没有特殊含义，<strong>在BibTeX中<code>.</code>可以像正常字符一样出现在函数名当中</strong>。</p>
 <h2 id="BibTeX简单示例"><a href="#BibTeX简单示例" class="headerlink" title="BibTeX简单示例"></a>BibTeX简单示例</h2><p>至此，本文第一节提出的若干个问题已经全部得到了解决（见加粗部分），BibTeX的语法也逐渐清晰了起来。下面介绍一个实例：如果针对unsrt格式，想设置发表年份斜体，应该怎么做？从上面的示例代码不难发现目标即是<code>format.date</code>函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">FUNCTION &#123;format.date&#125;</span><br><span class="line">&#123; year empty$</span><br><span class="line">    &#123; month empty$</span><br><span class="line">        &#123; &quot;&quot; &#125;</span><br><span class="line">        &#123; &quot;there&apos;s a month but no year in &quot; cite$ * warning$</span><br><span class="line">          month</span><br><span class="line">        &#125;</span><br><span class="line">      if$</span><br><span class="line">    &#125;</span><br><span class="line">    &#123; month empty$</span><br><span class="line">        &apos;year</span><br><span class="line">        &#123; month &quot; &quot; * year * &#125;</span><br><span class="line">      if$</span><br><span class="line">    &#125;</span><br><span class="line">  if$</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看出该函数的控制流分为四种情况，首先<code>year empty$</code>是否定义了年份，其次<code>month empty$</code>是否定义了月份。那由于我们的目的是改年份格式，没有定义年份的就不用管了，只看第二个代码块即第10到14行。当月份为空时，执行第一个代码块<code>&#39;year</code>也就是简简单单把年份入栈（注意输出是后面函数的工作），其中<code>&#39;</code>的作用前面已经提到，就是将简单的语句<code>year</code>变成代码块，与<code>{year}</code>相同。当月份不为空时，代码<code>month &quot; &quot; * year *</code>中出现了运算符<code>*</code>。这个运算符的作用不是乘法而是字符串相连（实际上BibTeX内生不支持乘法），所以这行代码的意思实际上是把三个字符串相连，换成Python的话说就是<code>f&quot;{month} {year}&quot;</code>。</p>
+<p>可以看出该函数的控制流分为四种情况，首先<code>year empty$</code>是否定义了年份，其次<code>month empty$</code>是否定义了月份。那由于我们的目的是改年份格式，没有定义年份的就不用管了，只看第二个代码块即第10到14行。当月份为空时，执行第一个代码块<code>&#39;year</code>也就是简简单单把年份入栈（注意输出是后面函数的工作），其中<code>&#39;</code>的作用前面已经提到，就是将简单的语句<code>year</code>变成代码块，与<code>{year}</code>相同。当月份不为空时，代码<code>month &quot; &quot; * year *</code>中出现了运算符<code>*</code>。这个运算符的作用不是乘法而是字符串相连（实际上BibTeX内生不支持乘法），所以这行代码的意思实际上是把三个字符串相连，换成Python的话说就是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">f"<span class="subst">&#123;month&#125;</span> <span class="subst">&#123;year&#125;</span>"</span></span><br></pre></td></tr></table></figure></p>
 <p>如此分析后，怎样设置年份斜体就呼之欲出了，以没有定义月份时为例，只需将<code>&#39;year</code>替换为<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"\textit&#123;"</span> <span class="built_in">year</span> * <span class="string">"&#125;"</span> *&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这行代码初看有点难懂，因为它是为了生成代码的代码。外侧的一对<code>{}</code>作用是让BibTeX解释器把这一段当成代码块不要立刻执行。内侧的一对<code>{}</code>是处于括号中的，目的是让渲染出的结果中有<code>\textit{}</code>。</p>
-<p>按照这种方式，任意的参考文献格式都可以轻松定义。</p>
+<p>这行代码初看有点难懂，因为它是为了生成代码的代码。外侧的一对<code>{}</code>作用是让BibTeX解释器把这一段当成代码块不要立刻执行。内侧的一对<code>{}</code>是处于引号中的，目的是让渲染出的结果中有<code>\textit{}</code>。而<code>*</code>的作用是连接栈顶的两个字符串。</p>
+<p>按照这种方式编码bst文件，任意的参考文献格式都可以轻松定义。</p>
 
       
     </div>
@@ -458,6 +470,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/29/pool/" rel="prev" title="Python中的进程池（Pool）与全局变量">
+                Python中的进程池（Pool）与全局变量 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -527,7 +543,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
