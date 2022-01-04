@@ -106,17 +106,17 @@
 
 
 
-  <meta name="description" content="Loading...          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     container.height(container.width">
+  <meta name="description" content="Loading...          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     container.height(container.width());     in">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Online Molecular Viewer based on XYZ coordinates">
 <meta property="og:url" content="https://liwt31.github.io/2022/01/02/online_viewer/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
-<meta property="og:description" content="Loading...          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     container.height(container.width">
+<meta property="og:description" content="Loading...          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     container.height(container.width());     in">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-01-02T13:14:18.354Z">
+<meta property="og:updated_time" content="2022-01-04T13:59:50.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Online Molecular Viewer based on XYZ coordinates">
-<meta name="twitter:description" content="Loading...          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     container.height(container.width">
+<meta name="twitter:description" content="Loading...          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     container.height(container.width());     in">
 
 
 
@@ -351,12 +351,24 @@
                 
               
 
-              <time title="Created: 2022-01-02 20:51:59 / Modified: 21:14:18" itemprop="dateCreated datePublished" datetime="2022-01-02T20:51:59+08:00">2022-01-02</time>
+              <time title="Created: 2022-01-02 20:51:59" itemprop="dateCreated datePublished" datetime="2022-01-02T20:51:59+08:00">2022-01-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2022-01-04 21:59:50" itemprop="dateModified" datetime="2022-01-04T21:59:50+08:00">2022-01-04</time>
               
             
           </span>
@@ -390,9 +402,10 @@
 
       
         
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous">            
-</script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/1.4.0/3Dmol-nojquery.js" onload="backend_loaded()"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/1.4.0/3Dmol-min.js" onload="backend_loaded()"></script>
+
+
 <div id="container" style="height: 400px; width: 400px; position: relative;" class="mol-container"></div>
 <textarea id="coordinates" title="attributes" cols="80" rows="10">
 Loading...
@@ -413,9 +426,28 @@ Loading...
     let viewer;
 
     let label_on = true;
-    let atoms;
+    let atoms = [];
+    const bond_length_database = {};
+    const bond_length_data_url = "https://raw.githubusercontent.com/liwt31/liwt31.github.io/vendor/bond_length.json";
+    $.getJSON(bond_length_data_url, function(data) {
+        // load bond length data
+        for (const record of data){
+            if (record.bond_order != 1){
+                // Only deal with single bond for now
+                continue;
+            }
+            bond_length_database[record.elements] = record.length;
+            bond_length_database[[record.elements[1], record.elements[0]]] = record.length;
+        }
+        if (!(viewer === undefined)){
+            // backend already loaded. Rerender
+            form_bonds(atoms);
+            input_textarea.trigger("change");
+        }
+    });
 
     input_textarea.on('input change',function(e){
+        // main logic
         const coordinates = e.target.value;
         let success;
         try{
@@ -424,15 +456,17 @@ Loading...
         }
         catch (err) {
             console.log("Error parsing coordinates: ", err);
+            atoms = [];
             success = false;
         }
+        form_bonds(atoms);
         // rerender
         viewer.removeAllLabels();
         viewer.removeAllModels();
         if (success){
             const m = viewer.addModel();
             m.addAtoms(atoms);
-            m.setStyle({},{sphere:{scale:0.3}});
+            m.setStyle({},{sphere:{scale:0.3}, stick:{}});
             if (label_on){
                 draw_label();
             }
@@ -443,7 +477,17 @@ Loading...
         viewer.render();
     });
 
+    function parse_float_throw(s){
+        // parse float number but throws exception at NaN
+        let res = parseFloat(s);
+        if (isNaN(res)){
+            throw "invalid float number: " + s
+        }
+        return res
+    }
+
     function parse_input(coord_str){
+        // get xyz coordinates for the atoms
         let atoms = [];
         const lines = coord_str.split("\n");
         for (let line of lines){
@@ -452,12 +496,44 @@ Loading...
                 continue;
             }
             const elems = line.split(/\s+/);
-            if (line.length < 4){
+            if (elems.length < 4){
                 throw "invalid line: " + line
             }
-            atoms.push({elem: elems[0], x: parseFloat(elems[1]), y: parseFloat(elems[2]), z: parseFloat(elems[3])});
+            atoms.push({elem: elems[0], x: parse_float_throw(elems[1]), y: parse_float_throw(elems[2]), z: parse_float_throw(elems[3])});
         }
         return atoms;
+    }
+
+    function is_bonding(atom_coordinate1, atom_coordinate2){
+        const x1 = atom_coordinate1.x;
+        const y1 = atom_coordinate1.y;
+        const z1 = atom_coordinate1.z;
+        const x2 = atom_coordinate2.x;
+        const y2 = atom_coordinate2.y;
+        const z2 = atom_coordinate2.z;
+        const length = Math.sqrt((x1 - x2)**2 + (y1 - y2)**2 + (z1 - z2) ** 2);
+        const key = [atom_coordinate1.elem, atom_coordinate2.elem];
+        if (!(key in bond_length_database)){
+            return false
+        }
+        // add some tolerance
+        return length < 1.3 * bond_length_database[key];
+    }
+
+    function form_bonds(atom_coordinates){
+        // add bond information in place
+        // stick to simple logic and avoid (premature) optimization
+        for (const atom_coordinate1 of atom_coordinates){
+            const bonds = [];
+            for (let i= 0; i < atom_coordinates.length; i++){
+                const atom_coordinate2 = atom_coordinates[i];
+                if (is_bonding(atom_coordinate1, atom_coordinate2)){
+                    bonds.push(i)
+                }
+            }
+            atom_coordinate1.bonds = bonds;
+            atom_coordinate1.bondOrder = new Array(bonds.length).fill(1);
+        }
     }
 
     function draw_label(){
@@ -473,7 +549,7 @@ Loading...
         // in angstrom
         let d = 0.629;
         input_textarea.val(`C 0 0 0\nH -${d} ${d} ${d}\nH ${d} -${d} ${d}\nH -${d} -${d} -${d}\nH ${d} ${d} -${d}`);
-        input_textarea.trigger("change");        
+        input_textarea.trigger("change");
     }
 
     $("#toggle_label").on("click", function(e){
@@ -493,12 +569,8 @@ Loading...
 
 <p>The unit is in Angstrom.</p>
 <a id="more"></a>
-<p>Quite simple tool powered by <a href="https://github.com/3dmol/3Dmol.js" target="_blank" rel="noopener">3Dmol.js</a>.</p>
-<p>More features to come:</p>
-<ul>
-<li>Different units</li>
-<li>Automatically detect bonds</li>
-</ul>
+<p>Quite simple tool powered by <a href="https://github.com/3dmol/3Dmol.js" target="_blank" rel="noopener">3Dmol.js</a>. Auto-detects bond formation using bond length database from <a href="https://github.com/materialsproject/pymatgen" target="_blank" rel="noopener">pymatgen</a>.</p>
+<p>Feature requests are welcome by submitting an issue at <a href="https://github.com/liwt31/liwt31.github.io" target="_blank" rel="noopener">https://github.com/liwt31/liwt31.github.io</a>.</p>
 
       
     </div>
