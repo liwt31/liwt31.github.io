@@ -372,7 +372,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2022-01-04 21:59:50" itemprop="dateModified" datetime="2022-01-04T21:59:50+08:00">2022-01-04</time>
+                <time title="Modified: 2022-01-05 09:10:14" itemprop="dateModified" datetime="2022-01-05T09:10:14+08:00">2022-01-05</time>
               
             
           </span>
@@ -412,7 +412,7 @@
 
 <div id="container" style="height: 400px; width: 400px; position: relative;" class="mol-container"></div>
 <textarea id="coordinates" title="attributes" cols="80" rows="10">
-Loading...
+Loading... Please refresh if the message persists.
 </textarea>
 <br>
 <input type="button" id="toggle_label" value="Turn Label Off">
@@ -432,7 +432,7 @@ Loading...
     let label_on = true;
     let atoms = [];
     const bond_length_database = {};
-    const bond_length_data_url = "https://raw.githubusercontent.com/liwt31/liwt31.github.io/vendor/bond_length.json";
+    const bond_length_data_url = "https://liwt31.github.io/vendor/bond_length.json";
     $.getJSON(bond_length_data_url, function(data) {
         // load bond length data
         for (const record of data){
