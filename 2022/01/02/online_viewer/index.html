@@ -106,17 +106,17 @@
 
 
 
-  <meta name="description" content="Loading... Please refresh if the message persists.          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     con">
+  <meta name="description" content="Loading... Please refresh if this message persists.           const input_textarea = $(&quot;#coordinates&quot;);      let viewer;      let label_on = true;     let atoms = [];     const bond_length_databa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Online Molecular Viewer based on XYZ coordinates">
 <meta property="og:url" content="https://liwt31.github.io/2022/01/02/online_viewer/index.html">
 <meta property="og:site_name" content="Weitang Li&#39;s blog">
-<meta property="og:description" content="Loading... Please refresh if the message persists.          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     con">
+<meta property="og:description" content="Loading... Please refresh if this message persists.           const input_textarea = $(&quot;#coordinates&quot;);      let viewer;      let label_on = true;     let atoms = [];     const bond_length_databa">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-01-05T01:10:14.338Z">
+<meta property="og:updated_time" content="2022-01-06T01:29:19.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Online Molecular Viewer based on XYZ coordinates">
-<meta name="twitter:description" content="Loading... Please refresh if the message persists.          let container = $(&quot;#container&quot;);     let input_textarea = $(&quot;#coordinates&quot;);      container.width(container.parent().width());     con">
+<meta name="twitter:description" content="Loading... Please refresh if this message persists.           const input_textarea = $(&quot;#coordinates&quot;);      let viewer;      let label_on = true;     let atoms = [];     const bond_length_databa">
 
 
 
@@ -368,7 +368,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2022-01-05 09:10:14" itemprop="dateModified" datetime="2022-01-05T09:10:14+08:00">2022-01-05</time>
+                <time title="Modified: 2022-01-06 09:29:19" itemprop="dateModified" datetime="2022-01-06T09:29:19+08:00">2022-01-06</time>
               
             
           </span>
@@ -405,24 +405,17 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/1.4.0/3Dmol-min.js" onload="backend_loaded()"></script>
 
-
-<div id="container" style="height: 400px; width: 400px; position: relative;" class="mol-container"></div>
-<textarea id="coordinates" title="attributes" cols="80" rows="10">
-Loading... Please refresh if the message persists.
+<div id="container" class="mol-container" style="width:100%; height:0; position: relative"></div>
+<textarea id="coordinates" title="attributes" rows="10" style="width: 100%; max-width: 100%;">
+Loading... Please refresh if this message persists.
 </textarea>
 <br>
 <input type="button" id="toggle_label" value="Turn Label Off">
 
 <script>
-    let container = $("#container");
-    let input_textarea = $("#coordinates");
 
-    container.width(container.parent().width());
-    container.height(container.width());
-    input_textarea.width(container.width());
+    const input_textarea = $("#coordinates");
 
-    const element = $("#container");
-    const config = { backgroundColor: "white" };
     let viewer;
 
     let label_on = true;
@@ -544,7 +537,10 @@ Loading... Please refresh if the message persists.
     }
 
     function backend_loaded(){
-        viewer = $3Dmol.createViewer( element, config );
+        const container = $("#container");
+        const config = { backgroundColor: "white" };
+        container.height(container.width());
+        viewer = $3Dmol.createViewer( container, config );
         // initial values for the textarea
         // in angstrom
         let d = 0.629;
