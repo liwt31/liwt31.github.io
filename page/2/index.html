@@ -309,6 +309,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/03/08/the_debug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Weitang Li">
+      <meta itemprop="description" content="Weitang Li's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Weitang Li's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/08/the_debug/" itemprop="url">
+                  记一次刻骨铭心的debug
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-08 20:23:21" itemprop="dateCreated datePublished" datetime="2019-03-08T20:23:21+08:00">2019-03-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-10 14:07:12" itemprop="dateModified" datetime="2019-03-10T14:07:12+08:00">2019-03-10</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>上个星期遇到了一个非常棘手的bug。我花了一个星期的时间，到昨天已经绝望，谁知柳暗花明醍醐灌顶，今天终于将其攻克，感觉有50%概率这会是我这辈子中印象最深的一次debug。</p>
+<p>这次的bug有以下几个特点：</p>
+<ul>
+<li>是第三方库的bug。所以必须要去看第三方库的源代码，搞清楚别人的代码是干什么的，然后自己hack，自己编译。</li>
+<li>是一个<em>Higgs-Bugson</em>。只存在于日志中，通过生产环境复现。这一个特性有两个结果，都对debug十分不利：<ul>
+<li>枪毙了基于断点的debug方法，因为事先不知道bug会在什么时候发生。</li>
+<li>第三方库的开发人员不可能有效参与debug过程。</li>
+</ul>
+</li>
+<li>最最重要的是：debug<strong>情节曲折离奇；结局出人意料，又在情理之中</strong>。</li>
+<li>debug过程使我掌握了一个内存调度算法，收获了一些debug技巧，加深了对程序语言的特性的认识。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/08/the_debug/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2019/03/03/fast_python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1715,162 +1882,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liwt31.github.io/2018/10/12/mul-complexity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Weitang Li">
-      <meta itemprop="description" content="Weitang Li's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Weitang Li's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/12/mul-complexity/" itemprop="url">
-                  矩阵、张量乘法（numpy.tensordot）的时间复杂度分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-10-12 15:48:25" itemprop="dateCreated datePublished" datetime="2018-10-12T15:48:25+08:00">2018-10-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-13 22:38:16" itemprop="dateModified" datetime="2018-12-13T22:38:16+08:00">2018-12-13</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>两个大小都是\(N \times N\)的矩阵相乘，如果使用naive的算法，时间复杂度应该是\(\mathcal{O}(N^3)\)，如果使用一些<a href="https://en.wikipedia.org/wiki/Strassen_algorithm" target="_blank" rel="noopener">高级的算法</a>，可以使幂指数降到3以下。对于一般情况的矩阵乘法，特别是张量乘法（<code>numpy</code>中的<code>tensordot</code>函数），时间复杂度又如何呢？</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/12/mul-complexity/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1918,7 +1929,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
