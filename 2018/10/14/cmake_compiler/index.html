@@ -408,7 +408,7 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">CC</span>=`which mygcc`</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">CXX</span>=`which myg++`</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>使用CMake参数</p>
-<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_C_COMPILE=`which mygcc` CMAKE_CXX_COMPILER=`which myg++` ..</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_C_COMPILER=`which mygcc` CMAKE_CXX_COMPILER=`which myg++` ..</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>注意这两种情况下的“形参”并不相同。见<a href="https://gitlab.kitware.com/cmake/community/wikis/FAQ#how-do-i-use-a-different-compiler" target="_blank" rel="noopener">cmake wiki</a>。</p>
